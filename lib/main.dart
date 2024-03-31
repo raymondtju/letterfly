@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mailify/forgotPassword.dart';
-import 'package:mailify/login.dart';
-import 'package:mailify/signup.dart';
+import 'package:Letterfly/forgotPassword.dart';
+import 'package:Letterfly/login.dart';
+import 'package:Letterfly/signup.dart';
 
 main() => runApp(
   MyApp()
@@ -114,37 +114,22 @@ class _WelcomePageState extends State<WelcomePage> {
                         context, 
                         MaterialPageRoute(builder: (context) => const Login()));
                     }, 
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Start Creating Letter',
+                          style: TextStyle(
+                            color: Colors.white
+                          ),
+                        ),
+                        SizedBox(width: 10,),
+                        Icon(Icons.arrow_right_alt, color: Colors.white,),
+                      ],
                     ),
                     style: OutlinedButton.styleFrom(
                       minimumSize: Size(double.infinity, 50),
                       backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero
-                      ),
-                      side: BorderSide(color: Colors.black, width: 1)
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignUp()));
-                    }, 
-                    child: Text(
-                      'Sign Up',
-                      style: TextStyle(
-                        color: Colors.black
-                      ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: Size(double.infinity, 50),
-                      backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero
                       ),

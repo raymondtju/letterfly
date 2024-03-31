@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mailify/signup.dart';
+import 'package:Letterfly/signup.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
