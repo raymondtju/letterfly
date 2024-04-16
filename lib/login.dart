@@ -6,7 +6,7 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyWidget();
+    return const MyWidget();
   }
 }
 
@@ -25,58 +25,78 @@ class _MyWidgetState extends State<MyWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              'Login',
+              style: TextStyle(
+                  fontFamily: "SF",
+                  letterSpacing: -1,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24),
+            ),
+          ],
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Email',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 10,),
-                TextField(
+                const SizedBox(
+                  height: 10,
+                ),
+                const TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your work email',
                   ),
                 ),
-                SizedBox(height: 20,),
-                Text(
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
                   'Password',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextField(
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorText,
-                    suffixIcon: IconButton(
-                      icon: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                        });
-                      },
-                    )
-                  ),
+                      border: const OutlineInputBorder(),
+                      hintText: 'Consisting of 8 letters',
+                      errorText: passwordErrorText,
+                      suffixIcon: IconButton(
+                        icon: Icon(obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                      )),
                   onChanged: (value) {
                     setState(() {
                       if (value.length < 8) {
-                        passwordErrorText = 'Password must be at least 8 characters';
+                        passwordErrorText =
+                            'Password must be at least 8 characters';
                       } else {
                         passwordErrorText = '';
                       }
@@ -88,36 +108,30 @@ class _MyWidgetState extends State<MyWidget> {
             Column(
               children: [
                 OutlinedButton(
-                  onPressed: () {
-
-                  }, 
-                  child: Text(
-                    'Login',
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
+                  onPressed: () {},
                   style: OutlinedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero
-                    ),
-                    side: BorderSide(color: Colors.white, width: 1)
+                      minimumSize: const Size(double.infinity, 50),
+                      backgroundColor: Colors.black,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.zero),
+                      side: const BorderSide(color: Colors.white, width: 1)),
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("Don't have an account?"),
+                    const Text("Don't have an account?"),
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => const SignUp()));
-                      }, 
-                      child: Text('Create an account')
-                    )
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUp()));
+                        },
+                        child: const Text('Create an account'))
                   ],
                 )
               ],

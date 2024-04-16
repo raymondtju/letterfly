@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Letterfly/forgotPassword.dart';
 import 'package:Letterfly/login.dart';
 import 'package:Letterfly/signup.dart';
 
-main() => runApp(MyApp());
+main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const WelcomePage(),
+    return const MaterialApp(
+      home: WelcomePage(),
     );
   }
 }
@@ -26,6 +27,10 @@ class WelcomePage extends StatefulWidget {
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
+    return WelcomePage(context);
+  }
+
+  Scaffold WelcomePage(BuildContext context) {
     return Scaffold(
         //  appBar: AppBar(
         //   centerTitle: true,
@@ -38,7 +43,7 @@ class _WelcomePageState extends State<WelcomePage> {
         //     ),
         //  ),
         body: Padding(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -52,14 +57,20 @@ class _WelcomePageState extends State<WelcomePage> {
                     children: [
                       Row(
                         children: [
-                          Icon(Icons.mail),
-                          SizedBox(
+                          SvgPicture.asset(
+                            'assets/logo/Logo.svg',
+                            height: 25,
+                          ),
+                          const SizedBox(
                             width: 10,
                           ),
-                          Text(
+                          const Text(
                             'Letterfly',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 24),
+                                fontFamily: "SF",
+                                letterSpacing: -1,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 24),
                           ),
                         ],
                       ),
@@ -72,8 +83,8 @@ class _WelcomePageState extends State<WelcomePage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(padding: EdgeInsets.symmetric(vertical: 120)),
-              Padding(
+              const Padding(padding: EdgeInsets.symmetric(vertical: 120)),
+              const Padding(
                 padding: EdgeInsets.only(right: 120),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,13 +106,19 @@ class _WelcomePageState extends State<WelcomePage> {
                   ],
                 ),
               ),
-              Padding(padding: EdgeInsets.symmetric(vertical: 10)),
+              const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
               OutlinedButton(
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Login()));
                 },
-                child: Row(
+                style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    backgroundColor: Colors.black,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero),
+                    side: const BorderSide(color: Colors.black, width: 1)),
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
@@ -117,14 +134,8 @@ class _WelcomePageState extends State<WelcomePage> {
                     ),
                   ],
                 ),
-                style: OutlinedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    backgroundColor: Colors.black,
-                    shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                    side: BorderSide(color: Colors.black, width: 1)),
               ),
-              Padding(padding: EdgeInsets.only(bottom: 30))
+              const Padding(padding: EdgeInsets.only(bottom: 30))
             ],
           ),
         ],
