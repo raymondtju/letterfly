@@ -1,5 +1,8 @@
+import 'package:Letterfly/forgotPassword.dart';
+import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
 import 'package:Letterfly/signup.dart';
+import 'package:flutter/widgets.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -19,6 +22,7 @@ class MyWidget extends StatefulWidget {
 
 class _MyWidgetState extends State<MyWidget> {
   String passwordErrorText = '';
+  bool passwordErrorBool = false;
   bool obscurePassword = true;
 
   @override
@@ -63,7 +67,7 @@ class _MyWidgetState extends State<MyWidget> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorText,
+                    errorText: passwordErrorBool ? passwordErrorText : null,
                     suffixIcon: IconButton(
                       icon: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility),
                       onPressed: () {
@@ -77,19 +81,36 @@ class _MyWidgetState extends State<MyWidget> {
                     setState(() {
                       if (value.length < 8) {
                         passwordErrorText = 'Password must be at least 8 characters';
+                        passwordErrorBool = true;
                       } else {
                         passwordErrorText = '';
+                        passwordErrorBool = false;
                       }
                     });
                   },
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(builder: (context) => ForgotPassword()));
+                      }, 
+                      child: Text('Forgot Password!', style: TextStyle(color: Colors.black),)
+                    ),
+                  ],
+                )
               ],
             ),
             Column(
               children: [
                 OutlinedButton(
                   onPressed: () {
-
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: ((context) => Main())));
                   }, 
                   child: Text(
                     'Login',

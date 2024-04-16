@@ -20,6 +20,8 @@ class MyWidget extends StatefulWidget {
 class _MyWidgetState extends State<MyWidget> {
   String passwordErrorText1 = '';
   String passwordErrorText2 = '';
+  bool passwordErrorBool1 = false;
+  bool passwordErrorBool2 = false;
 
   bool obscurePassword1 = true;
   bool obscurePassword2 = true;
@@ -31,7 +33,7 @@ class _MyWidgetState extends State<MyWidget> {
         title: Text('Create an account', style: TextStyle(fontWeight: FontWeight.bold),),
       ),
       body: Padding(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -52,7 +54,7 @@ class _MyWidgetState extends State<MyWidget> {
                     hintText: 'Masukkan nama lengkap anda',
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
                 Text(
                   'Email',
                   style: TextStyle(
@@ -67,7 +69,7 @@ class _MyWidgetState extends State<MyWidget> {
                     hintText: 'Enter your work email',
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 10,),
                 Text(
                   'Password',
                   style: TextStyle(
@@ -81,7 +83,7 @@ class _MyWidgetState extends State<MyWidget> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorText1,
+                    errorText: passwordErrorBool1 ? passwordErrorText1 : null,
                     suffixIcon: IconButton(
                       icon: Icon(obscurePassword1 ? Icons.visibility_off : Icons.visibility),
                       onPressed: () {
@@ -95,12 +97,15 @@ class _MyWidgetState extends State<MyWidget> {
                     setState(() {
                       if (value.length < 8) {
                         passwordErrorText1 = 'Password must be at least 8 characters';
+                        passwordErrorBool1 = true;
                       } else {
                         passwordErrorText1 = '';
+                        passwordErrorBool1 = false;
                       }
                     });
                   },
                 ),
+                SizedBox(height: 10,),
                 Text(
                   'Password Confirmation',
                   style: TextStyle(
@@ -114,7 +119,7 @@ class _MyWidgetState extends State<MyWidget> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorText2,
+                    errorText: passwordErrorBool2 ? passwordErrorText2 : null,
                     suffixIcon: IconButton(
                       icon: Icon(obscurePassword2 ? Icons.visibility_off : Icons.visibility),
                       onPressed: () {
@@ -128,8 +133,10 @@ class _MyWidgetState extends State<MyWidget> {
                     setState(() {
                       if (value.length < 8) {
                         passwordErrorText2 = 'Password must be at least 8 characters';
+                        passwordErrorBool2 = true;
                       } else {
                         passwordErrorText2 = '';
+                        passwordErrorBool2 = false;
                       }
                     });
                   },
@@ -140,7 +147,9 @@ class _MyWidgetState extends State<MyWidget> {
               children: [
                 OutlinedButton(
                   onPressed: () {
-
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (context) => Login()));
                   }, 
                   child: Text(
                     'Sign Up',
