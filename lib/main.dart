@@ -1,17 +1,15 @@
 import 'package:Letterfly/welcome.dart';
 import 'package:flutter/material.dart';
 
-main() => runApp(
-  MyApp()
-);
+main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: const WelcomePage(),
+    return const MaterialApp(
+      home: WelcomePage(),
     );
   }
 }
@@ -26,6 +24,10 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
+    return WelcomePage(context);
+  }
+
+  Scaffold WelcomePage(BuildContext context) {
     return Scaffold(
       
     );

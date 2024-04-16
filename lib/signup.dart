@@ -1,3 +1,4 @@
+import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
 import 'package:Letterfly/login.dart';
 
@@ -6,7 +7,7 @@ class SignUp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MyWidget();
+    return const MyWidget();
   }
 }
 
@@ -30,62 +31,84 @@ class _MyWidgetState extends State<MyWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create an account', style: TextStyle(fontWeight: FontWeight.bold),),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Full Name',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+            Text(
+              'Create an account',
+              style: TextStyle(
+                  fontFamily: "SF",
+                  letterSpacing: -1,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24),
+            ),
+          ],
+        ),
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(20),
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Full Name',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-                SizedBox(height: 10,),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Masukkan nama lengkap anda',
-                  ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Masukkan nama lengkap anda',
                 ),
-                SizedBox(height: 10,),
-                Text(
-                  'Email',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Email',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-                SizedBox(height: 10,),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your work email',
-                  ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter your work email',
                 ),
-                SizedBox(height: 10,),
-                Text(
-                  'Password',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Password',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-                SizedBox(height: 10,),
-                TextField(
-                  obscureText: obscurePassword1,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                obscureText: obscurePassword1,
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
                     errorText: passwordErrorBool1 ? passwordErrorText1 : null,
                     suffixIcon: IconButton(
-                      icon: Icon(obscurePassword1 ? Icons.visibility_off : Icons.visibility),
+                      icon: Icon(obscurePassword1
+                          ? Icons.visibility_off
+                          : Icons.visibility),
                       onPressed: () {
                         setState(() {
                           obscurePassword1 = !obscurePassword1;
@@ -121,7 +144,9 @@ class _MyWidgetState extends State<MyWidget> {
                     hintText: 'Consisting of 8 letters',
                     errorText: passwordErrorBool2 ? passwordErrorText2 : null,
                     suffixIcon: IconButton(
-                      icon: Icon(obscurePassword2 ? Icons.visibility_off : Icons.visibility),
+                      icon: Icon(obscurePassword2
+                          ? Icons.visibility_off
+                          : Icons.visibility),
                       onPressed: () {
                         setState(() {
                           obscurePassword2 = !obscurePassword2;
@@ -151,39 +176,34 @@ class _MyWidgetState extends State<MyWidget> {
                       context, 
                       MaterialPageRoute(builder: (context) => Login()));
                   }, 
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                  ),
                   style: OutlinedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50),
                     backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero
-                    ),
-                    side: BorderSide(color: Colors.white, width: 1)
-                  ),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero),
+                    side: const BorderSide(color: Colors.white, width: 1)),
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.white),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Already have an account?'),
-                    TextButton(
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Already have an account?'),
+                  TextButton(
                       onPressed: () {
                         Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Login()));
-                      }, 
-                      child: Text('Login here')
-                    )
-                  ],
-                )
-              ],
-            ),
-          ],
-        ),
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Login()));
+                      },
+                      child: const Text('Login here'))
+                ],
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
