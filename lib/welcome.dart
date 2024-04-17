@@ -1,3 +1,4 @@
+import 'package:Letterfly/components/textstylefont.dart';
 import 'package:flutter/material.dart';
 import 'package:Letterfly/login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -45,14 +46,7 @@ class _WelcomePageState extends State<WelcomePage> {
                           const SizedBox(
                             width: 10,
                           ),
-                          const Text(
-                            'Letterfly',
-                            style: TextStyle(
-                                fontFamily: "SF",
-                                letterSpacing: -1,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 24),
-                          ),
+                          const Text('Letterfly', style: headlineStyle),
                         ],
                       ),
                     ],
@@ -72,11 +66,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(right: 20),
-                      child: Text(
-                        'Welcome To Letterfly',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 28),
-                      ),
+                      child: Text('Welcome To Letterfly', style: headlineStyle),
                     ),
                     Text(
                       'Tempat kamu bisa dokumentasi dan sortir suratmu suratmu fleksibel sesuai keinginan.',

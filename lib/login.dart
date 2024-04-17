@@ -1,3 +1,4 @@
+import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/forgotPassword.dart';
 import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
@@ -32,14 +33,7 @@ class _MyWidgetState extends State<MyWidget> {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              'Login',
-              style: TextStyle(
-                  fontFamily: "SF",
-                  letterSpacing: -1,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24),
-            ),
+            Text('Login', style: subheadlineStyle),
           ],
         ),
       ),
@@ -83,22 +77,24 @@ class _MyWidgetState extends State<MyWidget> {
                 TextField(
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorBool ? passwordErrorText : null,
-                    suffixIcon: IconButton(
-                      icon: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                        });
-                      },
-                    )
-                  ),
+                      border: const OutlineInputBorder(),
+                      hintText: 'Consisting of 8 letters',
+                      errorText: passwordErrorBool ? passwordErrorText : null,
+                      suffixIcon: IconButton(
+                        icon: Icon(obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                      )),
                   onChanged: (value) {
                     setState(() {
                       if (value.length < 8) {
-                        passwordErrorText = 'Password must be at least 8 characters';
+                        passwordErrorText =
+                            'Password must be at least 8 characters';
                         passwordErrorBool = true;
                       } else {
                         passwordErrorText = '';
@@ -111,13 +107,17 @@ class _MyWidgetState extends State<MyWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => ForgotPassword()));
-                      }, 
-                      child: Text('Forgot Password!', style: TextStyle(color: Colors.black),)
-                    ),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPassword()));
+                        },
+                        child: const Text(
+                          'Forgot Password!',
+                          style: TextStyle(color: Colors.black),
+                        )),
                   ],
                 )
               ],
@@ -127,9 +127,10 @@ class _MyWidgetState extends State<MyWidget> {
                 OutlinedButton(
                   onPressed: () {
                     Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: ((context) => Main())));
-                  }, 
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => const Main())));
+                  },
                   style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Colors.black,

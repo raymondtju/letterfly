@@ -1,3 +1,4 @@
+import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
 import 'package:Letterfly/login.dart';
@@ -34,14 +35,7 @@ class _MyWidgetState extends State<MyWidget> {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text(
-              'Create an account',
-              style: TextStyle(
-                  fontFamily: "SF",
-                  letterSpacing: -1,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24),
-            ),
+            Text('Create an account', style: subheadlineStyle),
           ],
         ),
       ),
@@ -114,33 +108,37 @@ class _MyWidgetState extends State<MyWidget> {
                           obscurePassword1 = !obscurePassword1;
                         });
                       },
-                    )
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value.length < 8) {
-                        passwordErrorText1 = 'Password must be at least 8 characters';
-                        passwordErrorBool1 = true;
-                      } else {
-                        passwordErrorText1 = '';
-                        passwordErrorBool1 = false;
-                      }
-                    });
-                  },
+                    )),
+                onChanged: (value) {
+                  setState(() {
+                    if (value.length < 8) {
+                      passwordErrorText1 =
+                          'Password must be at least 8 characters';
+                      passwordErrorBool1 = true;
+                    } else {
+                      passwordErrorText1 = '';
+                      passwordErrorBool1 = false;
+                    }
+                  });
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                'Password Confirmation',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-                SizedBox(height: 10,),
-                Text(
-                  'Password Confirmation',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(height: 10,),
-                TextField(
-                  obscureText: obscurePassword2,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextField(
+                obscureText: obscurePassword2,
+                decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
                     errorText: passwordErrorBool2 ? passwordErrorText2 : null,
                     suffixIcon: IconButton(
@@ -152,32 +150,31 @@ class _MyWidgetState extends State<MyWidget> {
                           obscurePassword2 = !obscurePassword2;
                         });
                       },
-                    )
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value.length < 8) {
-                        passwordErrorText2 = 'Password must be at least 8 characters';
-                        passwordErrorBool2 = true;
-                      } else {
-                        passwordErrorText2 = '';
-                        passwordErrorBool2 = false;
-                      }
-                    });
-                  },
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) => Login()));
-                  }, 
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
+                    )),
+                onChanged: (value) {
+                  setState(() {
+                    if (value.length < 8) {
+                      passwordErrorText2 =
+                          'Password must be at least 8 characters';
+                      passwordErrorBool2 = true;
+                    } else {
+                      passwordErrorText2 = '';
+                      passwordErrorBool2 = false;
+                    }
+                  });
+                },
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Login()));
+                },
+                style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
                     backgroundColor: Colors.black,
                     shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero),
