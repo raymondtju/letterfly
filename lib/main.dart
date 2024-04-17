@@ -1,3 +1,4 @@
+import 'package:Letterfly/successful.dart';
 import 'package:Letterfly/welcome.dart';
 import 'package:flutter/material.dart';
 
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: WelcomePage(),
+      home: SuccessfulPage(),
     );
   }
 }

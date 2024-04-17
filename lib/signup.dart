@@ -1,4 +1,3 @@
-import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
 import 'package:Letterfly/login.dart';
 
@@ -168,6 +167,7 @@ class _MyWidgetState extends State<MyWidget> {
                 ),
               ],
             ),
+            SizedBox(height: 20,),
             Column(
               children: [
                 OutlinedButton(
