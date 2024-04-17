@@ -3,8 +3,8 @@ import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
 import 'package:Letterfly/login.dart';
 
-class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -166,12 +166,14 @@ class _MyWidgetState extends State<MyWidget> {
               ),
             ],
           ),
+          const SizedBox(
+            height: 20,
+          ),
           Column(
             children: [
               OutlinedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Login()));
+                  Navigator.pushNamed(context, "/signup");
                 },
                 style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
@@ -189,13 +191,11 @@ class _MyWidgetState extends State<MyWidget> {
                 children: [
                   const Text('Already have an account?'),
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Login()));
-                      },
-                      child: const Text('Login here'))
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
+                    child: const Text('Login here'),
+                  ),
                 ],
               )
             ],

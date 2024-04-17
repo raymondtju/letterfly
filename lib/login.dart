@@ -2,11 +2,10 @@ import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/forgotPassword.dart';
 import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
-import 'package:Letterfly/signup.dart';
 import 'package:flutter/widgets.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -108,11 +107,7 @@ class _MyWidgetState extends State<MyWidget> {
                   children: [
                     TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const ForgotPassword()));
+                          Navigator.pushNamed(context, "/forgetPass");
                         },
                         child: const Text(
                           'Forgot Password!',
@@ -125,12 +120,7 @@ class _MyWidgetState extends State<MyWidget> {
             Column(
               children: [
                 OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => const Main())));
-                  },
+                  onPressed: () {},
                   style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Colors.black,
@@ -147,13 +137,11 @@ class _MyWidgetState extends State<MyWidget> {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUp()));
-                        },
-                        child: const Text('Create an account'))
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/signup");
+                      },
+                      child: const Text('Create an account'),
+                    ),
                   ],
                 )
               ],
