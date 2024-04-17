@@ -1,11 +1,8 @@
-import 'package:Letterfly/forgotPassword.dart';
-import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
-import 'package:Letterfly/signup.dart';
 import 'package:flutter/widgets.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -83,22 +80,24 @@ class _MyWidgetState extends State<MyWidget> {
                 TextField(
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorBool ? passwordErrorText : null,
-                    suffixIcon: IconButton(
-                      icon: Icon(obscurePassword ? Icons.visibility_off : Icons.visibility),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword = !obscurePassword;
-                        });
-                      },
-                    )
-                  ),
+                      border: OutlineInputBorder(),
+                      hintText: 'Consisting of 8 letters',
+                      errorText: passwordErrorBool ? passwordErrorText : null,
+                      suffixIcon: IconButton(
+                        icon: Icon(obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility),
+                        onPressed: () {
+                          setState(() {
+                            obscurePassword = !obscurePassword;
+                          });
+                        },
+                      )),
                   onChanged: (value) {
                     setState(() {
                       if (value.length < 8) {
-                        passwordErrorText = 'Password must be at least 8 characters';
+                        passwordErrorText =
+                            'Password must be at least 8 characters';
                         passwordErrorBool = true;
                       } else {
                         passwordErrorText = '';
@@ -111,13 +110,13 @@ class _MyWidgetState extends State<MyWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context, 
-                          MaterialPageRoute(builder: (context) => ForgotPassword()));
-                      }, 
-                      child: Text('Forgot Password!', style: TextStyle(color: Colors.black),)
-                    ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/forgetPass");
+                        },
+                        child: Text(
+                          'Forgot Password!',
+                          style: TextStyle(color: Colors.black),
+                        )),
                   ],
                 )
               ],
@@ -125,11 +124,7 @@ class _MyWidgetState extends State<MyWidget> {
             Column(
               children: [
                 OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: ((context) => Main())));
-                  }, 
+                  onPressed: () {},
                   style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Colors.black,
@@ -146,13 +141,11 @@ class _MyWidgetState extends State<MyWidget> {
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUp()));
-                        },
-                        child: const Text('Create an account'))
+                      onPressed: () {
+                        Navigator.pushNamed(context, "/signup");
+                      },
+                      child: const Text('Create an account'),
+                    ),
                   ],
                 )
               ],

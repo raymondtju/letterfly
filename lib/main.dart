@@ -1,36 +1,27 @@
+// ignore_for_file: prefer_const_constructors
+import 'package:Letterfly/forgotPassword.dart';
+import 'package:Letterfly/login.dart';
+import 'package:Letterfly/signup.dart';
 import 'package:Letterfly/successful.dart';
 import 'package:Letterfly/welcome.dart';
 import 'package:flutter/material.dart';
 
-main() => runApp(const MyApp());
+main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: SuccessfulPage(),
-    );
-  }
-}
-
-class Main extends StatefulWidget {
-  const Main({super.key});
-
-  @override
-  State<Main> createState() => _MainState();
-}
-
-class _MainState extends State<Main> {
-  @override
-  Widget build(BuildContext context) {
-    return WelcomePage(context);
-  }
-
-  Scaffold WelcomePage(BuildContext context) {
-    return Scaffold(
-      
+    return MaterialApp(
+      initialRoute: "/home",
+      routes: {
+        '/home': (context) => WelcomePage(),
+        '/login': (context) => LoginPage(),
+        '/signup': (context) => SignUpPage(),
+        '/sukses': (context) => SuccessfulPage(),
+        '/forgetPass': (context) => ForgotPasswordPage(),
+      },
     );
   }
 }

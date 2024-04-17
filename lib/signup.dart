@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:Letterfly/login.dart';
 
-class SignUp extends StatelessWidget {
-  const SignUp({super.key});
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -113,32 +113,36 @@ class _MyWidgetState extends State<MyWidget> {
                           obscurePassword1 = !obscurePassword1;
                         });
                       },
-                    )
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value.length < 8) {
-                        passwordErrorText1 = 'Password must be at least 8 characters';
-                        passwordErrorBool1 = true;
-                      } else {
-                        passwordErrorText1 = '';
-                        passwordErrorBool1 = false;
-                      }
-                    });
-                  },
+                    )),
+                onChanged: (value) {
+                  setState(() {
+                    if (value.length < 8) {
+                      passwordErrorText1 =
+                          'Password must be at least 8 characters';
+                      passwordErrorBool1 = true;
+                    } else {
+                      passwordErrorText1 = '';
+                      passwordErrorBool1 = false;
+                    }
+                  });
+                },
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Password Confirmation',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
                 ),
-                SizedBox(height: 10,),
-                Text(
-                  'Password Confirmation',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
-                ),
-                SizedBox(height: 10,),
-                TextField(
-                  obscureText: obscurePassword2,
-                  decoration: InputDecoration(
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              TextField(
+                obscureText: obscurePassword2,
+                decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
                     errorText: passwordErrorBool2 ? passwordErrorText2 : null,
@@ -151,32 +155,32 @@ class _MyWidgetState extends State<MyWidget> {
                           obscurePassword2 = !obscurePassword2;
                         });
                       },
-                    )
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value.length < 8) {
-                        passwordErrorText2 = 'Password must be at least 8 characters';
-                        passwordErrorBool2 = true;
-                      } else {
-                        passwordErrorText2 = '';
-                        passwordErrorBool2 = false;
-                      }
-                    });
-                  },
-                ),
-              ],
-            ),
-            SizedBox(height: 20,),
-            Column(
-              children: [
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) => Login()));
-                  }, 
-                  style: OutlinedButton.styleFrom(
+                    )),
+                onChanged: (value) {
+                  setState(() {
+                    if (value.length < 8) {
+                      passwordErrorText2 =
+                          'Password must be at least 8 characters';
+                      passwordErrorBool2 = true;
+                    } else {
+                      passwordErrorText2 = '';
+                      passwordErrorBool2 = false;
+                    }
+                  });
+                },
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Column(
+            children: [
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/signup");
+                },
+                style: OutlinedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50),
                     backgroundColor: Colors.black,
                     shape: const RoundedRectangleBorder(
@@ -192,13 +196,11 @@ class _MyWidgetState extends State<MyWidget> {
                 children: [
                   const Text('Already have an account?'),
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Login()));
-                      },
-                      child: const Text('Login here'))
+                    onPressed: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
+                    child: const Text('Login here'),
+                  ),
                 ],
               )
             ],

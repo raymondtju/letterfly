@@ -90,8 +90,7 @@ class _WelcomePageState extends State<WelcomePage> {
               const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Login()));
+                  Navigator.pushNamed(context, "/login");
                 },
                 style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
