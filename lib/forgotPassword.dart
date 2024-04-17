@@ -2,8 +2,8 @@ import 'package:Letterfly/components/textstylefont.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ForgotPassword extends StatelessWidget {
-  const ForgotPassword({super.key});
+class ForgotPasswordPage extends StatelessWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
