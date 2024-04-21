@@ -94,7 +94,7 @@ class _MyWidgetState extends State<MyWidget> {
                 height: 10,
               ),
               TextField(
-                obscureText: obscurePassword1,
+                obscureText: obscurePassword2,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
@@ -159,8 +159,8 @@ class _MyWidgetState extends State<MyWidget> {
                       passwordErrorBool2 = true;
                     } else {
                       passwordErrorText2 = '';
-                      passwordErrorBool2 = false;
                     }
+                    passwordErrorBool2 = false;
                   });
                 },
               ),
