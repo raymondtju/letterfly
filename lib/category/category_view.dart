@@ -18,42 +18,109 @@ class _CategoryViewState extends State<CategoryView> {
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('Category', style: subheadlineStyle),
-          ],
+        appBar: AppBar(
+          title: const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text('Category', style: subheadlineStyle),
+            ],
+          ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            searchBar(context),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('${dummyDummy.length} Categories',
-                      style: subheadlineStyle),
-                ],
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              searchBar(context),
+              const SizedBox(
+                height: 15,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Expanded(
-                child:
-                    prov.CategoryViewIsGrid ? gridCategory() : listCategory())
-          ],
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text('${dummyDummy.length} Categories',
+                        style: subheadlineStyle),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Expanded(
+                  child:
+                      prov.CategoryViewIsGrid ? gridCategory() : listCategory())
+            ],
+          ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: const Color.fromARGB(255, 40, 42, 45),
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+              side: const BorderSide(color: Colors.white, width: 2)),
+          // foregroundColor: const Color(0xFF282a2d),
+
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    backgroundColor: Colors.white,
+                    title: const Text(
+                      "Category Name",
+                      style: subheadlineStyle,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                    content: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.11,
+                      child: Column(
+                        children: [
+                          // height: MediaQuery.of(context).size.height * 0.3,
+                          TextField(
+                            decoration: InputDecoration(
+                              contentPadding: const EdgeInsets.all(10),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                  borderSide:
+                                      const BorderSide(color: Colors.grey)),
+                              hintText: "Enter Category Name",
+                            ),
+                            style: const TextStyle(fontSize: 13),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 20, vertical: 10),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 40, 42, 45),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(0),
+                                ),
+                              ),
+                              onPressed: () {},
+                              child: const Text("Add",
+                                  style: TextStyle(color: Colors.white)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          },
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+        ));
   }
 
   Row searchBar(context) {
