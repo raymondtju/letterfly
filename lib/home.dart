@@ -80,7 +80,9 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/takeaphoto");
+                                  },
                                   icon: Icon(
                                     Icons.add_box_rounded,
                                     size: 45,

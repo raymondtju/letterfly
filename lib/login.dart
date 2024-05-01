@@ -1,6 +1,4 @@
 import 'package:Letterfly/components/textstylefont.dart';
-import 'package:Letterfly/forgotPassword.dart';
-import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -120,7 +118,9 @@ class _MyWidgetState extends State<MyWidget> {
             Column(
               children: [
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/home");
+                  },
                   style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
                       backgroundColor: Colors.black,

@@ -1,7 +1,5 @@
 import 'package:Letterfly/components/textstylefont.dart';
-import 'package:Letterfly/main.dart';
 import 'package:flutter/material.dart';
-import 'package:Letterfly/login.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
