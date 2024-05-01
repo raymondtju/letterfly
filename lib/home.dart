@@ -197,7 +197,7 @@ class HomePage extends StatelessWidget {
                           trailing: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
+                            children: const [
                               Text("02/04/2024"),
                               Text("2 hari yang lalu")
                             ],
