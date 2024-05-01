@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ProviderPage extends ChangeNotifier {
+class ProviderPhoto extends ChangeNotifier {
   List<String> TempPhoto = [];
 
   void addPhoto(String value) {

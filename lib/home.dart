@@ -106,7 +106,9 @@ class HomePage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, "/category");
+                                  },
                                   icon: Icon(
                                     Icons.category_rounded,
                                     size: 45,

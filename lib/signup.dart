@@ -1,5 +1,7 @@
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -26,8 +28,15 @@ class _MyWidgetState extends State<MyWidget> {
   bool obscurePassword1 = true;
   bool obscurePassword2 = true;
 
+  TextEditingController UsernameController = TextEditingController();
+  TextEditingController EmailController = TextEditingController();
+  TextEditingController Password1Controller = TextEditingController();
+  TextEditingController Password2Controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<LetterFlyProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -43,56 +52,59 @@ class _MyWidgetState extends State<MyWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Full Name',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              const TextField(
+              TextField(
+                controller: UsernameController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Masukkan nama lengkap anda',
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              const Text(
+              Text(
                 'Email',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              const TextField(
+              TextField(
+                controller: EmailController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Enter your work email',
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
-              const Text(
+              Text(
                 'Password',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
               TextField(
-                obscureText: obscurePassword2,
+                controller: Password1Controller,
+                obscureText: obscurePassword1,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: 'Consisting of 8 letters',
@@ -134,6 +146,7 @@ class _MyWidgetState extends State<MyWidget> {
                 height: 10,
               ),
               TextField(
+                controller: Password2Controller,
                 obscureText: obscurePassword2,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -157,8 +170,8 @@ class _MyWidgetState extends State<MyWidget> {
                       passwordErrorBool2 = true;
                     } else {
                       passwordErrorText2 = '';
+                      passwordErrorBool2 = false;
                     }
-                    passwordErrorBool2 = false;
                   });
                 },
               ),
@@ -171,7 +184,24 @@ class _MyWidgetState extends State<MyWidget> {
             children: [
               OutlinedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, "/signup");
+                  String username = UsernameController.text;
+                  String email = EmailController.text;
+                  String password1 = Password1Controller.text;
+                  String password2 = Password2Controller.text;
+
+                  if (password1 == password2) {
+                    prov.setUsername = username;
+                    prov.setEmail = email;
+                    prov.setPassword = password1;
+                    Navigator.pushNamed(context, "/login");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Passwords do not match.'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  }
                 },
                 style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),

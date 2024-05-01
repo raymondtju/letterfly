@@ -1,6 +1,8 @@
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -23,8 +25,13 @@ class _MyWidgetState extends State<MyWidget> {
   bool passwordErrorBool = false;
   bool obscurePassword = true;
 
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<LetterFlyProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -52,7 +59,8 @@ class _MyWidgetState extends State<MyWidget> {
                 const SizedBox(
                   height: 10,
                 ),
-                const TextField(
+                TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Enter your work email',
@@ -72,6 +80,7 @@ class _MyWidgetState extends State<MyWidget> {
                   height: 10,
                 ),
                 TextField(
+                  controller: passwordController,
                   obscureText: obscurePassword,
                   decoration: InputDecoration(
                       border: const OutlineInputBorder(),
@@ -119,7 +128,29 @@ class _MyWidgetState extends State<MyWidget> {
               children: [
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, "/home");
+                    String email = emailController.text;
+                    String password = passwordController.text;
+
+                    if (email == prov.Email && password == prov.Password) {
+                      if (password == prov.Password) {
+                        Navigator.pushNamed(context, "/home");
+                      }
+                      else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Password is wrong.'),
+                            duration: Duration(seconds: 2),
+                          )
+                        );                  
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Email not registered.'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                    }
                   },
                   style: OutlinedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),

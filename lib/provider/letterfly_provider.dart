@@ -1,8 +1,29 @@
 import 'package:flutter/foundation.dart';
 
 class LetterFlyProvider with ChangeNotifier {
-  bool _CategoryViewIsGrid = false;
+  String _Username = '';
+  String get Username => _Username;
+  
+  set setUsername(val) {
+    _Username = val;
+    notifyListeners();
+  }
+  String _Email = '';
+  String get Email => _Email;
+  
+  set setEmail(val) {
+    _Email = val;
+    notifyListeners();
+  }
+  String _Password = '';
+  String get Password => _Password;
+  
+  set setPassword(val) {
+    _Password = val;
+    notifyListeners();
+  }
 
+  bool _CategoryViewIsGrid = false;
   bool get CategoryViewIsGrid => _CategoryViewIsGrid;
 
   set setCategoryViewGrid(val) {
