@@ -194,35 +194,34 @@ class _CategoryViewState extends State<CategoryView> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(0),
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "/surat_kuasa");
+                },
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.folder_sharp,
+                      size: MediaQuery.of(context).size.width * 0.3,
                     ),
-                  ),
-                  Icon(
-                    Icons.folder_sharp,
-                    size: MediaQuery.of(context).size.width * 0.3,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.06,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        dummyDummy[index].title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        dummyDummy[index].durasi,
-                        style: const TextStyle(fontSize: 10),
-                      )
-                    ],
-                  )
-                ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.06,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dummyDummy[index].title,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          dummyDummy[index].durasi,
+                          style: const TextStyle(fontSize: 10),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ],
@@ -241,26 +240,31 @@ Expanded gridCategory() {
         crossAxisCount: 3,
         childAspectRatio: 0.6,
       ),
-      padding: const EdgeInsets.all(10),
+      // padding: const EdgeInsets.all(10),
       itemCount: dummyDummy.length,
-      itemBuilder: (context, index) => Column(
-        children: [
-          Icon(
-            Icons.folder_sharp,
-            size: MediaQuery.of(context).size.width * 0.3,
-          ),
-          const SizedBox(
-            height: 7,
-          ),
-          Text(
-            dummyDummy[index].title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(
-            dummyDummy[index].durasi,
-            style: const TextStyle(fontSize: 10),
-          ),
-        ],
+      itemBuilder: (context, index) => InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, "/surat_kuasa");
+        },
+        child: Column(
+          children: [
+            Icon(
+              Icons.folder_sharp,
+              size: MediaQuery.of(context).size.width * 0.3,
+            ),
+            const SizedBox(
+              height: 7,
+            ),
+            Text(
+              dummyDummy[index].title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              dummyDummy[index].durasi,
+              style: const TextStyle(fontSize: 10),
+            ),
+          ],
+        ),
       ),
     ),
   );
