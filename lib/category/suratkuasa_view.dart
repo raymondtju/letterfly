@@ -126,41 +126,44 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.width * 0.3,
-                      width: MediaQuery.of(context).size.width * 0.3,
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.06,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        dummySuratKuasa[index].title,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
+              child: InkWell(
+                onTap: () {},
+                child: Row(
+                  children: [
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.grey[200],
+                    //     borderRadius: BorderRadius.circular(0),
+                    //   ),
+                    // ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(0),
                       ),
-                      Text(
-                        dummySuratKuasa[index].durasi,
-                        style: const TextStyle(fontSize: 10),
-                      )
-                    ],
-                  )
-                ],
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.width * 0.3,
+                        width: MediaQuery.of(context).size.width * 0.3,
+                      ),
+                    ),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.06,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dummySuratKuasa[index].title,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          dummySuratKuasa[index].durasi,
+                          style: const TextStyle(fontSize: 10),
+                        )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ],
@@ -179,32 +182,38 @@ Expanded gridSuratKuasa() {
         crossAxisCount: 3,
         childAspectRatio: 0.6,
       ),
-      padding: const EdgeInsets.all(10),
+      // padding: const EdgeInsets.all(10),
       itemCount: dummySuratKuasa.length,
-      itemBuilder: (context, index) => Column(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(0),
+      itemBuilder: (context, index) => InkWell(
+        onTap: () {},
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.width * 0.05,
             ),
-            child: SizedBox(
-              height: MediaQuery.of(context).size.width * 0.3,
-              width: MediaQuery.of(context).size.width * 0.3,
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(0),
+              ),
+              child: SizedBox(
+                height: MediaQuery.of(context).size.width * 0.25,
+                width: MediaQuery.of(context).size.width * 0.25,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 7,
-          ),
-          Text(
-            dummySuratKuasa[index].title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          Text(
-            dummySuratKuasa[index].durasi,
-            style: const TextStyle(fontSize: 10),
-          ),
-        ],
+            const SizedBox(
+              height: 7,
+            ),
+            Text(
+              dummySuratKuasa[index].title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              dummySuratKuasa[index].durasi,
+              style: const TextStyle(fontSize: 10),
+            ),
+          ],
+        ),
       ),
     ),
   );
