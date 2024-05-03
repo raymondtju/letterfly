@@ -18,7 +18,7 @@ main() => runApp(
 );
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,21 +26,28 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => LetterFlyProvider()),
       ],
-      child: MaterialApp(
-        // theme: ThemeData.dark(),
-        initialRoute: "/welcome",
-        routes: {
-          '/welcome': (context) => const WelcomePage(),
-          '/login': (context) => const LoginPage(),
-          '/signup': (context) => const SignUpPage(),
-          '/home': (context) => const HomePage(),
-          '/sukses': (context) => const SuccessfulPage(),
-          '/forgetPass': (context) => const ForgotPasswordPage(),
-          '/newPass': (context) => const NewPasswordPage(),
-          '/category': (context) => const CategoryView(),
-          '/surat_kuasa': (context) => const SuratKuasaView(),
-          '/takeaphoto': (context) => const TakeAPhotoPage(),
-          '/addletter': (context) => const AddLetterPage(imagePaths: [],),
+      child: Consumer<LetterFlyProvider>(
+        builder: (context, prov, child) {
+          return MaterialApp(
+            theme: ThemeData(
+              brightness: prov.switchThemeto ? Brightness.dark : Brightness.light,
+              primarySwatch: Colors.amber
+            ),
+            initialRoute: "/welcome",
+            routes: {
+              '/welcome': (context) => const WelcomePage(),
+              '/login': (context) => const LoginPage(),
+              '/signup': (context) => const SignUpPage(),
+              '/home': (context) => const HomePage(),
+              '/sukses': (context) => const SuccessfulPage(),
+              '/forgetPass': (context) => const ForgotPasswordPage(),
+              '/newPass': (context) => const NewPasswordPage(),
+              '/category': (context) => const CategoryView(),
+              '/surat_kuasa': (context) => const SuratKuasaView(),
+              '/takeaphoto': (context) => const TakeAPhotoPage(),
+              '/addletter': (context) => const AddLetterPage(imagePaths: [],),
+            },
+          );
         },
       ),
     );

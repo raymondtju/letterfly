@@ -107,7 +107,7 @@ void _showOTPMenu(BuildContext context) {
     builder: (BuildContext context) {
       return Container(
         height: 450,
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(),
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: Column(
@@ -264,15 +264,24 @@ void _showOTPMenu(BuildContext context) {
                           print("OTP matched, navigating to '/newPass'");
                           Navigator.pushNamed(context, "/newPass");
                         } else {
-                          print("OTP did not match.");
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('OTP Code do not match.'),
-                              duration: Duration(seconds: 2),
-                            ),
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('Error'),
+                                content: Text('OTP code didn\'t match.'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('OK'),
+                                  ),
+                                ],
+                              );
+                            },
                           );
                         }
-
                       },
                       style: OutlinedButton.styleFrom(
                           minimumSize: const Size(300, 50),

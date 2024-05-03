@@ -1,12 +1,49 @@
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<LetterFlyProvider>(context);
+
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        automaticallyImplyLeading: false,
+        title: Row(
+          children: [
+            SvgPicture.asset(
+              'assets/logo/Logo.svg',
+              height: 25,
+              color: Colors.white,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text(
+              'Letterfly',
+              style: TextStyle(
+                  fontFamily: "SF",
+                  letterSpacing: -1,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  fontSize: 24),
+            ),
+          ],
+        ),
+        actions: [
+          Switch(
+            value: prov.switchThemeto, 
+            onChanged: (val) {
+              prov.setSwitchThemeto = val;
+            }
+          ),
+        ],
+      ),
       backgroundColor: Colors.black,
       body: Column(
         children: [
@@ -20,39 +57,18 @@ class HomePage extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/logo/Logo.svg',
-                              height: 25,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              'Letterfly',
-                              style: TextStyle(
-                                  fontFamily: "SF",
-                                  letterSpacing: -1,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: 24),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20,),
                         Container(
                           color: Colors.white,
                           width: 300,
                           child: TextField(
                             autofocus: false,
                             style: TextStyle(
-                                fontSize: 22.0, color: Color(0xFFbdc6cf)),
+                                fontSize: 22.0, color: Colors.black),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
                               hintText: 'Search category or letter title',
+                              hintStyle: TextStyle(color: Colors.black),
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 8.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
