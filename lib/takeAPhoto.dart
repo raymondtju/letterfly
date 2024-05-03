@@ -1,5 +1,5 @@
-import 'package:Letterfly/addletters.dart';
-import 'package:Letterfly/provider/providerPhoto.dart';
+import 'package:Letterfly/addletter.dart';
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
@@ -36,7 +36,7 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<ProviderPhoto>(context);
+    final prov = Provider.of<LetterFlyProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.black,

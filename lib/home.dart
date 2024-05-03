@@ -1,16 +1,14 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: ListView(
+      body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(20),
@@ -43,33 +41,30 @@ class HomePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Row(
-                          children: [
-                            Container(
-                              color: Colors.white,
-                              width: 300,
-                              child: TextField(
-                                autofocus: false,
-                                style: TextStyle(
-                                    fontSize: 22.0, color: Color(0xFFbdc6cf)),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hintText: 'Username',
-                                  contentPadding: const EdgeInsets.only(
-                                      left: 14.0, bottom: 8.0, top: 8.0),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(25.7),
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(25.7),
-                                  ),
-                                ),
+                        SizedBox(height: 20,),
+                        Container(
+                          color: Colors.white,
+                          width: 300,
+                          child: TextField(
+                            autofocus: false,
+                            style: TextStyle(
+                                fontSize: 22.0, color: Color(0xFFbdc6cf)),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.white,
+                              hintText: 'Search category or letter title',
+                              contentPadding: const EdgeInsets.only(
+                                  left: 14.0, bottom: 8.0, top: 8.0),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
                               ),
                             ),
-                          ],
+                          ),
                         ),
                         SizedBox(
                           height: 25,
@@ -81,7 +76,7 @@ class HomePage extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () {
-                                    Navigator.pushNamed(context, "/takeaphoto");
+                                    Navigator.pushNamed(context, "/addletter");
                                   },
                                   icon: Icon(
                                     Icons.add_box_rounded,
@@ -91,7 +86,7 @@ class HomePage extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  "New Letter",
+                                  "Add Letter",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
@@ -183,28 +178,30 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Column(
-                      children: List.generate(
-                        20,
-                        (index) => ListTile(
-                          // onTap: () {},
-                          contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                          leading: Container(
-                            height: 40,
-                            width: 40,
-                            color: Colors.grey,
-                          ),
-                          title: Text("011/200/0334AB"),
-                          subtitle: Text("Surat Keputusan / Div. Adm / 1 File"),
-                          trailing: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: const [
-                              Text("02/04/2024"),
-                              Text("2 hari yang lalu")
-                            ],
-                          ),
-                        ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            // onTap: () {},
+                            contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                            leading: Container(
+                              height: 40,
+                              width: 40,
+                              color: Colors.grey,
+                            ),
+                            title: Text("011/200/0334AB"),
+                            subtitle: Text("Surat Keputusan / Div. Adm / 1 File"),
+                            trailing: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: const [
+                                Text("02/04/2024"),
+                                Text("2 hari yang lalu")
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 
-void showSignatureDialog(BuildContext context) {
-  showDialog(
+Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signatureKey) async {
+  return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
@@ -18,6 +18,7 @@ void showSignatureDialog(BuildContext context) {
             children: [
               Expanded(
                 child: Signature(
+                  key: signatureKey,
                   strokeWidth: 2.0,
                 ),
               ),
@@ -33,8 +34,9 @@ void showSignatureDialog(BuildContext context) {
           ),
           TextButton(
             child: Text('Save'),
-            onPressed: () {
-              Navigator.of(context).pop();
+            onPressed: () async {
+              var data = await signatureKey.currentState?.getData();
+              Navigator.of(context).pop(data);
             },
           ),
         ],
@@ -58,6 +60,9 @@ class AddLetterPageState extends State<AddLetterPage> {
   String selectedDivision = 'No Division';
   List <String> itemsCategory = ['Uncathegorized','A', 'B', 'C'];
   List <String> itemsDivision = ['No Division','A', 'B', 'C'];
+  String data = '';
+
+  final signatureKey = GlobalKey<SignatureState>();
 
   AddLetterPageState({required this.imagePaths});
 
@@ -85,39 +90,40 @@ class AddLetterPageState extends State<AddLetterPage> {
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for (var imagePath in imagePaths)
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                child: Image.network(imagePath, width: 150, height: 150),
-                              ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context, "/takeaphoto");
-                              },
-                              child: Container(
-                                width: 85,
-                                height: 85,
-                                color: Colors.grey[300],
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.description),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      'Add Letter',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Row(
+                            children: [
+                              for (var imagePath in imagePaths)
+                                Image.network(imagePath, fit: BoxFit.cover, width: 85, height: 85),
+                                SizedBox(width: 10,),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushNamed(context, "/takeaphoto");
+                                },
+                                child: Container(
+                                  width: 85,
+                                  height: 85,
+                                  color: Colors.grey[300],
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.description),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        'Add Photo',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -170,7 +176,9 @@ class AddLetterPageState extends State<AddLetterPage> {
                               setState(() {
                                 selectedCategory = val.toString();
                               });
-                            }
+                            },
+                            underline: Container(),
+                            focusColor: Colors.white,
                           ),
                         ),
                       ),
@@ -198,7 +206,9 @@ class AddLetterPageState extends State<AddLetterPage> {
                               setState(() {
                                 selectedDivision = val.toString();
                               });
-                            }
+                            },
+                            underline: Container(),
+                            focusColor: Colors.white,
                           ),
                         ),
                       ),
@@ -218,14 +228,15 @@ class AddLetterPageState extends State<AddLetterPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
-                    onTap: () {
-                      showSignatureDialog(context);
+                    onTap: () async {
+                      data = await showSignatureDialog(context, signatureKey);
                     },
                     child: Container(
                       color: Colors.grey[300],
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Image.network(data),
                           Icon(Icons.create),
                           SizedBox(height: 5),
                           Text(

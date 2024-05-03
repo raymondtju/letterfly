@@ -1,11 +1,11 @@
-import 'package:Letterfly/addletters.dart';
+import 'package:Letterfly/addletter.dart';
 import 'package:Letterfly/category/category_view.dart';
 import 'package:Letterfly/category/suratkuasa_view.dart';
+import 'package:Letterfly/editletter.dart';
 import 'package:Letterfly/forgotPassword.dart';
 import 'package:Letterfly/home.dart';
 import 'package:Letterfly/login.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
-import 'package:Letterfly/provider/providerPhoto.dart';
 import 'package:Letterfly/signup.dart';
 import 'package:Letterfly/successful.dart';
 import 'package:Letterfly/takeAPhoto.dart';
@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LetterFlyProvider()),
-        ChangeNotifierProvider(create: (_) => ProviderPhoto()),
       ],
       child: MaterialApp(
         initialRoute: "/welcome",
@@ -38,6 +37,7 @@ class MyApp extends StatelessWidget {
           '/surat_kuasa': (context) => const SuratKuasaView(),
           '/takeaphoto': (context) => const TakeAPhotoPage(),
           '/addletter': (context) => const AddLetterPage(imagePaths: [],),
+          '/editletter': (context) => const EditLetterPage(imagePaths: [],),
         },
       ),
     );

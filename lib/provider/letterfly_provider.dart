@@ -30,4 +30,18 @@ class LetterFlyProvider with ChangeNotifier {
     _CategoryViewIsGrid = val;
     notifyListeners();
   }
+
+  List<String> TempPhoto = [];
+
+  void addPhoto(String value) {
+    TempPhoto.add(value);
+    notifyListeners();
+  }
+
+  String? TempSignature;
+
+  void addSignature(String value) {
+    TempSignature = value;
+    notifyListeners();
+  }
 }
