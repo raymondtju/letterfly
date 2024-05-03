@@ -86,7 +86,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black)
+                        border: Border.all(color: Colors.grey)
                       ),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
@@ -223,13 +223,14 @@ class AddLetterPageState extends State<AddLetterPage> {
                 width: 100,
                 height: 100,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
+                  border: Border.all(color: Colors.grey),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: InkWell(
                     onTap: () async {
-                      data = await showSignatureDialog(context, signatureKey);
+                      showSignatureDialog(context, signatureKey);
+                      // data = await showSignatureDialog(context, signatureKey);
                     },
                     child: Container(
                       color: Colors.grey[300],

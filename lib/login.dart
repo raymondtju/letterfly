@@ -118,7 +118,6 @@ class _MyWidgetState extends State<MyWidget> {
                         },
                         child: const Text(
                           'Forgot Password!',
-                          style: TextStyle(color: Colors.black),
                         )),
                   ],
                 )

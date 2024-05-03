@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 class LetterFlyProvider with ChangeNotifier {
   String _Username = '';
@@ -44,4 +45,20 @@ class LetterFlyProvider with ChangeNotifier {
     TempSignature = value;
     notifyListeners();
   }
+
+  String? _otp;
+  String? get otp => _otp;
+
+  set setOTP(String? value) {
+    _otp = value;
+    notifyListeners();
+  }
+
+  bool _switchThemeto = false;
+  bool get switchThemeto => _switchThemeto;
+  set setSwitchThemeto(bool val) {
+    _switchThemeto = val;
+    notifyListeners();
+  }
 }
+  
