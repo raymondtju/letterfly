@@ -44,4 +44,13 @@ class LetterFlyProvider with ChangeNotifier {
     TempSignature = value;
     notifyListeners();
   }
+
+  String? _otp;
+  String? get otp => _otp;
+
+  set setOTP(String? value) {
+    _otp = value;
+    notifyListeners();
+  }
 }
+  
