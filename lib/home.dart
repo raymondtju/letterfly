@@ -10,45 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
-
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              'assets/logo/Logo.svg',
-                              height: 25,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              'Letterfly',
-                              style: TextStyle(
-                                  fontFamily: "SF",
-                                  letterSpacing: -1,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white,
-                                  fontSize: 24),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
       appBar: AppBar(
         backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
@@ -75,11 +37,10 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           Switch(
-            value: prov.switchThemeto, 
-            onChanged: (val) {
-              prov.setSwitchThemeto = val;
-            }
-          ),
+              value: prov.switchThemeto,
+              onChanged: (val) {
+                prov.setSwitchThemeto = val;
+              }),
         ],
       ),
       backgroundColor: Colors.black,
@@ -102,13 +63,10 @@ class HomePage extends StatelessWidget {
                             autofocus: false,
                             style: const TextStyle(
                                 fontSize: 22.0, color: Color(0xFFbdc6cf)),
-                            style: TextStyle(
-                                fontSize: 22.0, color: Colors.black),
                             decoration: InputDecoration(
                               filled: true,
                               fillColor: Colors.white,
                               hintText: 'Search category or letter title',
-                              hintStyle: TextStyle(color: Colors.black),
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 8.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
