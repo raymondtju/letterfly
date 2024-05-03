@@ -1,8 +1,9 @@
+import 'package:Letterfly/components/textstylefont.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +42,15 @@ class HomePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Container(
                           color: Colors.white,
                           width: 300,
                           child: TextField(
                             autofocus: false,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 22.0, color: Color(0xFFbdc6cf)),
                             decoration: InputDecoration(
                               filled: true,
@@ -56,17 +59,19 @@ class HomePage extends StatelessWidget {
                               contentPadding: const EdgeInsets.only(
                                   left: 14.0, bottom: 8.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(25.7),
                               ),
                               enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.white),
+                                borderSide:
+                                    const BorderSide(color: Colors.white),
                                 borderRadius: BorderRadius.circular(25.7),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 25,
                         ),
                         Row(
@@ -78,14 +83,14 @@ class HomePage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pushNamed(context, "/addletter");
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.add_box_rounded,
                                     size: 45,
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                Text(
+                                const SizedBox(height: 10),
+                                const Text(
                                   "Add Letter",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -94,7 +99,7 @@ class HomePage extends StatelessWidget {
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
@@ -104,14 +109,14 @@ class HomePage extends StatelessWidget {
                                   onPressed: () {
                                     Navigator.pushNamed(context, "/category");
                                   },
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.category_rounded,
                                     size: 45,
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                Text(
+                                const SizedBox(height: 10),
+                                const Text(
                                   "Category",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -120,7 +125,7 @@ class HomePage extends StatelessWidget {
                                 )
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             Column(
@@ -128,14 +133,14 @@ class HomePage extends StatelessWidget {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.settings_rounded,
                                     size: 45,
                                     color: Colors.white,
                                   ),
                                 ),
-                                SizedBox(height: 10),
-                                Text(
+                                const SizedBox(height: 10),
+                                const Text(
                                   "Settings",
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
@@ -158,23 +163,58 @@ class HomePage extends StatelessWidget {
               color: Colors.white,
               width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
+                        const Text(
                           "Recents",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 20),
+                          style: subheadlineStyle,
                         ),
                         TextButton(
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             "View All",
                             style: TextStyle(color: Colors.black),
                           ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: [
+                        ChoiceChip(
+                          labelPadding:
+                              const EdgeInsets.symmetric(horizontal: 15),
+                          label: const Text(
+                            "Surat Kuasa",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          side: const BorderSide(color: Colors.black, width: 1),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0)),
+                          selected: false,
+                        ),
+                        const SizedBox(width: 10),
+                        ChoiceChip(
+                          labelPadding:
+                              const EdgeInsets.symmetric(horizontal: 15),
+                          label: const Text(
+                            "Surat Ajaib",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          side: const BorderSide(color: Colors.black, width: 1),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0)),
+                          selected: false,
                         ),
                       ],
                     ),
@@ -184,18 +224,20 @@ class HomePage extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return ListTile(
                             // onTap: () {},
-                            contentPadding: EdgeInsets.fromLTRB(5, 5, 5, 0),
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(5, 5, 5, 0),
                             leading: Container(
                               height: 40,
                               width: 40,
                               color: Colors.grey,
                             ),
-                            title: Text("011/200/0334AB"),
-                            subtitle: Text("Surat Keputusan / Div. Adm / 1 File"),
-                            trailing: Column(
+                            title: const Text("011/200/0334AB"),
+                            subtitle: const Text(
+                                "Surat Keputusan / Div. Adm / 1 File"),
+                            trailing: const Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
-                              children: const [
+                              children: [
                                 Text("02/04/2024"),
                                 Text("2 hari yang lalu")
                               ],
