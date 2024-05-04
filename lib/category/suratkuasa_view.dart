@@ -65,19 +65,21 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
           child: TextField(
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(0),
-              hintText: 'Search category or letter title',
+              hintText: 'Search category',
               hintStyle: TextStyle(color: Colors.grey[400]),
-              prefixIcon: const Padding(
-                padding: EdgeInsets.only(left: 10.0),
-                child: Icon(
-                  Icons.search,
-                  color: Colors.grey,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Icon(
+                    Icons.search,
+                    size: 30,
+                    color: Colors.grey[400],
+                  ),
                 ),
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                ),
+                borderSide: const BorderSide(color: Colors.grey, width: 1.5),
                 borderRadius: BorderRadius.circular(0),
               ),
               focusedBorder: OutlineInputBorder(
@@ -130,12 +132,6 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
                 onTap: () {},
                 child: Row(
                   children: [
-                    // Container(
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.grey[200],
-                    //     borderRadius: BorderRadius.circular(0),
-                    //   ),
-                    // ),
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[200],

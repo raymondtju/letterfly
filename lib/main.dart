@@ -1,6 +1,7 @@
 import 'package:Letterfly/addletter.dart';
 import 'package:Letterfly/category/category_view.dart';
 import 'package:Letterfly/category/suratkuasa_view.dart';
+import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/forgotPassword.dart';
 import 'package:Letterfly/home.dart';
 import 'package:Letterfly/login.dart';
@@ -13,12 +14,10 @@ import 'package:Letterfly/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-main() => runApp(
-  MyApp()
-);
+main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +28,12 @@ class MyApp extends StatelessWidget {
       child: Consumer<LetterFlyProvider>(
         builder: (context, prov, child) {
           return MaterialApp(
-            theme: ThemeData(
-              brightness: prov.switchThemeto ? Brightness.dark : Brightness.light,
-              primarySwatch: Colors.amber
-            ),
+            themeMode: ThemeMode.light,
+            theme: GlobalThemeData().lightThemeData,
+            // theme: ThemeData(
+            //   brightness: prov.switchThemeto ? Brightness.dark : Brightness.light,
+            //   primarySwatch: Colors.amber
+            // ),
             initialRoute: "/welcome",
             routes: {
               '/welcome': (context) => const WelcomePage(),
@@ -45,7 +46,9 @@ class MyApp extends StatelessWidget {
               '/category': (context) => const CategoryView(),
               '/surat_kuasa': (context) => const SuratKuasaView(),
               '/takeaphoto': (context) => const TakeAPhotoPage(),
-              '/addletter': (context) => const AddLetterPage(imagePaths: [],),
+              '/addletter': (context) => const AddLetterPage(
+                    imagePaths: [],
+                  ),
             },
           );
         },
