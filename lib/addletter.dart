@@ -272,7 +272,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ),
                 child: TextButton( 
                   onPressed: () {
-          
+                    Navigator.pushNamed(context, "/sukses");
                   },
                   child: Text(
                     'Add Letter',

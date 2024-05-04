@@ -74,7 +74,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
               const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/home');
                 },
                 style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
