@@ -1,3 +1,4 @@
+import 'package:Letterfly/components/letteritem.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -60,5 +61,11 @@ class LetterFlyProvider with ChangeNotifier {
     _switchThemeto = val;
     notifyListeners();
   }
+
+  List<Letter> _letters = [];
+  List get Letters => _letters;
+  void setLetters(Letter letter) {
+    _letters.add(letter);
+    notifyListeners();
+  }
 }
-  

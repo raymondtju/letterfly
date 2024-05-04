@@ -1,5 +1,11 @@
+import 'dart:convert';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:Letterfly/components/letteritem.dart';
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
+import 'package:provider/provider.dart';
 
 Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signatureKey) async {
   return showDialog(
@@ -9,7 +15,7 @@ Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signat
         contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         title: Text('Autograph', style: TextStyle(fontWeight: FontWeight.bold),),
         content: Container(
-          width: 1000,
+          width: 400,
           height: 250,
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey)
@@ -36,6 +42,7 @@ Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signat
             child: Text('Save'),
             onPressed: () async {
               var data = await signatureKey.currentState?.getData();
+              print(data);
               Navigator.of(context).pop(data);
             },
           ),
@@ -60,7 +67,12 @@ class AddLetterPageState extends State<AddLetterPage> {
   String selectedDivision = 'No Division';
   List <String> itemsCategory = ['Uncathegorized','A', 'B', 'C'];
   List <String> itemsDivision = ['No Division','A', 'B', 'C'];
-  String data = '';
+  Uint8List? signImage;
+
+  TextEditingController letternumberController = TextEditingController();
+  TextEditingController datepublishedController = TextEditingController();
+  TextEditingController signatureimageController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   final signatureKey = GlobalKey<SignatureState>();
 
@@ -133,7 +145,8 @@ class AddLetterPageState extends State<AddLetterPage> {
               SizedBox(height: 10),
               const Text('Letter Number', style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
-              const TextField(
+              TextField(
+                controller: letternumberController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'e.g Order/Code1/Code2/Month/Year',
@@ -143,6 +156,7 @@ class AddLetterPageState extends State<AddLetterPage> {
               const Text('Date Published', style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 10),
               TextField(
+                controller: datepublishedController,
                 keyboardType: TextInputType.datetime,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -219,40 +233,63 @@ class AddLetterPageState extends State<AddLetterPage> {
               SizedBox(height: 10,),
               const Text('Add E-Signature', style: TextStyle(fontWeight: FontWeight.bold)),
               SizedBox(height: 10,),
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: InkWell(
-                    onTap: () async {
-                      showSignatureDialog(context, signatureKey);
-                      // data = await showSignatureDialog(context, signatureKey);
-                    },
-                    child: Container(
-                      color: Colors.grey[300],
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.network(data),
-                          Icon(Icons.create),
-                          SizedBox(height: 5),
-                          Text(
-                            'Add Sign',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                            ),
+              Row(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () async {
+                          var data2 = await showSignatureDialog(context, signatureKey);
+                          data2 = await data2.toByteData(format: ui.ImageByteFormat.png);
+                          final encoded = base64.encode(data2.buffer.asUint8List());
+                  
+                          setState(() {
+                            signImage = base64.decode(encoded);
+                          });
+                        },
+                        child: Container(
+                          color: Colors.grey[300],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.create),
+                              SizedBox(height: 5),
+                              Text(
+                                'Add Sign',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+              SizedBox(width: 20,),
+              signImage != null ?
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey)
+                  ),
+                  child: Image.memory(
+                        signImage!,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      )
+                ) : Container(),
+                ],
               ),
               SizedBox(height: 10,),
               const Text('Description', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -272,6 +309,16 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ),
                 child: TextButton( 
                   onPressed: () {
+                    final letter = Letter(
+                      imagePaths: imagePaths, 
+                      letterNumber: letternumberController.text, 
+                      datePublished: datepublishedController.text, 
+                      category: selectedCategory, 
+                      division: selectedDivision, 
+                      signatureImage: signImage, 
+                      description: descriptionController.text
+                    );
+                    Provider.of<LetterFlyProvider>(context, listen: false).setLetters(letter);
                     Navigator.pushNamed(context, "/sukses");
                   },
                   child: Text(
