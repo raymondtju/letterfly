@@ -302,11 +302,92 @@ class AddLetterPageState extends State<AddLetterPage> {
               const SizedBox(
                 height: 10,
               ),
-              Row(
+              // Stack(
+              //   children: [
+              //     Container(
+              //       width: 120,
+              //       height: 120,
+              //       decoration: BoxDecoration(
+              //         border: Border.all(color: Colors.grey),
+              //       ),
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(12.0),
+              //         child: InkWell(
+              //           onTap: () async {
+              //             var data2 =
+              //                 await showSignatureDialog(context, signatureKey);
+              //             data2 = await data2.toByteData(
+              //                 format: ui.ImageByteFormat.png);
+              //             final encoded =
+              //                 base64.encode(data2.buffer.asUint8List());
+
+              //             setState(() {
+              //               signImage = base64.decode(encoded);
+              //             });
+              //           },
+              //           child: Container(
+              //             color: Colors.grey[300],
+              //             child: const Column(
+              //               mainAxisAlignment: MainAxisAlignment.center,
+              //               children: [
+              //                 Icon(
+              //                   Icons.edit,
+              //                   size: 16,
+              //                 ),
+              //                 SizedBox(height: 5),
+              //                 Text(
+              //                   'Add Sign',
+              //                   textAlign: TextAlign.center,
+              //                   style: TextStyle(
+              //                     fontSize: 10,
+              //                     color: Colors.black,
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     // const SizedBox(
+              //     //   width: 20,
+              //     // ),
+              //     // signImage != null
+              //     //     ? Container(
+              //     //         width: 100,
+              //     //         height: 100,
+              //     //         decoration: BoxDecoration(
+              //     //             border: Border.all(color: Colors.grey)),
+              //     //         child: Image.memory(
+              //     //           signImage!,
+              //     //           width: 100,
+              //     //           height: 100,
+              //     //           fit: BoxFit.cover,
+              //     //         ))
+              //     //     : Container(),
+              //     Align(
+              //       alignment: Alignment.bottomRight,
+              //       child: signImage != null
+              //           ? Container(
+              //               width: 100,
+              //               height: 100,
+              //               decoration: BoxDecoration(
+              //                   border: Border.all(color: Colors.grey)),
+              //               child: Image.memory(
+              //                 signImage!,
+              //                 width: 100,
+              //                 height: 100,
+              //                 fit: BoxFit.cover,
+              //               ))
+              //           : Container(),
+              //     )
+              //   ],
+              // ),
+              Stack(
                 children: [
                   Container(
-                    width: 120,
-                    height: 120,
+                    width: 160,
+                    height: 160,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                     ),
@@ -316,55 +397,89 @@ class AddLetterPageState extends State<AddLetterPage> {
                         onTap: () async {
                           var data2 =
                               await showSignatureDialog(context, signatureKey);
-                          data2 = await data2.toByteData(
-                              format: ui.ImageByteFormat.png);
-                          final encoded =
-                              base64.encode(data2.buffer.asUint8List());
-
-                          setState(() {
-                            signImage = base64.decode(encoded);
-                          });
+                          if (data2 != null) {
+                            data2 = await data2.toByteData(
+                                format: ui.ImageByteFormat.png);
+                            final encoded =
+                                base64.encode(data2.buffer.asUint8List());
+                            setState(() {
+                              signImage = base64.decode(encoded);
+                            });
+                          }
                         },
-                        child: Container(
-                          color: Colors.grey[300],
-                          child: const Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.edit,
-                                size: 16,
-                              ),
-                              SizedBox(height: 5),
-                              Text(
-                                'Add Sign',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.black,
+                        child: signImage != null
+                            ? Container(
+                                color: Colors.grey[300],
+                                child: Image.memory(
+                                  signImage!,
+                                  width: double.infinity,
+                                  height: double.infinity,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Container(
+                                color: Colors.grey[300],
+                                child: const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.edit,
+                                      size: 24,
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      'Add Sign',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: -4,
+                    right: -4,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(40, 42, 45, 1),
+                          borderRadius: BorderRadius.circular(0),
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     color: Colors.black.withOpacity(0.5),
+                          //     spreadRadius: 1,
+                          //     blurRadius: 3,
+                          //     offset: const Offset(0, 3),
+                          //   ),
+                          // ],
+                        ),
+                        child: IconButton(
+                          onPressed: () async {
+                            var data2 = await showSignatureDialog(
+                                context, signatureKey);
+                            if (data2 != null) {
+                              data2 = await data2.toByteData(
+                                  format: ui.ImageByteFormat.png);
+                              final encoded =
+                                  base64.encode(data2.buffer.asUint8List());
+                              setState(() {
+                                signImage = base64.decode(encoded);
+                              });
+                            }
+                          },
+                          icon: const Icon(Icons.edit),
+                          iconSize: 24,
+                          color: Colors.grey[200],
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  signImage != null
-                      ? Container(
-                          width: 100,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey)),
-                          child: Image.memory(
-                            signImage!,
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
-                          ))
-                      : Container(),
                 ],
               ),
               const SizedBox(
