@@ -19,6 +19,12 @@ class _CategoryViewState extends State<CategoryView> {
     final prov = Provider.of<LetterFlyProvider>(context);
     return Scaffold(
         appBar: AppBar(
+          titleSpacing: 0,
+          leading: BackButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           title: const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [

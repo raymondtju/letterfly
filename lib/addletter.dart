@@ -2,24 +2,34 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
+import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:provider/provider.dart';
 
-Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signatureKey) async {
+Future showSignatureDialog(
+    BuildContext context, GlobalKey<SignatureState> signatureKey) async {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        title: Text('Autograph', style: TextStyle(fontWeight: FontWeight.bold),),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(0))),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        title: const Text(
+          'Autograph',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         content: Container(
           width: 400,
           height: 250,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey)
-          ),
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
           child: Column(
             children: [
               Expanded(
@@ -32,19 +42,28 @@ Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signat
           ),
         ),
         actions: <Widget>[
-          TextButton(
-            child: Text('Cancel'),
+          OutlinedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(0)))),
             onPressed: () {
-              Navigator.of(context).pop();
+              signatureKey.currentState?.clear();
             },
+            child: const Text('Reset'),
           ),
-          TextButton(
-            child: Text('Save'),
-            onPressed: () async {
-              var data = await signatureKey.currentState?.getData();
-              print(data);
-              Navigator.of(context).pop(data);
-            },
+          Container(
+            color: const Color.fromRGBO(40, 42, 45, 1),
+            child: OutlinedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0)))),
+              child: const Text('Save',
+                  style: TextStyle(color: Color.fromRGBO(249, 249, 249, 1))),
+              onPressed: () async {
+                var data = await signatureKey.currentState?.getData();
+                Navigator.of(context).pop(data);
+              },
+            ),
           ),
         ],
       );
@@ -55,18 +74,19 @@ Future showSignatureDialog(BuildContext context, GlobalKey<SignatureState>signat
 class AddLetterPage extends StatefulWidget {
   final List<String> imagePaths;
 
-  const AddLetterPage({Key? key, required this.imagePaths}) : super(key: key);
+  const AddLetterPage({super.key, required this.imagePaths});
 
   @override
-  State<AddLetterPage> createState() => AddLetterPageState(imagePaths: imagePaths);
+  State<AddLetterPage> createState() =>
+      AddLetterPageState(imagePaths: imagePaths);
 }
 
 class AddLetterPageState extends State<AddLetterPage> {
-  final List<String> imagePaths; 
+  final List<String> imagePaths;
   String selectedCategory = 'Surat Kuasa';
   String selectedDivision = 'IT';
-  List <String> itemsCategory = ['Surat Kuasa','Surat Ajaib'];
-  List <String> itemsDivision = ['IT','ADMN', 'LOG', 'FO'];
+  List<String> itemsCategory = ['Surat Kuasa', 'Surat Ajaib'];
+  List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
   TextEditingController letternumberController = TextEditingController();
@@ -82,7 +102,18 @@ class AddLetterPageState extends State<AddLetterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Letter'),
+        titleSpacing: 0,
+        leading: BackButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text('Add Letter', style: subheadlineStyle),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -91,42 +122,60 @@ class AddLetterPageState extends State<AddLetterPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Letter Media', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
+              const Text(
+                'Letter Media',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey)
-                      ),
+                      height: 120,
+                      decoration:
+                          BoxDecoration(border: Border.all(color: Colors.grey)),
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Padding(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(5),
                           child: Row(
                             children: [
                               for (var imagePath in imagePaths)
-                                Image.network(imagePath, fit: BoxFit.cover, width: 85, height: 85),
-                                SizedBox(width: 10,),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: SizedBox(
+                                    width: 88,
+                                    height: 88,
+                                    child: Image.network(
+                                      imagePath,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushNamed(context, "/takeaphoto");
                                 },
                                 child: Container(
-                                  width: 85,
-                                  height: 85,
+                                  width: 88,
+                                  height: 88,
                                   color: Colors.grey[300],
-                                  child: Column(
+                                  child: const Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.description),
-                                      SizedBox(height: 5),
+                                      Icon(
+                                        Icons.description_sharp,
+                                        size: 16,
+                                      ),
+                                      SizedBox(height: 4),
                                       Text(
-                                        'Add Photo',
+                                        'Add Letter',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
-                                          fontSize: 12,
+                                          fontSize: 10,
                                           color: Colors.black,
                                         ),
                                       ),
@@ -142,49 +191,60 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
-              const Text('Letter Number', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
+              const SizedBox(height: 20),
+              const Text('Letter Number',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
               TextField(
                 controller: letternumberController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(0)),
+                  ),
                   hintText: 'e.g Order/Code1/Code2/Month/Year',
                 ),
               ),
-              SizedBox(height: 10),
-              const Text('Date Published', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
+              const SizedBox(height: 20),
+              const Text('Date Published',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
               TextField(
                 controller: datepublishedController,
                 keyboardType: TextInputType.datetime,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'dd/mm/yyyy',
-                  suffixIcon: Icon(Icons.calendar_today)
-                ),
+                decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.grey),
+                      borderRadius: BorderRadius.all(Radius.circular(0)),
+                    ),
+                    hintText: 'dd/mm/yyyy',
+                    suffixIcon: Icon(Icons.calendar_today_sharp)),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Category', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text('Category',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
                       Container(
+                        width: MediaQuery.of(context).size.width * 0.44,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
+                            border: Border.all(color: Colors.grey)),
+                        child: ButtonTheme(
+                          alignedDropdown: true,
                           child: DropdownButton(
-                            items: itemsCategory.map((e) { 
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            isExpanded: true,
+                            items: itemsCategory.map((e) {
                               return DropdownMenuItem(
-                                child: Text(e),
                                 value: e,
+                                child: Text(e),
                               );
-                            }).toList(), 
+                            }).toList(),
                             value: selectedCategory,
                             onChanged: (val) {
                               setState(() {
@@ -201,20 +261,24 @@ class AddLetterPageState extends State<AddLetterPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Division', style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text('Division',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 10),
                       Container(
+                        width: MediaQuery.of(context).size.width * 0.44,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black)
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
+                            border: Border.all(color: Colors.grey)),
+                        child: ButtonTheme(
+                          alignedDropdown: true,
                           child: DropdownButton(
-                            items: itemsDivision.map((e) { 
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            isExpanded: true,
+                            items: itemsDivision.map((e) {
                               return DropdownMenuItem(
-                                child: Text(e),
                                 value: e,
+                                child: Text(e),
                               );
-                            }).toList(), 
+                            }).toList(),
                             value: selectedDivision,
                             onChanged: (val) {
                               setState(() {
@@ -230,41 +294,52 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
-              const Text('Add E-Signature', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 20,
+              ),
+              const Text('Add E-Signature',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 120,
+                    height: 120,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(12.0),
                       child: InkWell(
                         onTap: () async {
-                          var data2 = await showSignatureDialog(context, signatureKey);
-                          data2 = await data2.toByteData(format: ui.ImageByteFormat.png);
-                          final encoded = base64.encode(data2.buffer.asUint8List());
-                  
+                          var data2 =
+                              await showSignatureDialog(context, signatureKey);
+                          data2 = await data2.toByteData(
+                              format: ui.ImageByteFormat.png);
+                          final encoded =
+                              base64.encode(data2.buffer.asUint8List());
+
                           setState(() {
                             signImage = base64.decode(encoded);
                           });
                         },
                         child: Container(
                           color: Colors.grey[300],
-                          child: Column(
+                          child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.create),
+                              Icon(
+                                Icons.edit,
+                                size: 16,
+                              ),
                               SizedBox(height: 5),
                               Text(
                                 'Add Sign',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  fontSize: 12,
+                                  fontSize: 10,
                                   color: Colors.black,
                                 ),
                               ),
@@ -274,58 +349,83 @@ class AddLetterPageState extends State<AddLetterPage> {
                       ),
                     ),
                   ),
-              SizedBox(width: 20,),
-              signImage != null ?
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey)
+                  const SizedBox(
+                    width: 20,
                   ),
-                  child: Image.memory(
-                        signImage!,
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      )
-                ) : Container(),
+                  signImage != null
+                      ? Container(
+                          width: 100,
+                          height: 100,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.grey)),
+                          child: Image.memory(
+                            signImage!,
+                            width: 100,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          ))
+                      : Container(),
                 ],
               ),
-              SizedBox(height: 10,),
-              const Text('Description', style: TextStyle(fontWeight: FontWeight.bold)),
-              SizedBox(height: 10,),
-              TextField(
-                maxLines: null, 
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Write Detail Description',
+              const SizedBox(
+                height: 10,
+              ),
+              const Text('Description',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(0)),
+                height: 160,
+                // width: 200,
+                child: const Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  child: SingleChildScrollView(
+                    child: TextField(
+                      // expands: true,
+                      maxLines: null,
+                      keyboardType: TextInputType.multiline,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Write Detail Description',
+                      ),
+                    ),
+                  ),
                 ),
               ),
-              SizedBox(height: 30,),
-              Container(
-                width: double.infinity, 
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                ),
-                child: TextButton( 
+              const SizedBox(
+                height: 30,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      )),
                   onPressed: () {
                     final letter = Letter(
-                      imagePaths: imagePaths, 
-                      letterNumber: letternumberController.text, 
-                      datePublished: datepublishedController.text, 
-                      category: selectedCategory, 
-                      division: selectedDivision, 
-                      signatureImage: signImage, 
-                      description: descriptionController.text
-                    );
-                    Provider.of<LetterFlyProvider>(context, listen: false).setLetters(letter);
+                        imagePaths: imagePaths,
+                        letterNumber: letternumberController.text,
+                        datePublished: datepublishedController.text,
+                        category: selectedCategory,
+                        division: selectedDivision,
+                        signatureImage: signImage,
+                        description: descriptionController.text);
+                    Provider.of<LetterFlyProvider>(context, listen: false)
+                        .setLetters(letter);
                     // Provider.of<LetterFlyProvider>(context, listen: false).clearTempPhoto();
                     Navigator.pushNamed(context, "/sukses");
                   },
-                  child: Text(
+                  child: const Text(
                     'Add Letter',
                     style: TextStyle(color: Colors.white, fontSize: 16),
-                    
                   ),
                 ),
               ),
