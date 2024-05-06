@@ -68,4 +68,9 @@ class LetterFlyProvider with ChangeNotifier {
     _letters.add(letter);
     notifyListeners();
   }
+
+  void clearTempPhoto() {
+  TempPhoto.clear();
+  notifyListeners();
+}
 }

@@ -58,7 +58,6 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
           if (_controller.value.isInitialized) {
             try {
               final image = await _controller.takePicture();
-              print(image.path);
               prov.addPhoto(image.path);
               Navigator.push(
                 context,

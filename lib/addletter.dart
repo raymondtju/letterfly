@@ -63,10 +63,10 @@ class AddLetterPage extends StatefulWidget {
 
 class AddLetterPageState extends State<AddLetterPage> {
   final List<String> imagePaths; 
-  String selectedCategory = 'Uncathegorized';
-  String selectedDivision = 'No Division';
-  List <String> itemsCategory = ['Uncathegorized','A', 'B', 'C'];
-  List <String> itemsDivision = ['No Division','A', 'B', 'C'];
+  String selectedCategory = 'Surat Kuasa';
+  String selectedDivision = 'IT';
+  List <String> itemsCategory = ['Surat Kuasa','Surat Ajaib'];
+  List <String> itemsDivision = ['IT','ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
   TextEditingController letternumberController = TextEditingController();
@@ -319,11 +319,13 @@ class AddLetterPageState extends State<AddLetterPage> {
                       description: descriptionController.text
                     );
                     Provider.of<LetterFlyProvider>(context, listen: false).setLetters(letter);
+                    // Provider.of<LetterFlyProvider>(context, listen: false).clearTempPhoto();
                     Navigator.pushNamed(context, "/sukses");
                   },
                   child: Text(
                     'Add Letter',
                     style: TextStyle(color: Colors.white, fontSize: 16),
+                    
                   ),
                 ),
               ),

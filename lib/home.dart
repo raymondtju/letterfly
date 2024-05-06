@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
@@ -83,10 +84,13 @@ class HomePage extends StatelessWidget {
                     const Chips(),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: 20,
+                        itemCount: prov.Letters.length,
                         itemBuilder: (context, index) {
                           return ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              print(index);
+                              print(prov.Letters[index]);
+                            },
                             contentPadding:
                                 const EdgeInsets.fromLTRB(0, 5, 5, 5),
                             leading: Container(
@@ -94,15 +98,13 @@ class HomePage extends StatelessWidget {
                               width: MediaQuery.of(context).size.width * 0.1,
                               color: Colors.grey,
                             ),
-                            title: const Text("011/200/0334AB"),
-                            subtitle: const Text(
-                                "Surat Keputusan / Div. Adm / 1 File"),
-                            trailing: const Column(
+                            title: Text(prov.Letters[index].letterNumber),
+                            subtitle: Text('${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
+                            trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text("02/04/2024"),
-                                Text("2 hari yang lalu")
+                                Text(prov.Letters[index].datePublished),
                               ],
                             ),
                           );
