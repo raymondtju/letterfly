@@ -135,10 +135,16 @@ class HomePage extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      const Icon(
-                                        Icons.add,
-                                        size: 28,
-                                        color: Color.fromRGBO(40, 42, 45, 1),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, "/addletter");
+                                        },
+                                        child: const Icon(
+                                          Icons.add,
+                                          size: 28,
+                                          color: Color.fromRGBO(40, 42, 45, 1),
+                                        ),
                                       ),
                                     ],
                                   ),

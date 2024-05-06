@@ -237,7 +237,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                         child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButton(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 4),
                             isExpanded: true,
                             items: itemsCategory.map((e) {
                               return DropdownMenuItem(
@@ -271,7 +271,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                         child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButton(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            padding: const EdgeInsets.symmetric(vertical: 4),
                             isExpanded: true,
                             items: itemsDivision.map((e) {
                               return DropdownMenuItem(
