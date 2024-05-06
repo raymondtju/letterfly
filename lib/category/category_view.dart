@@ -36,20 +36,47 @@ class _CategoryViewState extends State<CategoryView> {
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              searchBar(context),
-              const SizedBox(
-                height: 15,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text('${dummyDummy.length} Categories',
+                            style: subheadlineStyle),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.filter_alt_outlined,
+                        size: 40,
+                        color: Color(0xFFd9d9d9),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          prov.CategoryViewIsGrid
+                              ? Icons.list
+                              : Icons.grid_view,
+                          size: 40,
+                          color: const Color(0xFFd9d9d9),
+                        ),
+                        hoverColor: Colors.white.withOpacity(0),
+                        onPressed: () {
+                          prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
+                        },
+                      ),
+                    ],
+                  )
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text('${dummyDummy.length} Categories',
-                        style: subheadlineStyle),
-                  ],
-                ),
-              ),
+              // searchBar(context), rip searchbar
+              // const SizedBox(
+              //   height: 15,
+              // ),
               const SizedBox(
                 height: 15,
               ),

@@ -172,10 +172,10 @@ class HomePage extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            homeSearchBar(),
-            const SizedBox(
-              height: 16,
-            ),
+            // homeSearchBar(),
+            // const SizedBox(
+            //   height: 16,
+            // ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -192,8 +192,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              height: 48,
-                              width: 48,
+                              height: 52,
+                              width: 52,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -236,8 +236,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              height: 48,
-                              width: 48,
+                              height: 52,
+                              width: 52,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -278,8 +278,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              height: 48,
-                              width: 48,
+                              height: 52,
+                              width: 52,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
