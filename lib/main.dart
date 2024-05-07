@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
-
             initialRoute: "/welcome",
             routes: {
               '/welcome': (context) => const WelcomePage(),
@@ -43,7 +42,9 @@ class MyApp extends StatelessWidget {
               '/category': (context) => const CategoryView(),
               '/surat_kuasa': (context) => const SuratKuasaView(),
               '/takeaphoto': (context) => const TakeAPhotoPage(),
-              '/addletter': (context) => const AddLetterPage(imagePaths: [],),
+              '/addletter': (context) => const AddLetterPage(
+                    imagePaths: [],
+                  ),
             },
           );
         },

@@ -6,11 +6,13 @@ class GlobalThemeData {
   ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
-        colorScheme: colorScheme,
-        canvasColor: colorScheme.background,
-        scaffoldBackgroundColor: colorScheme.background,
-        highlightColor: Colors.transparent,
-        focusColor: focusColor);
+      colorScheme: colorScheme,
+      canvasColor: colorScheme.background,
+      scaffoldBackgroundColor: colorScheme.background,
+      highlightColor: Colors.transparent,
+      focusColor: focusColor,
+      fontFamily: "SF",
+    );
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(
