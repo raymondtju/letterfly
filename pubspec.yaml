@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/images/undraw_software_engineer_re_tnjc 1.svg
     - assets/lotties/
+    - assets/lotties/verify.json
     - assets/logo/Logo.svg
     - assets/logo/Logotitle.svg
 

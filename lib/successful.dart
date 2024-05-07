@@ -41,7 +41,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
             child: SizedBox(
               height: 200,
               width: 200,
-              child: Lottie.asset("assets/lotties/sukses.json"),
+              child: Lottie.asset("assets/lotties/verify.json"),
             ),
           ),
           Column(
