@@ -96,6 +96,7 @@ class AddLetterPageState extends State<AddLetterPage> {
 
   List<String> TempPhotos = [];
 
+  TextEditingController lettertitleController = TextEditingController();
   TextEditingController letternumberController = TextEditingController();
   TextEditingController datepublishedController = TextEditingController();
   TextEditingController signatureimageController = TextEditingController();
@@ -197,6 +198,18 @@ class AddLetterPageState extends State<AddLetterPage> {
                     ),
                   ),
                 ],
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Letter Title',
+                style: DefaultStyles.labelStyle,
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: lettertitleController,
+                decoration: DefaultStyles.inputDecoration.copyWith(
+                  hintText: 'Title',
+                ),
               ),
               const SizedBox(height: 20),
               const Text(
@@ -551,6 +564,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                     }
                     final letter = Letter(
                         imagePaths: TempPhotos,
+                        letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
                         datePublished: datepublishedController.text.isNotEmpty
                             ? datepublishedController.text
