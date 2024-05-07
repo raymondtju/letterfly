@@ -31,7 +31,6 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
               const Text(
                 'Letterfly',
                 style: TextStyle(
-                    fontFamily: "SF",
                     letterSpacing: -1,
                     fontWeight: FontWeight.w700,
                     fontSize: 24),

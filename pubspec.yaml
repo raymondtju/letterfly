@@ -82,10 +82,13 @@ flutter:
     - family: SF
       fonts:
         - asset: assets/fonts/SF-Pro.ttf
+          weight: 400
         - asset: assets/fonts/SF-Pro-Italic.ttf
           style: italic
         - asset: assets/fonts/SF-Pro-Text-Heavy.otf
           weight: 700
+        - asset: assets/fonts/SFPRODISPLAYMEDIUM.otf
+          weight: 500
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
