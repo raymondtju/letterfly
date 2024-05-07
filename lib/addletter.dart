@@ -69,6 +69,8 @@ class AddLetterPageState extends State<AddLetterPage> {
   List <String> itemsDivision = ['IT','ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
+  List <String> TempPhotos = [];
+
   TextEditingController letternumberController = TextEditingController();
   TextEditingController datepublishedController = TextEditingController();
   TextEditingController signatureimageController = TextEditingController();
@@ -309,18 +311,23 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ),
                 child: TextButton( 
                   onPressed: () {
+                    DateTime currentDate = DateTime.now();
+                    String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+                    for (var gmbr in imagePaths){
+                      TempPhotos.add(gmbr);
+                    }
                     final letter = Letter(
-                      imagePaths: imagePaths, 
-                      letterNumber: letternumberController.text, 
-                      datePublished: datepublishedController.text, 
+                      imagePaths: TempPhotos,
+                      letterNumber: letternumberController.text,
+                      datePublished: datepublishedController.text.isNotEmpty ? datepublishedController.text : defaultDate,  
                       category: selectedCategory, 
                       division: selectedDivision, 
                       signatureImage: signImage, 
                       description: descriptionController.text
                     );
                     Provider.of<LetterFlyProvider>(context, listen: false).setLetters(letter);
-                    // Provider.of<LetterFlyProvider>(context, listen: false).clearTempPhoto();
                     Navigator.pushNamed(context, "/sukses");
+                    imagePaths.clear();
                   },
                   child: Text(
                     'Add Letter',
