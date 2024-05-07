@@ -89,6 +89,7 @@ class AddLetterPage extends StatefulWidget {
 
 class AddLetterPageState extends State<AddLetterPage> {
   final List<String> imagePaths;
+  bool isDraft = false;
   String selectedCategory = 'Surat Kuasa';
   String selectedDivision = 'IT';
   List<String> itemsCategory = ['Surat Kuasa', 'Surat Ajaib'];
@@ -591,9 +592,26 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Save as draft'),
+                  Switch(
+                    value: isDraft, 
+                    onChanged: (value) {
+                      setState(() {
+                        isDraft = value;
+                      });
+                    })
+                ],
+              ),
               const SizedBox(
                 height: 30,
               ),
+
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
