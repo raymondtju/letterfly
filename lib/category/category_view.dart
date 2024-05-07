@@ -98,55 +98,50 @@ class _CategoryViewState extends State<CategoryView> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    backgroundColor: Colors.white,
-                    title: const Text(
-                      "Category Name",
-                      style: subheadlineStyle,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-                    content: SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.11,
-                      child: Column(
-                        children: [
-                          // height: MediaQuery.of(context).size.height * 0.3,
-                          TextField(
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.all(10),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey)),
-                              hintText: "Enter Category Name",
-                            ),
-                            style: const TextStyle(fontSize: 13),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 10),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 40, 42, 45),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                              ),
-                              onPressed: () {},
-                              child: const Text("Add",
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                          ),
-                        ],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
                       ),
-                    ),
-                  );
+                      backgroundColor: Colors.white,
+                      title: const Text(
+                        "Category Name",
+                        style: subheadlineStyle,
+                      ),
+                      content: SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: TextField(
+                          maxLines: 1,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.only(left: 10),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(0),
+                                borderSide:
+                                    const BorderSide(color: Colors.grey)),
+                            hintText: "Enter Category Name",
+                          ),
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      actions: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 10),
+                            backgroundColor:
+                                const Color.fromARGB(255, 40, 42, 45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Add",
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      ],
+                      actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 10));
                 });
           },
           child: const Icon(
