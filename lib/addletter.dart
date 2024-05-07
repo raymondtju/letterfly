@@ -4,8 +4,10 @@ import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +26,7 @@ Future showSignatureDialog(
             const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         title: const Text(
           'Autograph',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: DefaultStyles.labelStyle,
         ),
         content: Container(
           width: 400,
@@ -44,8 +46,12 @@ Future showSignatureDialog(
         actions: <Widget>[
           OutlinedButton(
             style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(0)))),
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+            ),
             onPressed: () {
               signatureKey.currentState?.clear();
             },
@@ -83,14 +89,16 @@ class AddLetterPage extends StatefulWidget {
 
 class AddLetterPageState extends State<AddLetterPage> {
   final List<String> imagePaths;
+  bool isDraft = false;
   String selectedCategory = 'Surat Kuasa';
   String selectedDivision = 'IT';
   List<String> itemsCategory = ['Surat Kuasa', 'Surat Ajaib'];
   List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
-  List <String> TempPhotos = [];
+  List<String> TempPhotos = [];
 
+  TextEditingController lettertitleController = TextEditingController();
   TextEditingController letternumberController = TextEditingController();
   TextEditingController datepublishedController = TextEditingController();
   TextEditingController signatureimageController = TextEditingController();
@@ -99,6 +107,20 @@ class AddLetterPageState extends State<AddLetterPage> {
   final signatureKey = GlobalKey<SignatureState>();
 
   AddLetterPageState({required this.imagePaths});
+
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -120,15 +142,15 @@ class AddLetterPageState extends State<AddLetterPage> {
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
                 'Letter Media',
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                style: DefaultStyles.labelStyle,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 8),
               Row(
                 children: [
                   Expanded(
@@ -194,34 +216,79 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ],
               ),
               const SizedBox(height: 20),
-              const Text('Letter Number',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
+              const Text(
+                'Letter Title',
+                style: DefaultStyles.labelStyle,
+              ),
+              const SizedBox(height: 8),
+              TextField(
+                controller: lettertitleController,
+                decoration: DefaultStyles.inputDecoration.copyWith(
+                  hintText: 'Title',
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'Letter Number',
+                style: DefaultStyles.labelStyle,
+              ),
+              const SizedBox(height: 8),
               TextField(
                 controller: letternumberController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
-                    borderRadius: BorderRadius.all(Radius.circular(0)),
-                  ),
+                decoration: DefaultStyles.inputDecoration.copyWith(
                   hintText: 'e.g Order/Code1/Code2/Month/Year',
                 ),
               ),
               const SizedBox(height: 20),
-              const Text('Date Published',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-              const SizedBox(height: 10),
-              TextField(
-                controller: datepublishedController,
-                keyboardType: TextInputType.datetime,
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey),
-                      borderRadius: BorderRadius.all(Radius.circular(0)),
-                    ),
-                    hintText: 'dd/mm/yyyy',
-                    suffixIcon: Icon(Icons.calendar_today_sharp)),
+              const Text(
+                'Date Published',
+                style: DefaultStyles.labelStyle,
               ),
+              const SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => _selectDate(context),
+                  style: ButtonStyle(
+                    alignment: Alignment.centerLeft,
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    shadowColor: MaterialStateProperty.all(Colors.black38),
+                    overlayColor: MaterialStateProperty.all(
+                      Colors.black.withOpacity(0.1),
+                    ), // Adjust opacity as needed
+                    elevation: MaterialStateProperty.all(0),
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.fromLTRB(12, 22, 0, 22),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                        side: BorderSide(color: Colors.black38, width: 1.0),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    selectedDate != null
+                        ? "${selectedDate.toLocal()}".split(' ')[0]
+                        : "Select date",
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              // TextField(
+              //   controller: datepublishedController,
+              //   keyboardType: TextInputType.datetime,
+              //   decoration: DefaultStyles.inputDecoration.copyWith(
+              //     hintText: 'dd/mm/yyyy',
+              //     suffixIcon: const Icon(
+              //       Icons.calendar_today_sharp,
+              //       size: 16,
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,17 +296,20 @@ class AddLetterPageState extends State<AddLetterPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Category',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text(
+                        'Category',
+                        style: DefaultStyles.labelStyle,
+                      ),
                       const SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.44,
                         decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey)),
+                          border: Border.all(color: Colors.grey),
+                        ),
                         child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButton(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            padding: EdgeInsets.zero,
                             isExpanded: true,
                             items: itemsCategory.map((e) {
                               return DropdownMenuItem(
@@ -263,8 +333,10 @@ class AddLetterPageState extends State<AddLetterPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Division',
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      const Text(
+                        'Division',
+                        style: DefaultStyles.labelStyle,
+                      ),
                       const SizedBox(height: 10),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.44,
@@ -273,7 +345,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                         child: ButtonTheme(
                           alignedDropdown: true,
                           child: DropdownButton(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            padding: EdgeInsets.zero,
                             isExpanded: true,
                             items: itemsDivision.map((e) {
                               return DropdownMenuItem(
@@ -299,10 +371,12 @@ class AddLetterPageState extends State<AddLetterPage> {
               const SizedBox(
                 height: 20,
               ),
-              const Text('Add E-Signature',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Add E-Signature',
+                style: DefaultStyles.labelStyle,
+              ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               // Stack(
               //   children: [
@@ -485,25 +559,29 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
-              const Text('Description',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const Text(
+                'Description',
+                style: DefaultStyles.labelStyle,
+              ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(0)),
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(0),
+                ),
                 height: 160,
                 // width: 200,
                 child: const Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 0,
+                  ),
                   child: SingleChildScrollView(
                     child: TextField(
-                      // expands: true,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
@@ -514,9 +592,26 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Save as draft'),
+                  Switch(
+                    value: isDraft, 
+                    onChanged: (value) {
+                      setState(() {
+                        isDraft = value;
+                      });
+                    })
+                ],
+              ),
               const SizedBox(
                 height: 30,
               ),
+
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -528,20 +623,24 @@ class AddLetterPageState extends State<AddLetterPage> {
                       )),
                   onPressed: () {
                     DateTime currentDate = DateTime.now();
-                    String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
-                    for (var gmbr in imagePaths){
+                    String defaultDate =
+                        "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+                    for (var gmbr in imagePaths) {
                       TempPhotos.add(gmbr);
                     }
                     final letter = Letter(
-                      imagePaths: TempPhotos,
-                      letterNumber: letternumberController.text,
-                      datePublished: datepublishedController.text.isNotEmpty ? datepublishedController.text : defaultDate,  
-                      category: selectedCategory, 
-                      division: selectedDivision, 
-                      signatureImage: signImage, 
-                      description: descriptionController.text
-                    );
-                    Provider.of<LetterFlyProvider>(context, listen: false).setLetters(letter);
+                        imagePaths: TempPhotos,
+                        letterTitle: lettertitleController.text,
+                        letterNumber: letternumberController.text,
+                        datePublished: datepublishedController.text.isNotEmpty
+                            ? datepublishedController.text
+                            : defaultDate,
+                        category: selectedCategory,
+                        division: selectedDivision,
+                        signatureImage: signImage,
+                        description: descriptionController.text);
+                    Provider.of<LetterFlyProvider>(context, listen: false)
+                        .setLetters(letter);
                     Navigator.pushNamed(context, "/sukses");
                     imagePaths.clear();
                   },

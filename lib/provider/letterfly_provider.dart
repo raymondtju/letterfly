@@ -70,7 +70,20 @@ class LetterFlyProvider with ChangeNotifier {
   }
 
   void clearTempPhoto() {
-  TempPhoto.clear();
-  notifyListeners();
-}
+    TempPhoto.clear();
+    notifyListeners();
+  }
+  
+  bool _selectedChipSuratKuasa = false;
+  bool get selectedChipSuratKuasa => _selectedChipSuratKuasa;
+  set setSelectedChipSuratKuasa(bool val) {
+    _selectedChipSuratKuasa = val;
+    notifyListeners();
+  }
+  bool _selectedChipSuratAjaib = false;
+  bool get selectedChipSuratAjaib => _selectedChipSuratAjaib;
+  set setSelectedChipSuratAjaib(bool val) {
+    _selectedChipSuratAjaib = val;
+    notifyListeners();
+  }
 }

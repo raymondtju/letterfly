@@ -31,7 +31,6 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
               const Text(
                 'Letterfly',
                 style: TextStyle(
-                    fontFamily: "SF",
                     letterSpacing: -1,
                     fontWeight: FontWeight.w700,
                     fontSize: 24),
@@ -42,7 +41,7 @@ class _SuccessfulPageState extends State<SuccessfulPage> {
             child: SizedBox(
               height: 200,
               width: 200,
-              child: Lottie.asset("assets/lotties/sukses.json"),
+              child: Lottie.asset("assets/lotties/verify.json"),
             ),
           ),
           Column(
