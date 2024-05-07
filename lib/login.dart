@@ -55,7 +55,7 @@ class _MyWidgetState extends State<MyWidget> {
                   style: DefaultStyles.labelStyle,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 TextField(
                   controller: emailController,
@@ -71,7 +71,7 @@ class _MyWidgetState extends State<MyWidget> {
                   style: DefaultStyles.labelStyle,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 TextField(
                   controller: passwordController,

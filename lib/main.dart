@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
+            debugShowCheckedModeBanner: false,
             initialRoute: "/welcome",
             routes: {
               '/welcome': (context) => const WelcomePage(),
