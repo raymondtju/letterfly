@@ -87,31 +87,55 @@ class HomePage extends StatelessWidget {
                           ? ListView.builder(
                               itemCount: prov.Letters.length,
                               itemBuilder: (context, index) {
-                                return ListTile(
-                                  onTap: () {
-                                    print(index);
-                                    print(prov.Letters[index]);
-                                  },
-                                  contentPadding:
-                                      const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                                  leading: Container(
-                                    height:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.1,
-                                    color: Colors.grey,
-                                  ),
-                                  title: Text(prov.Letters[index].letterNumber),
-                                  subtitle: Text(
-                                      '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
-                                  trailing: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                    children: [
-                                      Text(prov.Letters[index].datePublished),
-                                    ],
-                                  ),
-                                );
+                                if ((prov.selectedChipSuratKuasa && prov.Letters[index].category == 'Surat Kuasa') || (prov.selectedChipSuratAjaib && prov.Letters[index].category == 'Surat Ajaib')) {
+                                  return ListTile(
+                                    onTap: () {},
+                                    contentPadding:
+                                        const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                    leading: Container(
+                                      height:
+                                          MediaQuery.of(context).size.width * 0.1,
+                                      width:
+                                          MediaQuery.of(context).size.width * 0.1,
+                                      color: Colors.grey,
+                                    ),
+                                    title: Text(prov.Letters[index].letterNumber),
+                                    subtitle: Text(
+                                        '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
+                                    trailing: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text(prov.Letters[index].datePublished),
+                                      ],
+                                    ),
+                                  );
+                                } else if (!prov.selectedChipSuratKuasa && !prov.selectedChipSuratAjaib) {
+                                  return ListTile(
+                                    onTap: () {},
+                                    contentPadding:
+                                        const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                    leading: Container(
+                                      height:
+                                          MediaQuery.of(context).size.width * 0.1,
+                                      width:
+                                          MediaQuery.of(context).size.width * 0.1,
+                                      color: Colors.grey,
+                                    ),
+                                    title: Text(prov.Letters[index].letterNumber),
+                                    subtitle: Text(
+                                        '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
+                                    trailing: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Text(prov.Letters[index].datePublished),
+                                      ],
+                                    ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
                               },
                             )
                           : Center(
@@ -378,11 +402,9 @@ class Chips extends StatefulWidget {
 }
 
 class _ChipsState extends State<Chips> {
-  bool suratKuasa = false;
-  bool suratAjaib = false;
-
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<LetterFlyProvider>(context);
     return Row(
       children: [
         ChoiceChip(
@@ -395,12 +417,10 @@ class _ChipsState extends State<Chips> {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
           showCheckmark: false,
           selectedColor: const Color.fromRGBO(219, 219, 219, 100),
-          selected: suratKuasa,
+          selected: prov.selectedChipSuratKuasa,
           onSelected: (val) {
-            setState(() {
-              suratAjaib = false;
-              suratKuasa = val;
-            });
+            prov.setSelectedChipSuratKuasa = val;
+            prov.setSelectedChipSuratAjaib = false;
           },
         ),
         const SizedBox(width: 10),
@@ -415,12 +435,10 @@ class _ChipsState extends State<Chips> {
           showCheckmark: false,
           selectedColor: const Color.fromRGBO(219, 219, 219, 100),
           selectedShadowColor: Colors.black,
-          selected: suratAjaib,
+          selected: prov.selectedChipSuratAjaib,
           onSelected: (val) {
-            setState(() {
-              suratKuasa = false;
-              suratAjaib = val;
-            });
+              prov.setSelectedChipSuratAjaib = val;
+              prov.setSelectedChipSuratKuasa = false;
           },
         ),
       ],
