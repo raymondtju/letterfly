@@ -35,12 +35,7 @@ class _MyWidgetState extends State<MyWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('Login', style: subheadlineStyle),
-          ],
-        ),
+        title: const Text('Login', style: subheadlineStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),

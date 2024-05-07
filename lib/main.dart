@@ -32,24 +32,58 @@ class MyApp extends StatelessWidget {
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
             initialRoute: "/welcome",
-            routes: {
-              '/welcome': (context) => const WelcomePage(),
-              '/login': (context) => const LoginPage(),
-              '/signup': (context) => const SignUpPage(),
-              '/home': (context) => const HomePage(),
-              '/sukses': (context) => const SuccessfulPage(),
-              '/forgetPass': (context) => const ForgotPasswordPage(),
-              '/newPass': (context) => const NewPasswordPage(),
-              '/category': (context) => const CategoryView(),
-              '/surat_kuasa': (context) => const SuratKuasaView(),
-              '/takeaphoto': (context) => const TakeAPhotoPage(),
-              '/addletter': (context) => const AddLetterPage(
-                    imagePaths: [],
-                  ),
+            onGenerateRoute: (settings) {
+              switch (settings.name) {
+                case '/welcome':
+                  return _buildPageRoute(const WelcomePage());
+                case '/login':
+                  return _buildPageRoute(const LoginPage());
+                case '/signup':
+                  return _buildPageRoute(const SignUpPage());
+                case '/home':
+                  return _buildPageRoute(const HomePage());
+                case '/sukses':
+                  return _buildPageRoute(const SuccessfulPage());
+                case '/forgetPass':
+                  return _buildPageRoute(const ForgotPasswordPage());
+                case '/newPass':
+                  return _buildPageRoute(const NewPasswordPage());
+                case '/category':
+                  return _buildPageRoute(const CategoryView());
+                case '/surat_kuasa':
+                  return _buildPageRoute(const SuratKuasaView());
+                case '/takeaphoto':
+                  return _buildPageRoute(const TakeAPhotoPage());
+                case '/addletter':
+                  return _buildPageRoute(const AddLetterPage(imagePaths: []));
+                default:
+                  return _buildPageRoute(const WelcomePage());
+              }
             },
           );
         },
       ),
+    );
+  }
+
+  PageRouteBuilder _buildPageRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionDuration: const Duration(milliseconds: 100),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.easeIn;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var offsetAnimation = animation.drive(tween);
+
+        return SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        );
+      },
     );
   }
 }

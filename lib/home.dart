@@ -32,8 +32,11 @@ class HomePage extends StatelessWidget {
               ),
               Text(
                 'Letterfly',
-                style: subheadlineStyle.copyWith(
-                    color: Colors.white, fontSize: 24),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
