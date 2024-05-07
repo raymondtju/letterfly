@@ -7,6 +7,7 @@ import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -105,6 +106,20 @@ class AddLetterPageState extends State<AddLetterPage> {
   final signatureKey = GlobalKey<SignatureState>();
 
   AddLetterPageState({required this.imagePaths});
+
+  DateTime selectedDate = DateTime.now();
+  Future<void> _selectDate(BuildContext context) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -229,17 +244,50 @@ class AddLetterPageState extends State<AddLetterPage> {
                 style: DefaultStyles.labelStyle,
               ),
               const SizedBox(height: 8),
-              TextField(
-                controller: datepublishedController,
-                keyboardType: TextInputType.datetime,
-                decoration: DefaultStyles.inputDecoration.copyWith(
-                  hintText: 'dd/mm/yyyy',
-                  suffixIcon: const Icon(
-                    Icons.calendar_today_sharp,
-                    size: 16,
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => _selectDate(context),
+                  style: ButtonStyle(
+                    alignment: Alignment.centerLeft,
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.transparent),
+                    shadowColor: MaterialStateProperty.all(Colors.black38),
+                    overlayColor: MaterialStateProperty.all(
+                      Colors.black.withOpacity(0.1),
+                    ), // Adjust opacity as needed
+                    elevation: MaterialStateProperty.all(0),
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.fromLTRB(12, 22, 0, 22),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                        side: BorderSide(color: Colors.black38, width: 1.0),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    selectedDate != null
+                        ? "${selectedDate.toLocal()}".split(' ')[0]
+                        : "Select date",
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
+              // TextField(
+              //   controller: datepublishedController,
+              //   keyboardType: TextInputType.datetime,
+              //   decoration: DefaultStyles.inputDecoration.copyWith(
+              //     hintText: 'dd/mm/yyyy',
+              //     suffixIcon: const Icon(
+              //       Icons.calendar_today_sharp,
+              //       size: 16,
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
