@@ -1,4 +1,4 @@
-# mailify
+# letterfly
 
 A new Flutter project.
 

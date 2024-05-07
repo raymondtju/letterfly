@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -41,21 +42,15 @@ class _MyWidgetState extends State<MyWidget> {
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Email',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
+            const Text('Email', style: DefaultStyles.labelStyle),
             const SizedBox(
               height: 10,
             ),
             TextField(
               controller: emailController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
+              decoration: DefaultStyles.inputDecoration.copyWith(
                 hintText: 'Enter your work email',
               ),
             ),
@@ -76,12 +71,11 @@ class _MyWidgetState extends State<MyWidget> {
                 }
               },
               style: OutlinedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-                backgroundColor: Colors.black,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.zero),
-                  side: const BorderSide(color: Colors.white, width: 1)
-              ),
+                  minimumSize: const Size(double.infinity, 50),
+                  backgroundColor: Colors.black,
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero),
+                  side: const BorderSide(color: Colors.white, width: 1)),
               child: const Text(
                 'Send OTP',
                 style: TextStyle(color: Colors.white),
@@ -241,8 +235,8 @@ void _showOTPMenu(BuildContext context) {
                           backgroundColor: Colors.white,
                           shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero),
-                          side: const BorderSide(
-                              color: Colors.black, width: 1)),
+                          side:
+                              const BorderSide(color: Colors.black, width: 1)),
                       child: const Text(
                         'Resend',
                         style: TextStyle(color: Colors.black),
@@ -255,12 +249,21 @@ void _showOTPMenu(BuildContext context) {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () {
-                        String otpTemp = otpController1.text + otpController2.text + otpController3.text + otpController4.text + otpController5.text + otpController6.text;
+                        String otpTemp = otpController1.text +
+                            otpController2.text +
+                            otpController3.text +
+                            otpController4.text +
+                            otpController5.text +
+                            otpController6.text;
 
-                        print("OTP from provider: ${Provider.of<LetterFlyProvider>(context, listen: false).otp}");
+                        print(
+                            "OTP from provider: ${Provider.of<LetterFlyProvider>(context, listen: false).otp}");
                         print("OTP entered by user: $otpTemp");
 
-                        if (otpTemp == Provider.of<LetterFlyProvider>(context, listen: false).otp) {
+                        if (otpTemp ==
+                            Provider.of<LetterFlyProvider>(context,
+                                    listen: false)
+                                .otp) {
                           print("OTP matched, navigating to '/newPass'");
                           Navigator.pushNamed(context, "/newPass");
                         } else {
@@ -288,8 +291,8 @@ void _showOTPMenu(BuildContext context) {
                           backgroundColor: Colors.black,
                           shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero),
-                          side: const BorderSide(
-                              color: Colors.white, width: 1)),
+                          side:
+                              const BorderSide(color: Colors.white, width: 1)),
                       child: const Text(
                         'Confirm',
                         style: TextStyle(color: Colors.white),
@@ -309,9 +312,9 @@ void _showOTPMenu(BuildContext context) {
 void _showRandomCodeDialog(BuildContext context) {
   final random = Random();
   final randomCode = List.generate(6, (_) => random.nextInt(10)).join();
-  
+
   Provider.of<LetterFlyProvider>(context, listen: false).setOTP = randomCode;
-  
+
   showDialog(
     context: context,
     builder: (BuildContext context) {

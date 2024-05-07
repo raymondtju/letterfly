@@ -32,8 +32,11 @@ class HomePage extends StatelessWidget {
               ),
               Text(
                 'Letterfly',
-                style: subheadlineStyle.copyWith(
-                    color: Colors.white, fontSize: 24),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -179,9 +182,12 @@ class HomePage extends StatelessWidget {
                                     "No Recent File",
                                     style: subheadlineStyle,
                                   ),
-                                  const Text("Scan First Letter",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
+                                  const Text(
+                                    "Scan First Letter",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -245,10 +251,7 @@ class HomePage extends StatelessWidget {
                       const SizedBox(height: 10),
                       const Text(
                         "Add Letter",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 10),
+                        style: TextStyle(color: Colors.white, fontSize: 12),
                       )
                     ],
                   ),
@@ -290,9 +293,9 @@ class HomePage extends StatelessWidget {
                       const Text(
                         "Category",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 10),
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
                       )
                     ],
                   ),
@@ -332,9 +335,9 @@ class HomePage extends StatelessWidget {
                       const Text(
                         "Settings",
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 10),
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
                       )
                     ],
                   )

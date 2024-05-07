@@ -1,5 +1,6 @@
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,7 @@ class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Row(
@@ -54,71 +55,60 @@ class _MyWidgetState extends State<MyWidget> {
             children: [
               Text(
                 'Full Name',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: DefaultStyles.labelStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: UsernameController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: DefaultStyles.inputDecoration.copyWith(
                   hintText: 'Masukkan nama lengkap anda',
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Text(
                 'Email',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: DefaultStyles.labelStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: EmailController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: DefaultStyles.inputDecoration.copyWith(
                   hintText: 'Enter your work email',
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Text(
                 'Password',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: DefaultStyles.labelStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: Password1Controller,
                 obscureText: obscurePassword1,
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorBool1 ? passwordErrorText1 : null,
-                    suffixIcon: IconButton(
-                      icon: Icon(obscurePassword1
-                          ? Icons.visibility_off
-                          : Icons.visibility),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword1 = !obscurePassword1;
-                        });
-                      },
-                    )),
+                decoration: DefaultStyles.inputDecoration.copyWith(
+                  hintText: 'Consisting of 8 letters',
+                  errorText: passwordErrorBool1 ? passwordErrorText1 : null,
+                  suffixIcon: IconButton(
+                    icon: Icon(obscurePassword1
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword1 = !obscurePassword1;
+                      });
+                    },
+                  ),
+                ),
                 onChanged: (value) {
                   setState(() {
                     if (value.length < 8) {
@@ -133,35 +123,32 @@ class _MyWidgetState extends State<MyWidget> {
                 },
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               const Text(
                 'Password Confirmation',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: DefaultStyles.labelStyle,
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: Password2Controller,
                 obscureText: obscurePassword2,
-                decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Consisting of 8 letters',
-                    errorText: passwordErrorBool2 ? passwordErrorText2 : null,
-                    suffixIcon: IconButton(
-                      icon: Icon(obscurePassword2
-                          ? Icons.visibility_off
-                          : Icons.visibility),
-                      onPressed: () {
-                        setState(() {
-                          obscurePassword2 = !obscurePassword2;
-                        });
-                      },
-                    )),
+                decoration: DefaultStyles.inputDecoration.copyWith(
+                  hintText: 'Consisting of 8 letters',
+                  errorText: passwordErrorBool2 ? passwordErrorText2 : null,
+                  suffixIcon: IconButton(
+                    icon: Icon(obscurePassword2
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onPressed: () {
+                      setState(() {
+                        obscurePassword2 = !obscurePassword2;
+                      });
+                    },
+                  ),
+                ),
                 onChanged: (value) {
                   setState(() {
                     if (value.length < 8) {

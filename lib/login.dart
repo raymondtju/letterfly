@@ -1,5 +1,6 @@
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +35,7 @@ class _MyWidgetState extends State<MyWidget> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('Login', style: subheadlineStyle),
-          ],
-        ),
+        title: const Text('Login', style: subheadlineStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -51,18 +47,14 @@ class _MyWidgetState extends State<MyWidget> {
               children: [
                 const Text(
                   'Email',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: DefaultStyles.labelStyle,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 TextField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: DefaultStyles.inputDecoration.copyWith(
                     hintText: 'Enter your work email',
                   ),
                 ),
@@ -71,42 +63,45 @@ class _MyWidgetState extends State<MyWidget> {
                 ),
                 const Text(
                   'Password',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),
+                  style: DefaultStyles.labelStyle,
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 8,
                 ),
                 TextField(
                   controller: passwordController,
                   obscureText: obscurePassword,
-                  decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hintText: 'Consisting of 8 letters',
-                      errorText: passwordErrorBool ? passwordErrorText : null,
-                      suffixIcon: IconButton(
-                        icon: Icon(obscurePassword
+                  decoration: DefaultStyles.inputDecoration.copyWith(
+                    errorText: passwordErrorBool ? passwordErrorText : null,
+                    hintText: 'Consisting of 8 letters',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        obscurePassword
                             ? Icons.visibility_off
-                            : Icons.visibility),
-                        onPressed: () {
-                          setState(() {
-                            obscurePassword = !obscurePassword;
-                          });
-                        },
-                      )),
+                            : Icons.visibility,
+                        size: 16,
+                        color: Colors.black38,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          obscurePassword = !obscurePassword;
+                        });
+                      },
+                    ),
+                  ),
                   onChanged: (value) {
-                    setState(() {
-                      if (value.length < 8) {
-                        passwordErrorText =
-                            'Password must be at least 8 characters';
-                        passwordErrorBool = true;
-                      } else {
-                        passwordErrorText = '';
-                        passwordErrorBool = false;
-                      }
-                    });
+                    setState(
+                      () {
+                        if (value.length < 8) {
+                          passwordErrorText =
+                              'Password must be at least 8 characters';
+                          passwordErrorBool = true;
+                        } else {
+                          passwordErrorText = '';
+                          passwordErrorBool = false;
+                        }
+                      },
+                    );
                   },
                 ),
                 Row(
@@ -133,14 +128,11 @@ class _MyWidgetState extends State<MyWidget> {
                     if (email == prov.Email && password == prov.Password) {
                       if (password == prov.Password) {
                         Navigator.pushNamed(context, "/home");
-                      }
-                      else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Password is wrong.'),
-                            duration: Duration(seconds: 2),
-                          )
-                        );                  
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Password is wrong.'),
+                          duration: Duration(seconds: 2),
+                        ));
                       }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,11 +144,12 @@ class _MyWidgetState extends State<MyWidget> {
                     }
                   },
                   style: OutlinedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.black,
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero),
-                      side: const BorderSide(color: Colors.white, width: 1)),
+                    minimumSize: const Size(double.infinity, 50),
+                    backgroundColor: Colors.black,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero),
+                    side: const BorderSide(color: Colors.white, width: 1),
+                  ),
                   child: const Text(
                     'Login',
                     style: TextStyle(color: Colors.white),
