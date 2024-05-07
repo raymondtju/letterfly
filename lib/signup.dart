@@ -58,7 +58,7 @@ class _MyWidgetState extends State<MyWidget> {
                 style: DefaultStyles.labelStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: UsernameController,
@@ -74,7 +74,7 @@ class _MyWidgetState extends State<MyWidget> {
                 style: DefaultStyles.labelStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: EmailController,
@@ -90,7 +90,7 @@ class _MyWidgetState extends State<MyWidget> {
                 style: DefaultStyles.labelStyle,
               ),
               SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: Password1Controller,
@@ -130,7 +130,7 @@ class _MyWidgetState extends State<MyWidget> {
                 style: DefaultStyles.labelStyle,
               ),
               const SizedBox(
-                height: 10,
+                height: 8,
               ),
               TextField(
                 controller: Password2Controller,
