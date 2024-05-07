@@ -81,35 +81,86 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const Chips(),
+                    prov.Letters.isNotEmpty ? const Chips() : const SizedBox(),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: prov.Letters.length,
-                        itemBuilder: (context, index) {
-                          return ListTile(
-                            onTap: () {
-                              print(index);
-                              print(prov.Letters[index]);
-                            },
-                            contentPadding:
-                                const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                            leading: Container(
-                              height: MediaQuery.of(context).size.width * 0.1,
-                              width: MediaQuery.of(context).size.width * 0.1,
-                              color: Colors.grey,
+                      child: prov.Letters.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: prov.Letters.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onTap: () {
+                                    print(index);
+                                    print(prov.Letters[index]);
+                                  },
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                  leading: Container(
+                                    height:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                    color: Colors.grey,
+                                  ),
+                                  title: Text(prov.Letters[index].letterNumber),
+                                  subtitle: Text(
+                                      '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
+                                  trailing: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(prov.Letters[index].datePublished),
+                                    ],
+                                  ),
+                                );
+                              },
+                            )
+                          : Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 60,
+                                        width: 60,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border.all(
+                                                color: const Color.fromRGBO(
+                                                    40, 42, 45, 1),
+                                                width: 2),
+                                            borderRadius:
+                                                BorderRadius.circular(0),
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.pushNamed(
+                                              context, "/addletter");
+                                        },
+                                        child: const Icon(
+                                          Icons.add,
+                                          size: 28,
+                                          color: Color.fromRGBO(40, 42, 45, 1),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  const Text(
+                                    "No Recent File",
+                                    style: subheadlineStyle,
+                                  ),
+                                  const Text("Scan First Letter",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                ],
+                              ),
                             ),
-                            title: Text(prov.Letters[index].letterNumber),
-                            subtitle: Text('${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
-                            trailing: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Text(prov.Letters[index].datePublished),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
                     ),
                   ],
                 ),
@@ -127,10 +178,10 @@ class HomePage extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            homeSearchBar(),
-            const SizedBox(
-              height: 16,
-            ),
+            // homeSearchBar(),
+            // const SizedBox(
+            //   height: 16,
+            // ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
@@ -147,8 +198,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              height: 48,
-                              width: 48,
+                              height: 52,
+                              width: 52,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -191,8 +242,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              height: 48,
-                              width: 48,
+                              height: 52,
+                              width: 52,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
@@ -233,8 +284,8 @@ class HomePage extends StatelessWidget {
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              height: 48,
-                              width: 48,
+                              height: 52,
+                              width: 52,
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(

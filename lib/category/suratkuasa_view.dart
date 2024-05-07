@@ -17,6 +17,12 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
     final prov = Provider.of<LetterFlyProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 0,
+        leading: BackButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -28,19 +34,44 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            searchBar(context),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text('${dummySuratKuasa.length} Letter',
-                      style: subheadlineStyle),
-                ],
-              ),
+            // searchBar(context),
+            // const SizedBox(
+            //   height: 15,
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text('${dummySuratKuasa.length} Letter',
+                          style: subheadlineStyle),
+                    ],
+                  ),
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.filter_alt_outlined,
+                      size: 40,
+                      color: Color(0xFFd9d9d9),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
+                        size: 40,
+                        color: const Color(0xFFd9d9d9),
+                      ),
+                      hoverColor: Colors.white.withOpacity(0),
+                      onPressed: () {
+                        prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
+                      },
+                    ),
+                  ],
+                )
+              ],
             ),
             const SizedBox(
               height: 15,
