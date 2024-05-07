@@ -73,7 +73,7 @@ class _MyWidgetState extends State<MyWidget> {
                   obscureText: obscurePassword,
                   decoration: DefaultStyles.inputDecoration.copyWith(
                     errorText: passwordErrorBool ? passwordErrorText : null,
-                    hintText: 'Consisting of 8 letters',
+                    hintText: 'Enter your password',
                     suffixIcon: IconButton(
                       icon: Icon(
                         obscurePassword
@@ -125,23 +125,31 @@ class _MyWidgetState extends State<MyWidget> {
                     String email = emailController.text;
                     String password = passwordController.text;
 
-                    if (email == prov.Email && password == prov.Password) {
-                      if (password == prov.Password) {
-                        Navigator.pushNamed(context, "/home");
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Password is wrong.'),
-                          duration: Duration(seconds: 2),
-                        ));
-                      }
+                    if (password.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text('Password is wrong.'),
+                        duration: Duration(seconds: 2),
+                      ));
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Email not registered.'),
-                          duration: Duration(seconds: 2),
-                        ),
-                      );
+                      if (email == prov.Email && password == prov.Password) {
+                        if (password == prov.Password) {
+                          Navigator.pushNamed(context, "/home");
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text('Password is wrong.'),
+                            duration: Duration(seconds: 2),
+                          ));
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Email not registered.'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
                     }
+
                   },
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 50),
