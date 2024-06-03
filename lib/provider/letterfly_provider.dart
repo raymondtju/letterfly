@@ -64,6 +64,8 @@ class LetterFlyProvider with ChangeNotifier {
 
   List<Letter> _letters = [];
   List get Letters => _letters;
+  int get LetterCounts => _letters.length;
+
   void setLetters(Letter letter) {
     _letters.add(letter);
     notifyListeners();

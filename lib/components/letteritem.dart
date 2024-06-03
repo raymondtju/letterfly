@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 class Letter {
+  final int id;
   final List<String> imagePaths;
   final String letterTitle;
   final String letterNumber;
@@ -11,6 +12,7 @@ class Letter {
   final String description;
 
   Letter({
+    required this.id,
     required this.imagePaths,
     required this.letterTitle,
     required this.letterNumber,

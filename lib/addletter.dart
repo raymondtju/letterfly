@@ -575,13 +575,14 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ),
                 height: 160,
                 // width: 200,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
                   child: SingleChildScrollView(
                     child: TextField(
+                      controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
@@ -628,7 +629,9 @@ class AddLetterPageState extends State<AddLetterPage> {
                     for (var gmbr in imagePaths) {
                       TempPhotos.add(gmbr);
                     }
+                    final letterProvider = Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
+                        id: letterProvider.LetterCounts + 1,
                         imagePaths: TempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,

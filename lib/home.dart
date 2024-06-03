@@ -1,4 +1,5 @@
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/letterDetail.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -92,7 +93,12 @@ class HomePage extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 if ((prov.selectedChipSuratKuasa && prov.Letters[index].category == 'Surat Kuasa') || (prov.selectedChipSuratAjaib && prov.Letters[index].category == 'Surat Ajaib')) {
                                   return ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => LetterDetailPage(id_letter: prov.Letters[index].id)) 
+                                      );
+                                    },
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(0, 5, 5, 5),
                                     leading: Container(
@@ -115,7 +121,12 @@ class HomePage extends StatelessWidget {
                                   );
                                 } else if (!prov.selectedChipSuratKuasa && !prov.selectedChipSuratAjaib) {
                                   return ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => LetterDetailPage(id_letter: prov.Letters[index].id)) 
+                                      );
+                                    },
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(0, 5, 5, 5),
                                     leading: Container(
