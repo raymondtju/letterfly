@@ -1,3 +1,4 @@
+import 'package:Letterfly/aboutUs.dart';
 import 'package:Letterfly/addletter.dart';
 import 'package:Letterfly/category/category_view.dart';
 import 'package:Letterfly/category/suratkuasa_view.dart';
@@ -8,6 +9,7 @@ import 'package:Letterfly/login.dart';
 import 'package:Letterfly/newPassword.dart';
 import 'package:Letterfly/profile.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:Letterfly/report.dart';
 import 'package:Letterfly/signup.dart';
 import 'package:Letterfly/successful.dart';
 import 'package:Letterfly/takeAPhoto.dart';
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/welcome",
+            initialRoute: "/report",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':
@@ -59,6 +61,10 @@ class MyApp extends StatelessWidget {
                   return _buildPageRoute(const AddLetterPage(imagePaths: []));
                 case '/profile':
                   return _buildPageRoute(const ProfilePage());
+                case '/about_us':
+                  return _buildPageRoute(const AboutUs());
+                case '/report':
+                  return _buildPageRoute(const ReportBug());
                 default:
                   return _buildPageRoute(const WelcomePage());
               }
