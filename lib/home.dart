@@ -82,7 +82,7 @@ class HomePage extends StatelessWidget {
                       color: Colors.black, 
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(20),
                       child: SvgPicture.asset(
                         'assets/logo/Logo.svg',
                         color: Colors.white,
@@ -110,6 +110,7 @@ class HomePage extends StatelessWidget {
               leading: Icon(Icons.person),
               title: Text('Profile'),
               onTap: () {
+                Navigator.pushNamed(context, "/profile");
               },
             ),
             ListTile(
