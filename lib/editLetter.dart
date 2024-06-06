@@ -14,81 +14,18 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:provider/provider.dart';
 
-Future showSignatureDialog(
-    BuildContext context, GlobalKey<SignatureState> signatureKey) async {
-  return showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(0))),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        title: const Text(
-          'Autograph',
-          style: DefaultStyles.labelStyle,
-        ),
-        content: Container(
-          width: 400,
-          height: 250,
-          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
-          child: Column(
-            children: [
-              Expanded(
-                child: Signature(
-                  key: signatureKey,
-                  strokeWidth: 2.0,
-                ),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          OutlinedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                ),
-              ),
-            ),
-            onPressed: () {
-              signatureKey.currentState?.clear();
-            },
-            child: const Text('Reset'),
-          ),
-          Container(
-            color: const Color.fromRGBO(40, 42, 45, 1),
-            child: OutlinedButton(
-              style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)))),
-              child: const Text('Save',
-                  style: TextStyle(color: Color.fromRGBO(249, 249, 249, 1))),
-              onPressed: () async {
-                var data = await signatureKey.currentState?.getData();
-                Navigator.of(context).pop(data);
-              },
-            ),
-          ),
-        ],
-      );
-    },
-  );
-}
+class EditLetterPage extends StatefulWidget {
+  final int id_letter; 
 
-class AddLetterPage extends StatefulWidget {
-  final List<String> imagePaths;
-
-  const AddLetterPage({super.key, required this.imagePaths});
+  const EditLetterPage({super.key, required this.id_letter});
 
   @override
-  State<AddLetterPage> createState() =>
-      AddLetterPageState(imagePaths: imagePaths);
+  State<EditLetterPage> createState() => EditLetterPageState(id_letter: id_letter);
 }
 
-class AddLetterPageState extends State<AddLetterPage> {
-  final List<String> imagePaths;
+class EditLetterPageState extends State<EditLetterPage> {
+  final int id_letter; 
+
   bool isDraft = false;
   String selectedCategory = 'Surat Kuasa';
   String selectedDivision = 'IT';
@@ -98,32 +35,44 @@ class AddLetterPageState extends State<AddLetterPage> {
 
   List<String> TempPhotos = [];
 
-  TextEditingController lettertitleController = TextEditingController();
-  TextEditingController letternumberController = TextEditingController();
-  TextEditingController datepublishedController = TextEditingController();
-  TextEditingController signatureimageController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-
   final signatureKey = GlobalKey<SignatureState>();
 
-  AddLetterPageState({required this.imagePaths});
+  EditLetterPageState({required this.id_letter});
 
-  DateTime selectedDate = DateTime.now();
-  Future<void> _selectDate(BuildContext context) async {
-    final picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
-  }
 
   @override
   Widget build(BuildContext context) {
+    final prov = Provider.of<LetterFlyProvider>(context);
+    final itemOfLetter = prov.Letters.firstWhere((letter) => letter.id == id_letter);
+
+    TextEditingController lettertitleController = TextEditingController(text: itemOfLetter.letterTitle);
+    TextEditingController letternumberController = TextEditingController(text: itemOfLetter.letterNumber);
+    TextEditingController descriptionController = TextEditingController(text: itemOfLetter.description);
+
+    lettertitleController.addListener(() {
+      itemOfLetter.letterTitle = lettertitleController.text;
+    });
+    letternumberController.addListener(() {
+      itemOfLetter.letterNumber = letternumberController.text;
+    });
+    descriptionController.addListener(() {
+      itemOfLetter.description = descriptionController.text;
+    });
+
+    DateTime selectedDate = DateTime.now();
+    Future<void> _selectDate(BuildContext context) async {
+      final picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101),
+      );
+      if (picked != null && picked != selectedDate)
+        setState(() {
+          selectedDate = picked;
+        });
+    }
+
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -135,7 +84,7 @@ class AddLetterPageState extends State<AddLetterPage> {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Add Letter', style: subheadlineStyle),
+            Text('Edit Letter', style: subheadlineStyle),
           ],
         ),
       ),
@@ -164,16 +113,41 @@ class AddLetterPageState extends State<AddLetterPage> {
                           padding: const EdgeInsets.all(5),
                           child: Row(
                             children: [
-                              for (var imagePath in imagePaths)
+                              for (var imagePath in itemOfLetter.imagePaths)
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
-                                  child: SizedBox(
-                                    width: 88,
-                                    height: 88,
-                                    child: Image.network(
-                                      imagePath,
-                                      fit: BoxFit.cover,
-                                    ),
+                                  child: Stack(
+                                    children: [
+                                      SizedBox(
+                                        width: 88,
+                                        height: 88,
+                                        child: Image.network(
+                                          imagePath,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 0,
+                                        right: 0,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            itemOfLetter.imagePaths.remove(imagePath);
+                                            setState(() {});
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.red,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: const Icon(
+                                              Icons.close,
+                                              color: Colors.white,
+                                              size: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               const SizedBox(
@@ -181,7 +155,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.pushNamed(context, "/takeaphoto");
+                                  // Navigator.pushNamed(context, "/takeaphoto");
                                 },
                                 child: Container(
                                   width: 88,
@@ -196,7 +170,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                                       ),
                                       SizedBox(height: 4),
                                       Text(
-                                        'Add Letter',
+                                        'Edit Letter',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 10,
@@ -223,9 +197,7 @@ class AddLetterPageState extends State<AddLetterPage> {
               const SizedBox(height: 8),
               TextField(
                 controller: lettertitleController,
-                decoration: DefaultStyles.inputDecoration.copyWith(
-                  hintText: 'Title',
-                ),
+                decoration: DefaultStyles.inputDecoration,
               ),
               const SizedBox(height: 20),
               const Text(
@@ -235,9 +207,7 @@ class AddLetterPageState extends State<AddLetterPage> {
               const SizedBox(height: 8),
               TextField(
                 controller: letternumberController,
-                decoration: DefaultStyles.inputDecoration.copyWith(
-                  hintText: 'e.g Order/Code1/Code2/Month/Year',
-                ),
+                decoration: DefaultStyles.inputDecoration,
               ),
               const SizedBox(height: 20),
               const Text(
@@ -245,7 +215,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                 style: DefaultStyles.labelStyle,
               ),
               const SizedBox(height: 8),
-              SizedBox(
+                            SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () => _selectDate(context),
@@ -278,17 +248,6 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ),
               ),
-              // TextField(
-              //   controller: datepublishedController,
-              //   keyboardType: TextInputType.datetime,
-              //   decoration: DefaultStyles.inputDecoration.copyWith(
-              //     hintText: 'dd/mm/yyyy',
-              //     suffixIcon: const Icon(
-              //       Icons.calendar_today_sharp,
-              //       size: 16,
-              //     ),
-              //   ),
-              // ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -372,93 +331,12 @@ class AddLetterPageState extends State<AddLetterPage> {
                 height: 20,
               ),
               const Text(
-                'Add E-Signature',
+                'Edit E-Signature',
                 style: DefaultStyles.labelStyle,
               ),
               const SizedBox(
                 height: 8,
               ),
-              // Stack(
-              //   children: [
-              //     Container(
-              //       width: 120,
-              //       height: 120,
-              //       decoration: BoxDecoration(
-              //         border: Border.all(color: Colors.grey),
-              //       ),
-              //       child: Padding(
-              //         padding: const EdgeInsets.all(12.0),
-              //         child: InkWell(
-              //           onTap: () async {
-              //             var data2 =
-              //                 await showSignatureDialog(context, signatureKey);
-              //             data2 = await data2.toByteData(
-              //                 format: ui.ImageByteFormat.png);
-              //             final encoded =
-              //                 base64.encode(data2.buffer.asUint8List());
-
-              //             setState(() {
-              //               signImage = base64.decode(encoded);
-              //             });
-              //           },
-              //           child: Container(
-              //             color: Colors.grey[300],
-              //             child: const Column(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 Icon(
-              //                   Icons.edit,
-              //                   size: 16,
-              //                 ),
-              //                 SizedBox(height: 5),
-              //                 Text(
-              //                   'Add Sign',
-              //                   textAlign: TextAlign.center,
-              //                   style: TextStyle(
-              //                     fontSize: 10,
-              //                     color: Colors.black,
-              //                   ),
-              //                 ),
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //     // const SizedBox(
-              //     //   width: 20,
-              //     // ),
-              //     // signImage != null
-              //     //     ? Container(
-              //     //         width: 100,
-              //     //         height: 100,
-              //     //         decoration: BoxDecoration(
-              //     //             border: Border.all(color: Colors.grey)),
-              //     //         child: Image.memory(
-              //     //           signImage!,
-              //     //           width: 100,
-              //     //           height: 100,
-              //     //           fit: BoxFit.cover,
-              //     //         ))
-              //     //     : Container(),
-              //     Align(
-              //       alignment: Alignment.bottomRight,
-              //       child: signImage != null
-              //           ? Container(
-              //               width: 100,
-              //               height: 100,
-              //               decoration: BoxDecoration(
-              //                   border: Border.all(color: Colors.grey)),
-              //               child: Image.memory(
-              //                 signImage!,
-              //                 width: 100,
-              //                 height: 100,
-              //                 fit: BoxFit.cover,
-              //               ))
-              //           : Container(),
-              //     )
-              //   ],
-              // ),
               Stack(
                 children: [
                   Container(
@@ -504,7 +382,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      'Add Sign',
+                                      'Edit Sign',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 16,
@@ -526,14 +404,6 @@ class AddLetterPageState extends State<AddLetterPage> {
                         decoration: BoxDecoration(
                           color: const Color.fromRGBO(40, 42, 45, 1),
                           borderRadius: BorderRadius.circular(0),
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: Colors.black.withOpacity(0.5),
-                          //     spreadRadius: 1,
-                          //     blurRadius: 3,
-                          //     offset: const Offset(0, 3),
-                          //   ),
-                          // ],
                         ),
                         child: IconButton(
                           onPressed: () async {
@@ -593,67 +463,107 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text('Save as draft'),
-                  Switch(
-                    value: isDraft, 
-                    onChanged: (value) {
-                      setState(() {
-                        isDraft = value;
-                      });
-                    })
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
+              const SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(0),
-                      )),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0),
+                    ),
+                  ),
                   onPressed: () {
-                    DateTime currentDate = DateTime.now();
-                    String defaultDate =
-                        "${currentDate.day}/${currentDate.month}/${currentDate.year}";
-                    for (var gmbr in imagePaths) {
-                      TempPhotos.add(gmbr);
-                    }
-                    final letterProvider = Provider.of<LetterFlyProvider>(context, listen: false);
-                    final letter = Letter(
-                        id: letterProvider.LetterCounts + 1,
-                        imagePaths: TempPhotos,
-                        letterTitle: lettertitleController.text,
-                        letterNumber: letternumberController.text,
-                        datePublished: selectedDate != null ? "${selectedDate.toLocal()}".split(' ')[0] : defaultDate,
-                        category: selectedCategory,
-                        division: selectedDivision,
-                        signatureImage: signImage,
-                        description: descriptionController.text);
+                    final updatedLetter = Letter(
+                      id: itemOfLetter.id,
+                      imagePaths: itemOfLetter.imagePaths,
+                      letterTitle: lettertitleController.text,
+                      letterNumber: letternumberController.text,
+                      datePublished: "${selectedDate}".split(' ')[0],
+                      category: selectedCategory,
+                      division: selectedDivision,
+                      signatureImage: signImage,
+                      description: descriptionController.text,
+                    );
+
                     Provider.of<LetterFlyProvider>(context, listen: false)
-                        .setLetters(letter);
+                        .editLetter(updatedLetter);
                     Navigator.pushNamed(context, "/sukses");
-                    imagePaths.clear();
                   },
                   child: const Text(
-                    'Add Letter',
+                    'Edit Letter',
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
-              ),
+              )
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Future showSignatureDialog(
+    BuildContext context, GlobalKey<SignatureState> signatureKey) async {
+  return showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(0))),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        title: const Text(
+          'Autograph',
+          style: DefaultStyles.labelStyle,
+        ),
+        content: Container(
+          width: 400,
+          height: 250,
+          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          child: Column(
+            children: [
+              Expanded(
+                child: Signature(
+                  key: signatureKey,
+                  strokeWidth: 2.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          OutlinedButton(
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
+            ),
+            onPressed: () {
+              signatureKey.currentState?.clear();
+            },
+            child: const Text('Reset'),
+          ),
+          Container(
+            color: const Color.fromRGBO(40, 42, 45, 1),
+            child: OutlinedButton(
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0)))),
+              child: const Text('Save',
+                  style: TextStyle(color: Color.fromRGBO(249, 249, 249, 1))),
+              onPressed: () async {
+                var data = await signatureKey.currentState?.getData();
+                Navigator.of(context).pop(data);
+              },
+            ),
+          ),
+        ],
+      );
+    },
+  );
 }

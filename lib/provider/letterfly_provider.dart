@@ -88,4 +88,12 @@ class LetterFlyProvider with ChangeNotifier {
     _selectedChipSuratAjaib = val;
     notifyListeners();
   }
+
+  void editLetter(Letter updatedLetter) {
+  final index = _letters.indexWhere((letter) => letter.id == updatedLetter.id);
+  if (index != -1) {
+    _letters[index] = updatedLetter;
+    notifyListeners();
+    }
+  }
 }

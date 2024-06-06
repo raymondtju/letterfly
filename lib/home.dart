@@ -1,4 +1,5 @@
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/editLetter.dart';
 import 'package:Letterfly/letterDetail.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
@@ -137,14 +138,21 @@ class HomePage extends StatelessWidget {
                                       color: Colors.grey,
                                     ),
                                     title: Text(prov.Letters[index].letterNumber),
-                                    subtitle: Text(
-                                        '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
-                                    trailing: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(prov.Letters[index].datePublished),
+                                        Text('${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file', style: TextStyle(fontSize: 10),),
+                                        Text(prov.Letters[index].datePublished, style: TextStyle(fontSize: 10),),
                                       ],
+                                    ),
+                                    trailing: IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context, 
+                                          MaterialPageRoute(builder: (context) => EditLetterPage(id_letter: prov.Letters[index].id))
+                                        );
+                                      }, 
+                                      icon: Icon(Icons.edit)
                                     ),
                                   );
                                 } else {
