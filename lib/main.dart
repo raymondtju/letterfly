@@ -6,6 +6,7 @@ import 'package:Letterfly/forgotPassword.dart';
 import 'package:Letterfly/home.dart';
 import 'package:Letterfly/login.dart';
 import 'package:Letterfly/newPassword.dart';
+import 'package:Letterfly/profile.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/signup.dart';
 import 'package:Letterfly/successful.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
                 case '/signup':
                   return _buildPageRoute(const SignUpPage());
                 case '/home':
-                  return _buildPageRoute(const HomePage());
+                  return _buildPageRoute(HomePage());
                 case '/sukses':
                   return _buildPageRoute(const SuccessfulPage());
                 case '/forgetPass':
@@ -56,6 +57,8 @@ class MyApp extends StatelessWidget {
                   return _buildPageRoute(const TakeAPhotoPage());
                 case '/addletter':
                   return _buildPageRoute(const AddLetterPage(imagePaths: []));
+                case '/profile':
+                  return _buildPageRoute(const ProfilePage());
                 default:
                   return _buildPageRoute(const WelcomePage());
               }

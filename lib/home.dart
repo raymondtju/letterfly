@@ -9,13 +9,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
 
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
         automaticallyImplyLeading: false,
@@ -43,6 +45,18 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _scaffoldKey.currentState?.openDrawer();
+            }, 
+            icon: Icon(
+              Icons.settings_sharp,
+              size: 24,
+              color: Colors.white,
+            )
+          )
+        ],
         // actions: [
         //   Switch(
         //       value: prov.switchThemeto,
@@ -50,6 +64,109 @@ class HomePage extends StatelessWidget {
         //         prov.setSwitchThemeto = val;
         //       }),
         // ],
+      ),
+      drawer: Drawer(
+        width: MediaQuery.of(context).size.width * 0.75,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 75, 
+                    height: 75,
+                    decoration: BoxDecoration(
+                      color: Colors.black, 
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SvgPicture.asset(
+                        'assets/logo/Logo.svg',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Text(
+                    'Hi, ${prov.Username}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18
+                    ),
+                  ),
+                  Text(
+                    '${prov.Email}',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12
+                    ),
+                  ),
+                ],
+              )
+            ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Profile'),
+              onTap: () {
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.report),
+              title: Text('Report'),
+              onTap: () {
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.info_rounded),
+              title: Text('About us'),
+              onTap: () {
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.support),
+              title: Text('Support us'),
+              onTap: () {
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+              onTap: () {
+                Navigator.pushNamed(context, "/login");
+              },
+            ),
+            SizedBox(height: 70),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/logo/Logo.svg',
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'Letterfly',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 5),
+                Text(
+                  'All rights Reserved 2024',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
       backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
       body: Column(
@@ -167,29 +284,27 @@ class HomePage extends StatelessWidget {
                                   Stack(
                                     alignment: Alignment.center,
                                     children: [
-                                      SizedBox(
-                                        height: 60,
-                                        width: 60,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: const Color.fromRGBO(
-                                                    40, 42, 45, 1),
-                                                width: 2),
-                                            borderRadius:
-                                                BorderRadius.circular(0),
-                                          ),
-                                        ),
-                                      ),
                                       InkWell(
                                         onTap: () {
-                                          Navigator.pushNamed(
-                                              context, "/addletter");
+                                          Navigator.pushNamed(context, "/addletter");
                                         },
-                                        child: const Icon(
-                                          Icons.add,
-                                          size: 28,
-                                          color: Color.fromRGBO(40, 42, 45, 1),
+                                        child: SizedBox(
+                                          height: 60,
+                                          width: 60,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: const Color.fromRGBO(40, 42, 45, 1),
+                                                width: 2,
+                                              ),
+                                              borderRadius: BorderRadius.circular(0),
+                                            ),
+                                            child: const Icon(
+                                              Icons.add,
+                                              size: 28,
+                                              color: Color.fromRGBO(40, 42, 45, 1),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -321,45 +436,45 @@ class HomePage extends StatelessWidget {
                   const SizedBox(
                     width: 43,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            SizedBox(
-                              height: 52,
-                              width: 52,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: const Color.fromRGBO(
-                                          219, 219, 219, 1),
-                                      width: 2),
-                                  borderRadius: BorderRadius.circular(0),
-                                ),
-                              ),
-                            ),
-                            const Icon(
-                              Icons.settings_sharp,
-                              size: 24,
-                              color: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        "Settings",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  )
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: Stack(
+                  //         alignment: Alignment.center,
+                  //         children: [
+                  //           SizedBox(
+                  //             height: 52,
+                  //             width: 52,
+                  //             child: Container(
+                  //               decoration: BoxDecoration(
+                  //                 border: Border.all(
+                  //                     color: const Color.fromRGBO(
+                  //                         219, 219, 219, 1),
+                  //                     width: 2),
+                  //                 borderRadius: BorderRadius.circular(0),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //           const Icon(
+                  //             Icons.settings_sharp,
+                  //             size: 24,
+                  //             color: Colors.white,
+                  //           ),
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     const SizedBox(height: 10),
+                  //     const Text(
+                  //       "Settings",
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontSize: 12,
+                  //       ),
+                  //     )
+                  //   ],
+                  // )
                 ],
               ),
             ),
