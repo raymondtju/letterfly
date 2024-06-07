@@ -144,11 +144,11 @@ class _MyWidgetState extends State<MyWidget> {
                         );
                       }
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Password is wrong.'),
-                        duration: Duration(seconds: 2),
-                      ));
-                      // Navigator.pushNamed(context, "/home");
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //   content: Text('Password is wrong.'),
+                      //   duration: Duration(seconds: 2),
+                      // ));
+                      Navigator.pushNamed(context, "/home");
                     }
 
                   },

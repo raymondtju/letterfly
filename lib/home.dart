@@ -117,12 +117,14 @@ class HomePage extends StatelessWidget {
               leading: Icon(Icons.report),
               title: Text('Report'),
               onTap: () {
+                Navigator.pushNamed(context, "/report");
               },
             ),
             ListTile(
               leading: Icon(Icons.info_rounded),
               title: Text('About us'),
               onTap: () {
+                Navigator.pushNamed(context, "/about_us");
               },
             ),
             ListTile(

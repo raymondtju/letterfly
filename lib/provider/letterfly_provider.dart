@@ -96,4 +96,9 @@ class LetterFlyProvider with ChangeNotifier {
     notifyListeners();
     }
   }
+  
+  void removeLetter(Letter letter) {
+    _letters.remove(letter);
+    notifyListeners();
+  }
 }
