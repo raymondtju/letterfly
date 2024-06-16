@@ -1,7 +1,9 @@
+import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/editLetter.dart';
 import 'package:Letterfly/letterDetail.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
@@ -12,6 +14,7 @@ class HomePage extends StatelessWidget {
   HomePage({super.key});
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final global = GlobalThemeData().lightThemeData;
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
@@ -22,8 +25,9 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: EdgeInsets.only(
-              top: 30, left: MediaQuery.of(context).size.width * 0.01),
+          padding: EdgeInsets.only(top: 30, left: 12
+              //MediaQuery.of(context).size.width * 0.01
+              ),
           child: Row(
             children: [
               SvgPicture.asset(
@@ -34,7 +38,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              Text(
+              const Text(
                 'Letterfly',
                 style: TextStyle(
                   color: Colors.white,
@@ -46,16 +50,20 @@ class HomePage extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              _scaffoldKey.currentState?.openDrawer();
-            }, 
-            icon: Icon(
-              Icons.settings_sharp,
-              size: 24,
-              color: Colors.white,
-            )
-          )
+          Padding(
+              padding: EdgeInsets.only(
+                top: 20,
+                right: 20,
+              ),
+              child: IconButton(
+                  onPressed: () {
+                    _scaffoldKey.currentState?.openDrawer();
+                  },
+                  icon: Icon(
+                    Icons.settings_sharp,
+                    size: 24,
+                    color: Colors.white,
+                  )))
         ],
         // actions: [
         //   Switch(
@@ -71,41 +79,34 @@ class HomePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 75, 
-                    height: 75,
-                    decoration: BoxDecoration(
-                      color: Colors.black, 
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: SvgPicture.asset(
-                        'assets/logo/Logo.svg',
-                        color: Colors.white,
-                      ),
+                child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 75,
+                  height: 75,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SvgPicture.asset(
+                      'assets/logo/Logo.svg',
+                      color: Colors.white,
                     ),
                   ),
-                  Text(
-                    'Hi, ${prov.Username}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18
-                    ),
-                  ),
-                  Text(
-                    '${prov.Email}',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 12
-                    ),
-                  ),
-                ],
-              )
-            ),
+                ),
+                Text(
+                  'Hi, ${prov.Username}',
+                  style: TextStyle(color: Colors.black, fontSize: 18),
+                ),
+                Text(
+                  '${prov.Email}',
+                  style: TextStyle(color: Colors.black, fontSize: 12),
+                ),
+              ],
+            )),
             ListTile(
               leading: Icon(Icons.person),
               title: Text('Profile'),
@@ -130,8 +131,7 @@ class HomePage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.support),
               title: Text('Support us'),
-              onTap: () {
-              },
+              onTap: () {},
             ),
             ListTile(
               leading: Icon(Icons.logout),
@@ -150,8 +150,8 @@ class HomePage extends StatelessWidget {
                     SvgPicture.asset(
                       'assets/logo/Logo.svg',
                     ),
-                    SizedBox(width: 10),
-                    Text(
+                    const SizedBox(width: 10),
+                    const Text(
                       'Letterfly',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -159,8 +159,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 5),
-                Text(
+                const SizedBox(height: 5),
+                const Text(
                   'All rights Reserved 2024',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -177,7 +177,7 @@ class HomePage extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
-            child: homeNavbar(context),
+            child: homeNavBar(context),
           ),
           Expanded(
             child: Container(
@@ -212,68 +212,96 @@ class HomePage extends StatelessWidget {
                           ? ListView.builder(
                               itemCount: prov.Letters.length,
                               itemBuilder: (context, index) {
-                                if ((prov.selectedChipSuratKuasa && prov.Letters[index].category == 'Surat Kuasa') || (prov.selectedChipSuratAjaib && prov.Letters[index].category == 'Surat Ajaib')) {
+                                if ((prov.selectedChipSuratKuasa &&
+                                        prov.Letters[index].category ==
+                                            'Surat Kuasa') ||
+                                    (prov.selectedChipSuratAjaib &&
+                                        prov.Letters[index].category ==
+                                            'Surat Ajaib')) {
                                   return ListTile(
                                     onTap: () {
                                       Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => LetterDetailPage(id_letter: prov.Letters[index].id)) 
-                                      );
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LetterDetailPage(
+                                                      id_letter: prov
+                                                          .Letters[index].id)));
                                     },
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(0, 5, 5, 5),
                                     leading: Container(
                                       height:
-                                          MediaQuery.of(context).size.width * 0.1,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.1,
+                                          MediaQuery.of(context).size.width *
+                                              0.1,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
                                       color: Colors.grey,
                                     ),
-                                    title: Text(prov.Letters[index].letterNumber),
+                                    title:
+                                        Text(prov.Letters[index].letterNumber),
                                     subtitle: Text(
                                         '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
                                     trailing: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
                                         Text(prov.Letters[index].datePublished),
                                       ],
                                     ),
                                   );
-                                } else if (!prov.selectedChipSuratKuasa && !prov.selectedChipSuratAjaib) {
+                                } else if (!prov.selectedChipSuratKuasa &&
+                                    !prov.selectedChipSuratAjaib) {
                                   return ListTile(
                                     onTap: () {
                                       Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) => LetterDetailPage(id_letter: prov.Letters[index].id)) 
-                                      );
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LetterDetailPage(
+                                                      id_letter: prov
+                                                          .Letters[index].id)));
                                     },
                                     contentPadding:
                                         const EdgeInsets.fromLTRB(0, 5, 5, 5),
                                     leading: Container(
                                       height:
-                                          MediaQuery.of(context).size.width * 0.1,
-                                      width:
-                                          MediaQuery.of(context).size.width * 0.1,
+                                          MediaQuery.of(context).size.width *
+                                              0.1,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
                                       color: Colors.grey,
                                     ),
-                                    title: Text(prov.Letters[index].letterNumber),
+                                    title:
+                                        Text(prov.Letters[index].letterNumber),
                                     subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text('${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file', style: TextStyle(fontSize: 10),),
-                                        Text(prov.Letters[index].datePublished, style: TextStyle(fontSize: 10),),
+                                        Text(
+                                          '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file',
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                        Text(
+                                          prov.Letters[index].datePublished,
+                                          style: TextStyle(fontSize: 10),
+                                        ),
                                       ],
                                     ),
                                     trailing: IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context, 
-                                          MaterialPageRoute(builder: (context) => EditLetterPage(id_letter: prov.Letters[index].id))
-                                        );
-                                      }, 
-                                      icon: Icon(Icons.edit)
-                                    ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditLetterPage(
+                                                          id_letter: prov
+                                                              .Letters[index]
+                                                              .id)));
+                                        },
+                                        icon: Icon(Icons.edit)),
                                   );
                                 } else {
                                   return Container();
@@ -289,7 +317,8 @@ class HomePage extends StatelessWidget {
                                     children: [
                                       InkWell(
                                         onTap: () {
-                                          Navigator.pushNamed(context, "/addletter");
+                                          Navigator.pushNamed(
+                                              context, "/addletter");
                                         },
                                         child: SizedBox(
                                           height: 60,
@@ -297,15 +326,18 @@ class HomePage extends StatelessWidget {
                                           child: Container(
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                color: const Color.fromRGBO(40, 42, 45, 1),
+                                                color: const Color.fromRGBO(
+                                                    40, 42, 45, 1),
                                                 width: 2,
                                               ),
-                                              borderRadius: BorderRadius.circular(0),
+                                              borderRadius:
+                                                  BorderRadius.circular(0),
                                             ),
                                             child: const Icon(
                                               Icons.add,
                                               size: 28,
-                                              color: Color.fromRGBO(40, 42, 45, 1),
+                                              color:
+                                                  Color.fromRGBO(40, 42, 45, 1),
                                             ),
                                           ),
                                         ),
@@ -339,7 +371,88 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Column homeNavbar(BuildContext context) {
+  Column homeNavBar(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "/addletter");
+                },
+                child: Container(
+                  height: 44,
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: global.colorScheme.onPrimary,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(0),
+                    color: global.colorScheme.onPrimary,
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.add,
+                        size: 24,
+                      ),
+                      SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "Add Letter",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, "/category");
+                },
+                child: Container(
+                  height: 44,
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                        color: global.colorScheme.onPrimary, width: 2),
+                    borderRadius: BorderRadius.circular(0),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.grid_view_sharp,
+                        size: 20,
+                        color: global.colorScheme.onPrimary,
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        "My Letter",
+                        style: TextStyle(
+                            fontSize: 16, color: global.colorScheme.onPrimary),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+
+  Column homeNavbarOriginal(BuildContext context) {
     return Column(
       children: [
         Column(
@@ -577,8 +690,8 @@ class _ChipsState extends State<Chips> {
           selectedShadowColor: Colors.black,
           selected: prov.selectedChipSuratAjaib,
           onSelected: (val) {
-              prov.setSelectedChipSuratAjaib = val;
-              prov.setSelectedChipSuratKuasa = false;
+            prov.setSelectedChipSuratAjaib = val;
+            prov.setSelectedChipSuratKuasa = false;
           },
         ),
       ],
