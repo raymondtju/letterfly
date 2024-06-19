@@ -12,19 +12,21 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EditLetterPage extends StatefulWidget {
-  final int id_letter; 
+  final int id_letter;
 
   const EditLetterPage({super.key, required this.id_letter});
 
   @override
-  State<EditLetterPage> createState() => EditLetterPageState(id_letter: id_letter);
+  State<EditLetterPage> createState() =>
+      EditLetterPageState(id_letter: id_letter);
 }
 
 class EditLetterPageState extends State<EditLetterPage> {
-  final int id_letter; 
+  final int id_letter;
 
   bool isDraft = false;
   String selectedCategory = 'Surat Kuasa';
@@ -37,17 +39,46 @@ class EditLetterPageState extends State<EditLetterPage> {
 
   final signatureKey = GlobalKey<SignatureState>();
 
+  late DateTime selectedDate;
+
   EditLetterPageState({required this.id_letter});
 
+  @override
+  void initState() {
+    super.initState();
+    final prov = Provider.of<LetterFlyProvider>(context, listen: false);
+    final itemOfLetter =
+        prov.Letters.firstWhere((letter) => letter.id == id_letter);
+    String stringDate = itemOfLetter.datePublished;
+    selectedDate = DateTime.parse(stringDate);
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
-    final itemOfLetter = prov.Letters.firstWhere((letter) => letter.id == id_letter);
-
-    TextEditingController lettertitleController = TextEditingController(text: itemOfLetter.letterTitle);
-    TextEditingController letternumberController = TextEditingController(text: itemOfLetter.letterNumber);
-    TextEditingController descriptionController = TextEditingController(text: itemOfLetter.description);
+    final itemOfLetter =
+        prov.Letters.firstWhere((letter) => letter.id == id_letter);
+    TextEditingController lettertitleController =
+        TextEditingController(text: itemOfLetter.letterTitle);
+    TextEditingController letternumberController =
+        TextEditingController(text: itemOfLetter.letterNumber);
+    TextEditingController descriptionController =
+        TextEditingController(text: itemOfLetter.description);
 
     lettertitleController.addListener(() {
       itemOfLetter.letterTitle = lettertitleController.text;
@@ -58,20 +89,6 @@ class EditLetterPageState extends State<EditLetterPage> {
     descriptionController.addListener(() {
       itemOfLetter.description = descriptionController.text;
     });
-
-    DateTime selectedDate = DateTime.now();
-    Future<void> _selectDate(BuildContext context) async {
-      final picked = await showDatePicker(
-        context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101),
-      );
-      if (picked != null && picked != selectedDate)
-        setState(() {
-          selectedDate = picked;
-        });
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -131,7 +148,8 @@ class EditLetterPageState extends State<EditLetterPage> {
                                         right: 0,
                                         child: GestureDetector(
                                           onTap: () {
-                                            itemOfLetter.imagePaths.remove(imagePath);
+                                            itemOfLetter.imagePaths
+                                                .remove(imagePath);
                                             setState(() {});
                                           },
                                           child: Container(
@@ -215,10 +233,12 @@ class EditLetterPageState extends State<EditLetterPage> {
                 style: DefaultStyles.labelStyle,
               ),
               const SizedBox(height: 8),
-                            SizedBox(
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => _selectDate(context),
+                  onPressed: () async {
+                    await _selectDate(context);
+                  },
                   style: ButtonStyle(
                     alignment: Alignment.centerLeft,
                     backgroundColor:
@@ -239,9 +259,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                     ),
                   ),
                   child: Text(
-                    selectedDate != null
-                        ? "${selectedDate.toLocal()}".split(' ')[0]
-                        : "Select date",
+                    DateFormat('yyyy-MM-dd').format(selectedDate),
                     style: TextStyle(
                       fontSize: 16,
                     ),
@@ -475,6 +493,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                     ),
                   ),
                   onPressed: () {
+                    print(selectedDate);
                     final updatedLetter = Letter(
                       id: itemOfLetter.id,
                       imagePaths: itemOfLetter.imagePaths,

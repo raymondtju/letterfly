@@ -114,7 +114,7 @@ class AddLetterPageState extends State<AddLetterPage> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
+      lastDate: DateTime(DateTime.now().year + 10),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -601,12 +601,12 @@ class AddLetterPageState extends State<AddLetterPage> {
                 children: [
                   Text('Save as draft'),
                   Switch(
-                    value: isDraft, 
-                    onChanged: (value) {
-                      setState(() {
-                        isDraft = value;
-                      });
-                    })
+                      value: isDraft,
+                      onChanged: (value) {
+                        setState(() {
+                          isDraft = value;
+                        });
+                      })
                 ],
               ),
               const SizedBox(
@@ -628,13 +628,16 @@ class AddLetterPageState extends State<AddLetterPage> {
                     for (var gmbr in imagePaths) {
                       TempPhotos.add(gmbr);
                     }
-                    final letterProvider = Provider.of<LetterFlyProvider>(context, listen: false);
+                    final letterProvider =
+                        Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
                         id: letterProvider.LetterCounts + 1,
                         imagePaths: TempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
-                        datePublished: selectedDate != null ? "${selectedDate.toLocal()}".split(' ')[0] : defaultDate,
+                        datePublished: selectedDate != null
+                            ? "${selectedDate.toLocal()}".split(' ')[0]
+                            : defaultDate,
                         category: selectedCategory,
                         division: selectedDivision,
                         signatureImage: signImage,
