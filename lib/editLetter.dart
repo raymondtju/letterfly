@@ -1,16 +1,12 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/editTakeAPhoto.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +14,15 @@ import 'package:provider/provider.dart';
 class EditLetterPage extends StatefulWidget {
   final int id_letter;
 
-  const EditLetterPage({super.key, required this.id_letter});
+  const EditLetterPage({
+    super.key,
+    required this.id_letter,
+  });
 
   @override
-  State<EditLetterPage> createState() =>
-      EditLetterPageState(id_letter: id_letter);
+  State<EditLetterPage> createState() => EditLetterPageState(
+        id_letter: id_letter,
+      );
 }
 
 class EditLetterPageState extends State<EditLetterPage> {
@@ -148,6 +148,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                                         right: 0,
                                         child: GestureDetector(
                                           onTap: () {
+                                            print(itemOfLetter.imagePaths);
                                             itemOfLetter.imagePaths
                                                 .remove(imagePath);
                                             setState(() {});
@@ -173,7 +174,14 @@ class EditLetterPageState extends State<EditLetterPage> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  // Navigator.pushNamed(context, "/takeaphoto");
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditTakeAPhotoPage(
+                                        id_letter: id_letter,
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: Container(
                                   width: 88,

@@ -13,6 +13,7 @@ import 'package:Letterfly/report.dart';
 import 'package:Letterfly/signup.dart';
 import 'package:Letterfly/successful.dart';
 import 'package:Letterfly/takeAPhoto.dart';
+import 'package:Letterfly/editTakeAPhoto.dart';
 import 'package:Letterfly/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/welcome",
+            initialRoute: "/home",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':
@@ -57,6 +58,10 @@ class MyApp extends StatelessWidget {
                   return _buildPageRoute(const SuratKuasaView());
                 case '/takeaphoto':
                   return _buildPageRoute(const TakeAPhotoPage());
+                case '/edit_takeaphoto':
+                  return _buildPageRoute(EditTakeAPhotoPage(
+                      id_letter:
+                          ModalRoute.of(context)?.settings.arguments as int));
                 case '/addletter':
                   return _buildPageRoute(const AddLetterPage(imagePaths: []));
                 case '/profile':

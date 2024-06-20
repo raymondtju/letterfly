@@ -74,6 +74,9 @@ class HomePage extends StatelessWidget {
         // ],
       ),
       drawer: Drawer(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
+        ),
         width: MediaQuery.of(context).size.width * 0.75,
         child: ListView(
           padding: EdgeInsets.zero,
