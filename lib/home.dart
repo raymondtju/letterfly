@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: EdgeInsets.only(top: 30, left: 12
+          padding: const EdgeInsets.only(top: 30, left: 12
               //MediaQuery.of(context).size.width * 0.01
               ),
           child: Row(
@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           Padding(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 20,
                 right: 20,
               ),
@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     _scaffoldKey.currentState?.openDrawer();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.settings_sharp,
                     size: 24,
                     color: Colors.white,
@@ -73,107 +73,7 @@ class HomePage extends StatelessWidget {
         //       }),
         // ],
       ),
-      drawer: Drawer(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
-        ),
-        width: MediaQuery.of(context).size.width * 0.75,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 75,
-                  height: 75,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: SvgPicture.asset(
-                      'assets/logo/Logo.svg',
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                Text(
-                  'Hi, ${prov.Username}',
-                  style: TextStyle(color: Colors.black, fontSize: 18),
-                ),
-                Text(
-                  '${prov.Email}',
-                  style: TextStyle(color: Colors.black, fontSize: 12),
-                ),
-              ],
-            )),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
-              onTap: () {
-                Navigator.pushNamed(context, "/profile");
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.report),
-              title: Text('Report'),
-              onTap: () {
-                Navigator.pushNamed(context, "/report");
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.info_rounded),
-              title: Text('About us'),
-              onTap: () {
-                Navigator.pushNamed(context, "/about_us");
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.support),
-              title: Text('Support us'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-              onTap: () {
-                Navigator.pushNamed(context, "/login");
-              },
-            ),
-            SizedBox(height: 70),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/logo/Logo.svg',
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      'Letterfly',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                const Text(
-                  'All rights Reserved 2024',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      drawer: HomeDrawer(context, prov),
       backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
       body: Column(
         children: [
@@ -285,11 +185,11 @@ class HomePage extends StatelessWidget {
                                       children: [
                                         Text(
                                           '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file',
-                                          style: TextStyle(fontSize: 10),
+                                          style: const TextStyle(fontSize: 10),
                                         ),
                                         Text(
                                           prov.Letters[index].datePublished,
-                                          style: TextStyle(fontSize: 10),
+                                          style: const TextStyle(fontSize: 10),
                                         ),
                                       ],
                                     ),
@@ -304,7 +204,7 @@ class HomePage extends StatelessWidget {
                                                               .Letters[index]
                                                               .id)));
                                         },
-                                        icon: Icon(Icons.edit)),
+                                        icon: const Icon(Icons.edit)),
                                   );
                                 } else {
                                   return Container();
@@ -374,6 +274,140 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Drawer HomeDrawer(BuildContext context, LetterFlyProvider prov) {
+    return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
+      width: MediaQuery.of(context).size.width * 0.75,
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(16, 44, 0, 0),
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.25,
+                          height: MediaQuery.of(context).size.width * 0.25,
+                          decoration: BoxDecoration(
+                            color: global.colorScheme.primary,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(28),
+                            child: SvgPicture.asset(
+                              'assets/logo/Logo.svg',
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+
+                        // -- Real --
+
+                        //Text('Hi, ${prov.Username}', style: headlineStyle),
+                        //SizedBox(
+                        //  height: MediaQuery.of(context).size.height * 0.005,
+                        //),
+                        //Text(prov.Email, style: subheadlineStyle),
+
+                        // -- Debug --
+
+                        Text('Hi, Justin', style: headlineStyle),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.005,
+                        ),
+                        Text("dummy@gmail.com", style: subtextLineStyle),
+                      ],
+                    )),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.03,
+                ),
+                ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text(
+                    'Profile',
+                    style: textlineStyle,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, "/profile");
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.report),
+                  title: const Text(
+                    'Report',
+                    style: textlineStyle,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, "/report");
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.info_rounded),
+                  title: const Text(
+                    'About us',
+                    style: textlineStyle,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, "/about_us");
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.support),
+                  title: const Text(
+                    'Support us',
+                    style: textlineStyle,
+                  ),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text(
+                    'Logout',
+                    style: textlineStyle,
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, "/login");
+                  },
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(
+                0, 0, 0, MediaQuery.of(context).size.height * 0.1),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/logo/Logo.svg',
+                      width: 24, // Adjust size as needed
+                      height: 24,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text('Letterfly', style: headlineStyle),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                const Text('All rights Reserved 2024', style: subtextLineStyle),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Column homeNavBar(BuildContext context) {
     return Column(
       children: [
@@ -387,7 +421,7 @@ class HomePage extends StatelessWidget {
                 },
                 child: Container(
                   height: 44,
-                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: global.colorScheme.onPrimary,
@@ -399,7 +433,7 @@ class HomePage extends StatelessWidget {
                   child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.add,
                         size: 24,
                       ),
