@@ -1,11 +1,11 @@
-import 'package:Letterfly/addletter.dart';
+import 'package:Letterfly/pages/add_letter_page/addletter.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
 class TakeAPhotoPage extends StatefulWidget {
-  const TakeAPhotoPage({Key? key}) : super(key: key);
+  const TakeAPhotoPage({super.key});
 
   @override
   State<TakeAPhotoPage> createState() => _TakeAPhotoPageState();
@@ -14,7 +14,7 @@ class TakeAPhotoPage extends StatefulWidget {
 class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +47,7 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return CameraPreview(_controller);
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
@@ -62,7 +62,8 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddLetterPage(imagePaths: prov.TempPhoto),
+                  builder: (context) =>
+                      AddLetterPage(imagePaths: prov.TempPhoto),
                 ),
               );
             } catch (e) {
@@ -72,7 +73,7 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
             print("Camera is not initialized");
           }
         },
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
     );
   }

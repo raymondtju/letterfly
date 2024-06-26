@@ -1,7 +1,7 @@
 import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/components/textstylefont.dart';
-import 'package:Letterfly/editLetter.dart';
-import 'package:Letterfly/letterDetail.dart';
+import 'package:Letterfly/pages/edit_letter_page/editLetter.dart';
+import 'package:Letterfly/pages/letterDetail.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -284,10 +284,10 @@ class HomePage extends StatelessWidget {
         children: [
           Expanded(
             child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 44, 0, 0),
+              padding: const EdgeInsets.fromLTRB(16, 44, 0, 0),
               children: [
                 Container(
-                    padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,11 +320,11 @@ class HomePage extends StatelessWidget {
 
                         // -- Debug --
 
-                        Text('Hi, Justin', style: headlineStyle),
+                        const Text('Hi, Justin', style: headlineStyle),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.005,
                         ),
-                        Text("dummy@gmail.com", style: subtextLineStyle),
+                        const Text("dummy@gmail.com", style: subtextLineStyle),
                       ],
                     )),
                 SizedBox(

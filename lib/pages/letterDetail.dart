@@ -1,18 +1,19 @@
 import 'package:Letterfly/components/textstylefont.dart';
-import 'package:Letterfly/editLetter.dart';
+import 'package:Letterfly/pages/edit_letter_page/editLetter.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LetterDetailPage extends StatelessWidget {
-  final int id_letter; 
+  final int id_letter;
   const LetterDetailPage({super.key, required this.id_letter});
 
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
-    final itemOfLetter = prov.Letters.firstWhere((letter) => letter.id == id_letter);
+    final itemOfLetter =
+        prov.Letters.firstWhere((letter) => letter.id == id_letter);
 
     return Scaffold(
       appBar: AppBar(
@@ -30,49 +31,53 @@ class LetterDetailPage extends StatelessWidget {
         ),
         actions: [
           PopupMenuButton(
-            icon: Icon(Icons.more_vert),
-            itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-              PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(Icons.favorite),
-                  title: Text('Favorite'),
-                ),
-              ),
-              PopupMenuItem(
-                child: ListTile(
-                  leading: Icon(Icons.delete, color: Colors.red),
-                  title: Text('Delete', style: TextStyle(color: Colors.red)),
-                ),
-                onTap: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Delete Letter'),
-                        content: Text('Are you sure you want to delete this letter?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              final prov = Provider.of<LetterFlyProvider>(context, listen: false);
-                              prov.removeLetter(itemOfLetter);
-                              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
-                            },
-                            child: Text('Delete'),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              ),
-            ]
-          ),
+              icon: const Icon(Icons.more_vert),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                    const PopupMenuItem(
+                      child: ListTile(
+                        leading: Icon(Icons.favorite),
+                        title: Text('Favorite'),
+                      ),
+                    ),
+                    PopupMenuItem(
+                      child: const ListTile(
+                        leading: Icon(Icons.delete, color: Colors.red),
+                        title:
+                            Text('Delete', style: TextStyle(color: Colors.red)),
+                      ),
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Delete Letter'),
+                              content: const Text(
+                                  'Are you sure you want to delete this letter?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    final prov = Provider.of<LetterFlyProvider>(
+                                        context,
+                                        listen: false);
+                                    prov.removeLetter(itemOfLetter);
+                                    Navigator.pushNamedAndRemoveUntil(
+                                        context, '/home', (route) => false);
+                                  },
+                                  child: const Text('Delete'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ]),
         ],
       ),
       body: SingleChildScrollView(
@@ -116,10 +121,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 20),
               const Text(
                 'Letter Detail',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
               Row(
@@ -143,7 +145,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   Text('${itemOfLetter.letterTitle}'),
                 ],
               ),
@@ -169,7 +171,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   Text('${itemOfLetter.letterNumber}'),
                 ],
               ),
@@ -195,7 +197,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   Text('${itemOfLetter.datePublished}'),
                 ],
               ),
@@ -221,7 +223,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   Text(itemOfLetter.category ?? "No category"),
                 ],
               ),
@@ -247,7 +249,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   Text(itemOfLetter.division ?? "No division"),
                 ],
               ),
@@ -261,42 +263,44 @@ class LetterDetailPage extends StatelessWidget {
               ),
               Stack(
                 children: [
-                  Container(
+                  SizedBox(
                     width: 160,
                     height: 160,
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: itemOfLetter.signatureImage != null
-                        ? Container(
-                            color: Colors.grey[300],
-                            child: Image.memory(
-                              itemOfLetter.signatureImage!,
-                              width: double.infinity,
-                              height: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Container(
-                            color: Colors.grey[300],
-                            child: const Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'No Signature',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
+                          ? Container(
+                              color: Colors.grey[300],
+                              child: Image.memory(
+                                itemOfLetter.signatureImage!,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Container(
+                              color: Colors.grey[300],
+                              child: const Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'No Signature',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ),
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -318,7 +322,7 @@ class LetterDetailPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
-                  SizedBox(width: 25),
+                  const SizedBox(width: 25),
                   Text(itemOfLetter.description),
                 ],
               ),
@@ -335,7 +339,11 @@ class LetterDetailPage extends StatelessWidget {
                         borderRadius: BorderRadius.circular(0),
                       )),
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>EditLetterPage(id_letter: id_letter)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                EditLetterPage(id_letter: id_letter)));
                   },
                   child: const Text(
                     'Edit Letter',

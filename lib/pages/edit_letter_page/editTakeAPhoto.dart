@@ -1,4 +1,4 @@
-import 'package:Letterfly/editLetter.dart';
+import 'package:Letterfly/pages/edit_letter_page/editLetter.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 class EditTakeAPhotoPage extends StatefulWidget {
   final int id_letter;
 
-  const EditTakeAPhotoPage({required this.id_letter});
+  const EditTakeAPhotoPage({super.key, required this.id_letter});
 
   @override
   State<EditTakeAPhotoPage> createState() => _EditTakeAPhotoPageState();
@@ -52,7 +52,7 @@ class _EditTakeAPhotoPageState extends State<EditTakeAPhotoPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return CameraPreview(_controller);
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
@@ -81,7 +81,7 @@ class _EditTakeAPhotoPageState extends State<EditTakeAPhotoPage> {
             print("Camera is not initialized");
           }
         },
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
     );
   }

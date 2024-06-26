@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:Letterfly/components/textstylefont.dart';
-import 'package:Letterfly/editTakeAPhoto.dart';
+import 'package:Letterfly/pages/edit_letter_page/editTakeAPhoto.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -154,7 +154,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                                             setState(() {});
                                           },
                                           child: Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                               color: Colors.red,
                                               shape: BoxShape.circle,
                                             ),
@@ -250,16 +250,16 @@ class EditLetterPageState extends State<EditLetterPage> {
                   style: ButtonStyle(
                     alignment: Alignment.centerLeft,
                     backgroundColor:
-                        MaterialStateProperty.all(Colors.transparent),
-                    shadowColor: MaterialStateProperty.all(Colors.black38),
-                    overlayColor: MaterialStateProperty.all(
+                        WidgetStateProperty.all(Colors.transparent),
+                    shadowColor: WidgetStateProperty.all(Colors.black38),
+                    overlayColor: WidgetStateProperty.all(
                       Colors.black.withOpacity(0.1),
                     ), // Adjust opacity as needed
-                    elevation: MaterialStateProperty.all(0),
-                    padding: MaterialStateProperty.all(
+                    elevation: WidgetStateProperty.all(0),
+                    padding: WidgetStateProperty.all(
                       const EdgeInsets.fromLTRB(12, 22, 0, 22),
                     ),
-                    shape: MaterialStateProperty.all(
+                    shape: WidgetStateProperty.all(
                       const RoundedRectangleBorder(
                         borderRadius: BorderRadius.zero,
                         side: BorderSide(color: Colors.black38, width: 1.0),
@@ -268,7 +268,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                   ),
                   child: Text(
                     DateFormat('yyyy-MM-dd').format(selectedDate),
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -472,7 +472,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                 height: 160,
                 // width: 200,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
@@ -481,7 +481,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                       controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Write Detail Description',
                       ),
@@ -507,7 +507,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                       imagePaths: itemOfLetter.imagePaths,
                       letterTitle: lettertitleController.text,
                       letterNumber: letternumberController.text,
-                      datePublished: "${selectedDate}".split(' ')[0],
+                      datePublished: "$selectedDate".split(' ')[0],
                       category: selectedCategory,
                       division: selectedDivision,
                       signatureImage: signImage,
@@ -564,7 +564,7 @@ Future showSignatureDialog(
         actions: <Widget>[
           OutlinedButton(
             style: ButtonStyle(
-              shape: MaterialStateProperty.all(
+              shape: WidgetStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(0),
                 ),
@@ -579,7 +579,7 @@ Future showSignatureDialog(
             color: const Color.fromRGBO(40, 42, 45, 1),
             child: OutlinedButton(
               style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  shape: WidgetStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0)))),
               child: const Text('Save',
                   style: TextStyle(color: Color.fromRGBO(249, 249, 249, 1))),
