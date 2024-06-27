@@ -7,7 +7,7 @@ import 'package:Letterfly/pages/forgotPassword.dart';
 import 'package:Letterfly/pages/home.dart';
 import 'package:Letterfly/pages/login.dart';
 import 'package:Letterfly/pages/newPassword.dart';
-import 'package:Letterfly/pages/profile.dart';
+import 'package:Letterfly/pages/drawer/profile.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/pages/drawer/report.dart';
 import 'package:Letterfly/pages/signup.dart';

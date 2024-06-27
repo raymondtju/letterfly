@@ -1,5 +1,6 @@
 import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/pages/drawer/support_us.dart';
 import 'package:Letterfly/pages/edit_letter_page/editLetter.dart';
 import 'package:Letterfly/pages/letterDetail.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
@@ -330,7 +331,7 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
-                const ListTile(
+                ListTile(
                   leading: Icon(Icons.person),
                   title: Text(
                     'Profile',
@@ -366,7 +367,10 @@ class HomePage extends StatelessWidget {
                     'Support us',
                     style: textlineStyle,
                   ),
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                    showSupportUsSheet(context);
+                  },
                 ),
                 ListTile(
                   leading: const Icon(Icons.logout),
@@ -405,7 +409,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-    )
+    );
   }
 
   Column homeNavBar(BuildContext context) {
