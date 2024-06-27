@@ -330,9 +330,9 @@ class HomePage extends StatelessWidget {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
-                ListTile(
-                  leading: const Icon(Icons.person),
-                  title: const Text(
+                const ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text(
                     'Profile',
                     style: textlineStyle,
                   ),
@@ -405,7 +405,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-    );
+    )
   }
 
   Column homeNavBar(BuildContext context) {
