@@ -5,16 +5,16 @@ import "package:Letterfly/pages/letterDetail.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
-class SuratKuasaView extends StatefulWidget {
+class suratOnFolderView extends StatefulWidget {
   final String categoryId;
 
-  const SuratKuasaView({super.key, required this.categoryId});
+  const suratOnFolderView({super.key, required this.categoryId});
 
   @override
-  State<SuratKuasaView> createState() => _SuratKuasaViewState();
+  State<suratOnFolderView> createState() => _suratOnFolderViewState();
 }
 
-class _SuratKuasaViewState extends State<SuratKuasaView> {
+class _suratOnFolderViewState extends State<suratOnFolderView> {
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<MyLetterProvider>(context);

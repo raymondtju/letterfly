@@ -1,6 +1,9 @@
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -10,6 +13,27 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
+  @override
+  void initState() {
+    super.initState();
+    addAdmin();
+    addingRecentFolder();
+  }
+
+  void addingRecentFolder() {
+    final prov = Provider.of<MyLetterProvider>(context, listen: false);
+    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent")) {
+      prov.addItem(title: "Recent");
+    }
+  }
+
+  void addAdmin() {
+    final prov = Provider.of<LetterFlyProvider>(context, listen: false);
+    prov.setUsername = "admin";
+    prov.setEmail = "admin@gmail.com";
+    prov.setPassword = "adminadmin";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

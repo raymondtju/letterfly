@@ -1,4 +1,5 @@
 import 'package:Letterfly/components/categoryItem.dart';
+import 'package:Letterfly/components/letteritem.dart';
 import 'package:flutter/material.dart';
 
 class MyLetterProvider with ChangeNotifier {
@@ -32,5 +33,15 @@ class MyLetterProvider with ChangeNotifier {
   void insertItem(int index, CategoryItem item) {
     folders.insert(index, item);
     notifyListeners();
+  }
+
+  void addLetterToCategory(
+      {required String categoryId, required Letter letter}) {
+    final categoryIndex =
+        folders.indexWhere((category) => category.id == categoryId);
+    if (categoryIndex != -1) {
+      folders[categoryIndex].listletter.add(letter);
+      notifyListeners();
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
+import 'package:Letterfly/pages/category/suratOnFolderView.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -20,6 +21,7 @@ class _CategoryViewState extends State<CategoryView> {
   Widget build(BuildContext context) {
     final global = GlobalThemeData().lightThemeData;
     final prov = Provider.of<MyLetterProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -144,7 +146,7 @@ class _CategoryViewState extends State<CategoryView> {
       floatingActionButton: Consumer<MyLetterProvider>(
         builder: (context, prov, child) {
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
             child: Visibility(
               visible: prov.folders.isNotEmpty,
               child: FloatingActionButton(
@@ -299,7 +301,13 @@ class _CategoryViewState extends State<CategoryView> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, "/surat_kuasa");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          suratOnFolderView(categoryId: prov.folders[index].id),
+                    ),
+                  );
                 },
                 child: Row(
                   children: [
@@ -374,7 +382,7 @@ class _CategoryViewState extends State<CategoryView> {
 
     return Expanded(
       child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisSpacing: 20,
           mainAxisSpacing: 10,
           crossAxisCount: 3,
@@ -384,7 +392,13 @@ class _CategoryViewState extends State<CategoryView> {
         itemCount: prov.folders.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, "/surat_kuasa");
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    suratOnFolderView(categoryId: prov.folders[index].id),
+              ),
+            );
           },
           onTapDown: (TapDownDetails details) {
             tapPosition = details.globalPosition;
@@ -475,7 +489,8 @@ class _CategoryViewState extends State<CategoryView> {
         ),
         content: SizedBox(
           width: MediaQuery.of(context).size.width,
-          child: Text("This Letter will be deleted Permanently, Are you sure?"),
+          child: const Text(
+              "This Letter will be deleted Permanently, Are you sure?"),
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -484,7 +499,7 @@ class _CategoryViewState extends State<CategoryView> {
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               backgroundColor: global.colorScheme.onPrimary,
-              side: BorderSide(width: 1, color: Colors.grey),
+              side: const BorderSide(width: 1, color: Colors.grey),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0),
               ),
@@ -500,7 +515,7 @@ class _CategoryViewState extends State<CategoryView> {
           ElevatedButton(
             style: ElevatedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              side: BorderSide(width: 1, color: Colors.grey),
+              side: const BorderSide(width: 1, color: Colors.grey),
               backgroundColor: const Color.fromARGB(255, 40, 42, 45),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(0),
@@ -513,14 +528,14 @@ class _CategoryViewState extends State<CategoryView> {
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  duration: Duration(seconds: 5),
-                  content: Text('Item deleted'),
+                  duration: const Duration(seconds: 5),
+                  content: const Text('Item deleted'),
                   //behavior: SnackBarBehavior.floating,
 
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0)),
                   action: SnackBarAction(
-                    label: Text(
+                    label: const Text(
                       'UNDO',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ).data!,

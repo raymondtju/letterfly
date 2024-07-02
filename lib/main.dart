@@ -1,6 +1,6 @@
 import 'package:Letterfly/pages/category/category_view.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
-import 'package:Letterfly/pages/category/suratkuasa_view.dart';
+import 'package:Letterfly/pages/category/suratOnFolderView.dart';
 import 'package:Letterfly/pages/drawer/aboutUs.dart';
 import 'package:Letterfly/pages/add_letter_page/addletter.dart';
 import 'package:Letterfly/components/colors.dart';
@@ -58,7 +58,9 @@ class MyApp extends StatelessWidget {
                 case '/category':
                   return _buildPageRoute(const CategoryView());
                 case '/surat_kuasa':
-                  return _buildPageRoute(const SuratKuasaView());
+                  final String categoryId = settings.arguments as String;
+                  return _buildPageRoute(
+                      suratOnFolderView(categoryId: categoryId));
                 case '/takeaphoto':
                   return _buildPageRoute(const TakeAPhotoPage());
                 case '/edit_takeaphoto':
