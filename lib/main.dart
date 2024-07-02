@@ -1,7 +1,8 @@
+import 'package:Letterfly/pages/category/category_view.dart';
+import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
+import 'package:Letterfly/pages/category/suratkuasa_view.dart';
 import 'package:Letterfly/pages/drawer/aboutUs.dart';
 import 'package:Letterfly/pages/add_letter_page/addletter.dart';
-import 'package:Letterfly/category/category_view.dart';
-import 'package:Letterfly/category/suratkuasa_view.dart';
 import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/pages/forgotPassword.dart';
 import 'package:Letterfly/pages/home.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LetterFlyProvider()),
+        ChangeNotifierProvider(create: (_) => MyLetterProvider()),
       ],
       child: Consumer<LetterFlyProvider>(
         builder: (context, prov, child) {
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/home",
+            initialRoute: "/category",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':

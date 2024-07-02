@@ -87,13 +87,13 @@ class _MyWidgetState extends State<MyWidget> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value) ||
-                        !value.endsWith('@gmail.com')) {
-                      emailErrorText = 'Email must be in the format example@gmail.com';
-                      emailErrorBool = true;
-                    } else {
+                    if (value.contains('@') && value.endsWith('.com')) {
                       emailErrorText = '';
                       emailErrorBool = false;
+                    } else {
+                      emailErrorText =
+                          'Email must be in the format example@gmail.com';
+                      emailErrorBool = true;
                     }
                   });
                 },

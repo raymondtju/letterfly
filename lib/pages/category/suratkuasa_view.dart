@@ -1,6 +1,6 @@
 import "package:Letterfly/components/textstylefont.dart";
 import "package:Letterfly/data/dummy_suratkuasa.dart";
-import "package:Letterfly/provider/letterfly_provider.dart";
+import "package:Letterfly/pages/category/provider/My_Letter_Provider.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
@@ -14,7 +14,7 @@ class SuratKuasaView extends StatefulWidget {
 class _SuratKuasaViewState extends State<SuratKuasaView> {
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<LetterFlyProvider>(context);
+    final prov = Provider.of<MyLetterProvider>(context);
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -87,7 +87,7 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
   }
 
   Row searchBar(context) {
-    final prov = Provider.of<LetterFlyProvider>(context);
+    final prov = Provider.of<MyLetterProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
