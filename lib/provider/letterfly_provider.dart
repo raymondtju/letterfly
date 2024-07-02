@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,22 @@ class LetterFlyProvider with ChangeNotifier {
 
   set setPassword(val) {
     _Password = val;
+    notifyListeners();
+  }
+
+  File? _imageProfile;
+  File? get imageProfile => _imageProfile;
+
+  set setImageProfile(File? value) {
+    _imageProfile = value;
+    notifyListeners();
+  }
+
+  bool _CategoryViewIsGrid = false;
+  bool get CategoryViewIsGrid => _CategoryViewIsGrid;
+
+  set setCategoryViewGrid(val) {
+    _CategoryViewIsGrid = val;
     notifyListeners();
   }
 

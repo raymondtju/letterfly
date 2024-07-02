@@ -124,7 +124,7 @@ class HomePage extends StatelessWidget {
                                             'Surat Ajaib')) {
                                   return ListTile(
                                     onTap: () {
-                                      Navigator.push(
+                                     Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -144,17 +144,32 @@ class HomePage extends StatelessWidget {
                                     ),
                                     title:
                                         Text(prov.Letters[index].letterNumber),
-                                    subtitle: Text(
-                                        '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file'),
-                                    trailing: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                    subtitle: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Text(prov.Letters[index].datePublished),
+                                        Text(
+                                          '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file',
+                                          style: const TextStyle(fontSize: 10),
+                                        ),
+                                        Text(
+                                          prov.Letters[index].datePublished,
+                                          style: const TextStyle(fontSize: 10),
+                                        ),
                                       ],
                                     ),
+                                    trailing: IconButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditLetterPage(
+                                                          id_letter: prov
+                                                              .Letters[index]
+                                                              .id)));
+                                        },
+                                        icon: const Icon(Icons.edit)),
                                   );
                                 } else if (!prov.selectedChipSuratKuasa &&
                                     !prov.selectedChipSuratAjaib) {
@@ -293,6 +308,7 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        prov.imageProfile == null ?
                         Container(
                           width: MediaQuery.of(context).size.width * 0.25,
                           height: MediaQuery.of(context).size.width * 0.25,
@@ -306,26 +322,19 @@ class HomePage extends StatelessWidget {
                               color: Colors.white,
                             ),
                           ),
+                        ) : CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(prov.imageProfile!.path),
                         ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
 
-                        // -- Real --
-
-                        //Text('Hi, ${prov.Username}', style: headlineStyle),
-                        //SizedBox(
-                        //  height: MediaQuery.of(context).size.height * 0.005,
-                        //),
-                        //Text(prov.Email, style: subheadlineStyle),
-
-                        // -- Debug --
-
-                        const Text('Hi, Justin', style: headlineStyle),
+                        Text('Hi, ${prov.Username}', style: headlineStyle),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.005,
+                         height: MediaQuery.of(context).size.height * 0.005,
                         ),
-                        const Text("dummy@gmail.com", style: subtextLineStyle),
+                        Text(prov.Email, style: subheadlineStyle),
                       ],
                     )),
                 SizedBox(

@@ -87,7 +87,7 @@ class _MyWidgetState extends State<MyWidget> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    if (value.contains('@') && value.endsWith('.com')) {
+                    if (value.endsWith('@gmail.com')) {
                       emailErrorText = '';
                       emailErrorBool = false;
                     } else {

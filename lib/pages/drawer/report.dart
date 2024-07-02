@@ -4,12 +4,15 @@ import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 const List<String> list = <String>[
-  'Main Home',
-  'Main Home',
-  'Main Home',
-  'Main Home',
-  'Main Home',
-  'Main Home',
+  'Home',
+  'Login',
+  'Sign Up',
+  'Forgot Password',
+  'OTP',
+  'Add Letter',
+  'Edit Letter',
+  'Take a Photo',
+  'Category View',
 ];
 
 class ReportBug extends StatefulWidget {

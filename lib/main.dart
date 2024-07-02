@@ -4,6 +4,7 @@ import 'package:Letterfly/pages/category/suratkuasa_view.dart';
 import 'package:Letterfly/pages/drawer/aboutUs.dart';
 import 'package:Letterfly/pages/add_letter_page/addletter.dart';
 import 'package:Letterfly/components/colors.dart';
+import 'package:Letterfly/pages/drawer/editProfile.dart';
 import 'package:Letterfly/pages/forgotPassword.dart';
 import 'package:Letterfly/pages/home.dart';
 import 'package:Letterfly/pages/login.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/category",
+            initialRoute: "/welcome",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':
@@ -72,6 +73,8 @@ class MyApp extends StatelessWidget {
                   return _buildPageRoute(const AboutUs());
                 case '/report':
                   return _buildPageRoute(const ReportBug());
+                case '/edit_profile':
+                  return _buildPageRoute(const EditProfilePage());
                 default:
                   return _buildPageRoute(const WelcomePage());
               }
