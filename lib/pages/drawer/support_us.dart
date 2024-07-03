@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
   final global = GlobalThemeData().lightThemeData;
-  int _selectedRating = 0;
+  int _selectedRating = 1;
 
   return showModalBottomSheet<int>(
     context: context,
@@ -47,43 +47,53 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                     ],
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: List.generate(5, (index) {
-                      return GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _selectedRating = index + 1;
-                          });
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.14,
-                          height: MediaQuery.of(context).size.width * 0.14,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            color: index + 1 == _selectedRating
-                                ? global.colorScheme.primary
-                                : global.colorScheme.onPrimary,
-                          ),
-                          child: Center(
-                            child: Text('${index + 1}',
-                                style: textlineStyle.copyWith(
-                                  color: index + 1 == _selectedRating
-                                      ? global.colorScheme.onPrimary
-                                      : global.colorScheme.primary,
-                                )),
-                          ),
-                        ),
-                      );
-                    }),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      activeTrackColor: global.colorScheme.primary,
+                      inactiveTrackColor:
+                          global.colorScheme.primary.withOpacity(0.3),
+                      trackShape: RectangularSliderTrackShape(),
+                      trackHeight: 4.0,
+                      thumbColor: global.colorScheme.primary,
+                      thumbShape: RoundedRectangleSliderThumbShape(
+                        enabledThumbRadius: 12.0,
+                        borderRadius: BorderRadius.circular(0.0),
+                      ),
+                      overlayColor: global.colorScheme.primary.withAlpha(32),
+                      overlayShape:
+                          RoundSliderOverlayShape(overlayRadius: 28.0),
+                      tickMarkShape:
+                          RoundSliderTickMarkShape(tickMarkRadius: 3.0),
+                      activeTickMarkColor: global.colorScheme.onPrimary,
+                      inactiveTickMarkColor:
+                          global.colorScheme.primary.withOpacity(0.5),
+                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
+                      valueIndicatorColor: global.colorScheme.primary,
+                      valueIndicatorTextStyle: TextStyle(
+                        color: global.colorScheme.onPrimary,
+                      ),
+                    ),
+                    child: Slider(
+                      value: _selectedRating.toDouble(),
+                      min: 1,
+                      max: 5,
+                      divisions: 4,
+                      label: _selectedRating.toString(),
+                      onChanged: (double value) {
+                        setState(() {
+                          _selectedRating = value.round();
+                        });
+                      },
+                    ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Very Poor", style: subtextLineStyle),
-                        Text("Very Good", style: subtextLineStyle),
-                      ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Very Poor", style: subtextLineStyle),
+                      Text("Very Good", style: subtextLineStyle),
+                    ],
+                  ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -159,4 +169,55 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
       );
     },
   );
+}
+
+class RoundedRectangleSliderThumbShape extends SliderComponentShape {
+  final double enabledThumbRadius;
+  final BorderRadius borderRadius;
+
+  const RoundedRectangleSliderThumbShape({
+    this.enabledThumbRadius = 10.0,
+    this.borderRadius = const BorderRadius.all(Radius.circular(4.0)),
+  });
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return Size.fromRadius(enabledThumbRadius);
+  }
+
+  @override
+  void paint(PaintingContext context, Offset center,
+      {required Animation<double> activationAnimation,
+      required Animation<double> enableAnimation,
+      required bool isDiscrete,
+      required TextPainter labelPainter,
+      required RenderBox parentBox,
+      required SliderThemeData sliderTheme,
+      required TextDirection textDirection,
+      required double value,
+      required double textScaleFactor,
+      required Size sizeWithOverflow}) {
+    final Canvas canvas = context.canvas;
+
+    final rect = Rect.fromCenter(
+      center: center,
+      width: enabledThumbRadius * 2,
+      height: enabledThumbRadius * 2,
+    );
+
+    final paint = Paint()
+      ..color = sliderTheme.thumbColor!
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(
+      RRect.fromRectAndCorners(
+        rect,
+        topLeft: borderRadius.topLeft,
+        topRight: borderRadius.topRight,
+        bottomLeft: borderRadius.bottomLeft,
+        bottomRight: borderRadius.bottomRight,
+      ),
+      paint,
+    );
+  }
 }

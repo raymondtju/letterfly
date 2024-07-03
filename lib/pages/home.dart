@@ -99,7 +99,10 @@ class HomePage extends StatelessWidget {
                           style: subheadlineStyle,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            prov.setSelectedChipSuratAjaib = false;
+                            prov.setSelectedChipSuratKuasa = false;
+                          },
                           child: const Text(
                             "View All",
                             style: TextStyle(color: Colors.black),
@@ -124,7 +127,7 @@ class HomePage extends StatelessWidget {
                                             'Surat Ajaib')) {
                                   return ListTile(
                                     onTap: () {
-                                     Navigator.push(
+                                      Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
@@ -308,31 +311,33 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        prov.imageProfile == null ?
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.25,
-                          height: MediaQuery.of(context).size.width * 0.25,
-                          decoration: BoxDecoration(
-                            color: global.colorScheme.primary,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(28),
-                            child: SvgPicture.asset(
-                              'assets/logo/Logo.svg',
-                              color: Colors.white,
-                            ),
-                          ),
-                        ) : CircleAvatar(
-                          radius: 50,
-                          backgroundImage: NetworkImage(prov.imageProfile!.path),
-                        ),
+                        prov.imageProfile == null
+                            ? Container(
+                                width: MediaQuery.of(context).size.width * 0.25,
+                                height:
+                                    MediaQuery.of(context).size.width * 0.25,
+                                decoration: BoxDecoration(
+                                  color: global.colorScheme.primary,
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(28),
+                                  child: SvgPicture.asset(
+                                    'assets/logo/Logo.svg',
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundImage:
+                                    NetworkImage(prov.imageProfile!.path),
+                              ),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
-
                         Text('Hi, ${prov.Username}', style: headlineStyle),
                         SizedBox(
-                         height: MediaQuery.of(context).size.height * 0.005,
+                          height: MediaQuery.of(context).size.height * 0.005,
                         ),
                         Text(prov.Email, style: subheadlineStyle),
                       ],
