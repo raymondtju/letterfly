@@ -18,6 +18,7 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   String title = '';
+  bool isAscending = true;
   @override
   Widget build(BuildContext context) {
     final global = GlobalThemeData().lightThemeData;
@@ -59,10 +60,17 @@ class _CategoryViewState extends State<CategoryView> {
                 ),
                 Row(
                   children: [
-                    const Icon(
-                      Icons.filter_alt_outlined,
-                      size: 40,
-                      color: Color(0xFFd9d9d9),
+                    IconButton(
+                      icon: const Icon(
+                        Icons.filter_alt_outlined,
+                        size: 40,
+                        color: Color(0xFFd9d9d9),
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isAscending = !isAscending;
+                        });
+                      },
                     ),
                     IconButton(
                       icon: Icon(
@@ -293,9 +301,14 @@ class _CategoryViewState extends State<CategoryView> {
 
   Widget listCategory() {
     final prov = Provider.of<MyLetterProvider>(context);
+    final sortedFolders = List.from(prov.folders)
+    ..sort((a, b) => isAscending
+        ? a.title.compareTo(b.title)
+        : b.title.compareTo(a.title));
+
     return Expanded(
       child: ListView.builder(
-        itemCount: prov.folders.length,
+        itemCount: sortedFolders.length,
         itemBuilder: (context, index) => Column(
           children: [
             Padding(
@@ -306,7 +319,7 @@ class _CategoryViewState extends State<CategoryView> {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          suratOnFolderView(categoryId: prov.folders[index].id),
+                          suratOnFolderView(categoryId: sortedFolders[index].id),
                     ),
                   );
                 },
@@ -324,7 +337,7 @@ class _CategoryViewState extends State<CategoryView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            prov.folders[index].title,
+                            sortedFolders[index].title,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -379,6 +392,10 @@ class _CategoryViewState extends State<CategoryView> {
 
   Expanded gridCategory() {
     final prov = Provider.of<MyLetterProvider>(context);
+    final sortedFolders = List.from(prov.folders)
+      ..sort((a, b) => isAscending
+          ? a.title.compareTo(b.title)
+          : b.title.compareTo(a.title));
     Offset? tapPosition;
 
     return Expanded(
@@ -390,14 +407,14 @@ class _CategoryViewState extends State<CategoryView> {
           childAspectRatio: 0.6,
         ),
         padding: const EdgeInsets.all(10),
-        itemCount: prov.folders.length,
+        itemCount: sortedFolders.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    suratOnFolderView(categoryId: prov.folders[index].id),
+                    suratOnFolderView(categoryId: sortedFolders[index].id),
               ),
             );
           },
@@ -462,7 +479,7 @@ class _CategoryViewState extends State<CategoryView> {
                 height: 7,
               ),
               Text(
-                prov.folders[index].title,
+                sortedFolders[index].title,
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               //Text(
