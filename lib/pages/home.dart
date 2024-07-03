@@ -8,11 +8,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final global = GlobalThemeData().lightThemeData;
+  String? searchQuery;
+
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
@@ -107,6 +115,32 @@ class HomePage extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 5,),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            searchQuery = value.toLowerCase();
+                          });
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'Search category or letter title',
+                          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+                          filled: true,
+                          fillColor: Colors.white,
+                          prefixIcon: const Icon(Icons.search),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                        ),
+                      ),
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -116,111 +150,54 @@ class HomePage extends StatelessWidget {
                           ? ListView.builder(
                               itemCount: prov.Letters.length,
                               itemBuilder: (context, index) {
-                                if ((prov.selectedChipSuratKuasa &&
-                                        prov.Letters[index].category ==
-                                            'Surat Kuasa') ||
-                                    (prov.selectedChipSuratAjaib &&
-                                        prov.Letters[index].category ==
-                                            'Surat Ajaib')) {
+                                 final letter = prov.Letters[index];
+                                final matchesSearchQuery = searchQuery == null || searchQuery!.isEmpty || 
+                                  letter.letterNumber.toLowerCase().contains(searchQuery!) ||
+                                  letter.category.toLowerCase().contains(searchQuery!);
+
+                                if ((prov.selectedChipSuratKuasa && letter.category == 'Surat Kuasa'&& matchesSearchQuery) ||
+                                    (prov.selectedChipSuratAjaib && letter.category == 'Surat Ajaib'&& matchesSearchQuery) ||
+                                    (!prov.selectedChipSuratKuasa && !prov.selectedChipSuratAjaib && matchesSearchQuery)) {
                                   return ListTile(
                                     onTap: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LetterDetailPage(
-                                                      id_letter: prov
-                                                          .Letters[index].id)));
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => LetterDetailPage(id_letter: letter.id),
+                                        ),
+                                      );
                                     },
-                                    contentPadding:
-                                        const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                    contentPadding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
                                     leading: Container(
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.1,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
+                                      height: MediaQuery.of(context).size.width * 0.1,
+                                      width: MediaQuery.of(context).size.width * 0.1,
                                       color: Colors.grey,
                                     ),
-                                    title:
-                                        Text(prov.Letters[index].letterNumber),
+                                    title: Text(letter.letterNumber),
                                     subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file',
+                                          '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file',
                                           style: const TextStyle(fontSize: 10),
                                         ),
                                         Text(
-                                          prov.Letters[index].datePublished,
+                                          letter.datePublished,
                                           style: const TextStyle(fontSize: 10),
                                         ),
                                       ],
                                     ),
                                     trailing: IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditLetterPage(
-                                                          id_letter: prov
-                                                              .Letters[index]
-                                                              .id)));
-                                        },
-                                        icon: const Icon(Icons.edit)),
-                                  );
-                                } else if (!prov.selectedChipSuratKuasa &&
-                                    !prov.selectedChipSuratAjaib) {
-                                  return ListTile(
-                                    onTap: () {
-                                      Navigator.push(
+                                      onPressed: () {
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  LetterDetailPage(
-                                                      id_letter: prov
-                                                          .Letters[index].id)));
-                                    },
-                                    contentPadding:
-                                        const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                                    leading: Container(
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.1,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      color: Colors.grey,
+                                            builder: (context) => EditLetterPage(id_letter: letter.id),
+                                          ),
+                                        );
+                                      },
+                                      icon: const Icon(Icons.edit),
                                     ),
-                                    title:
-                                        Text(prov.Letters[index].letterNumber),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${prov.Letters[index].category} / ${prov.Letters[index].division} / ${prov.Letters[index].imagePaths.length} file',
-                                          style: const TextStyle(fontSize: 10),
-                                        ),
-                                        Text(
-                                          prov.Letters[index].datePublished,
-                                          style: const TextStyle(fontSize: 10),
-                                        ),
-                                      ],
-                                    ),
-                                    trailing: IconButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditLetterPage(
-                                                          id_letter: prov
-                                                              .Letters[index]
-                                                              .id)));
-                                        },
-                                        icon: const Icon(Icons.edit)),
                                   );
                                 } else {
                                   return Container();

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/category",
+            initialRoute: "/home",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':
