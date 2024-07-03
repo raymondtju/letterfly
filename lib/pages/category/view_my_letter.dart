@@ -2,6 +2,7 @@ import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
 import 'package:Letterfly/pages/category/suratOnFolderView.dart';
+import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -33,7 +34,7 @@ class _CategoryViewState extends State<CategoryView> {
         title: const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Category', style: subheadlineStyle),
+            Text('My Letter', style: subheadlineStyle),
           ],
         ),
       ),
@@ -50,7 +51,7 @@ class _CategoryViewState extends State<CategoryView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       prov.folders.isNotEmpty
-                          ? Text('${prov.folders.length} Categories',
+                          ? Text('${prov.folders.length} Folder ',
                               style: subheadlineStyle)
                           : const Text(""),
                     ],
@@ -277,7 +278,7 @@ class _CategoryViewState extends State<CategoryView> {
         ),
         IconButton(
           icon: Icon(
-            prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
+            prov.CategoryViewIsGrid ? Icons.grid_view : Icons.list,
             size: 40,
             color: const Color(0xFFd9d9d9),
           ),
@@ -522,16 +523,27 @@ class _CategoryViewState extends State<CategoryView> {
               ),
             ),
             onPressed: () {
+              final prov =
+                  Provider.of<MyLetterProvider>(context, listen: false);
+              final letterFlyProv =
+                  Provider.of<LetterFlyProvider>(context, listen: false);
+
               final deletedItem = prov.folders[index];
               final deletedIndex = index;
+
+              // Remove all letters in this folder from the main letter list in LetterFlyProvider
+              for (var letter in deletedItem.listletter) {
+                letterFlyProv.removeLetter(letter);
+              }
+
+              // Delete the folder and its contents
               prov.deleteItem(prov.folders[index].id);
+
               Navigator.of(context).pop();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   duration: const Duration(seconds: 5),
-                  content: const Text('Item deleted'),
-                  //behavior: SnackBarBehavior.floating,
-
+                  content: const Text('Folder and its contents deleted'),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0)),
                   action: SnackBarAction(
@@ -541,6 +553,10 @@ class _CategoryViewState extends State<CategoryView> {
                     ).data!,
                     onPressed: () {
                       prov.insertItem(deletedIndex, deletedItem);
+                      // Restore letters to LetterFlyProvider
+                      for (var letter in deletedItem.listletter) {
+                        letterFlyProv.setLetters(letter);
+                      }
                     },
                   ),
                 ),

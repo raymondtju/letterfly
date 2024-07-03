@@ -25,14 +25,46 @@ class MyLetterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteItem(String id) {
-    folders.removeWhere((item) => item.id == id);
+  List<Letter> getAllLetters() {
+    return folders.expand((folder) => folder.listletter).toList();
+  }
+
+  void removeLetterFromAllFolders(String letterId) {
+    for (var folder in folders) {
+      folder.listletter.removeWhere((letter) => letter.id == letterId);
+    }
     notifyListeners();
+  }
+
+  void deleteItem(String id) {
+    final folderIndex = folders.indexWhere((item) => item.id == id);
+    if (folderIndex != -1) {
+      folders.removeAt(folderIndex);
+      notifyListeners();
+    }
   }
 
   void insertItem(int index, CategoryItem item) {
     folders.insert(index, item);
     notifyListeners();
+  }
+
+  void moveLetterToCategory(
+      {required String fromCategoryId,
+      required String toCategoryId,
+      required Letter letter}) {
+    final fromCategoryIndex =
+        folders.indexWhere((category) => category.id == fromCategoryId);
+    final toCategoryIndex =
+        folders.indexWhere((category) => category.id == toCategoryId);
+
+    if (fromCategoryIndex != -1 && toCategoryIndex != -1) {
+      folders[fromCategoryIndex]
+          .listletter
+          .removeWhere((l) => l.id == letter.id);
+      folders[toCategoryIndex].listletter.add(letter);
+      notifyListeners();
+    }
   }
 
   void addLetterToCategory(
@@ -42,6 +74,18 @@ class MyLetterProvider with ChangeNotifier {
     if (categoryIndex != -1) {
       folders[categoryIndex].listletter.add(letter);
       notifyListeners();
+    }
+  }
+
+  void addLetterToCategoryByTitle(
+      {required String categoryTitle, required Letter letter}) {
+    final categoryIndex =
+        folders.indexWhere((category) => category.title == categoryTitle);
+    if (categoryIndex != -1) {
+      folders[categoryIndex].listletter.add(letter);
+      notifyListeners();
+    } else {
+      print('Category with title "$categoryTitle" not found.');
     }
   }
 }

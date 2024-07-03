@@ -22,7 +22,8 @@ class _WelcomePageState extends State<WelcomePage> {
 
   void addingRecentFolder() {
     final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent")) {
+    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent") &&
+        prov.folders.isEmpty) {
       prov.addItem(title: "Recent");
     }
   }

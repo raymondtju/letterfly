@@ -3,6 +3,7 @@ import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
+import 'package:Letterfly/pages/category/successful_add_surat_in_folder.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -73,25 +74,22 @@ Future showSignatureDialog(
   );
 }
 
-class AddLetterPage extends StatefulWidget {
+class AddSuratInFolder extends StatefulWidget {
   final List<String> imagePaths;
+  final String categoryId;
 
-  const AddLetterPage({super.key, required this.imagePaths});
+  const AddSuratInFolder({
+    super.key,
+    required this.imagePaths,
+    required this.categoryId,
+  });
 
   @override
-  State<AddLetterPage> createState() =>
-      AddLetterPageState(imagePaths: imagePaths);
+  State<AddSuratInFolder> createState() =>
+      AddSuratInFolderState(imagePaths: imagePaths);
 }
 
-class AddLetterPageState extends State<AddLetterPage> {
-  void addingRecentFolder() {
-    final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent") ||
-        prov.folders.isEmpty) {
-      prov.addItem(title: "Recent");
-    }
-  }
-
+class AddSuratInFolderState extends State<AddSuratInFolder> {
   final List<String> imagePaths;
   bool isDraft = false;
   String selectedCategory = 'Surat Kuasa';
@@ -110,7 +108,7 @@ class AddLetterPageState extends State<AddLetterPage> {
 
   final signatureKey = GlobalKey<SignatureState>();
 
-  AddLetterPageState({required this.imagePaths});
+  AddSuratInFolderState({required this.imagePaths});
 
   DateTime selectedDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
@@ -648,14 +646,17 @@ class AddLetterPageState extends State<AddLetterPage> {
                         description: descriptionController.text);
                     Provider.of<LetterFlyProvider>(context, listen: false)
                         .setLetters(letter);
-
-                    addingRecentFolder();
-
                     Provider.of<MyLetterProvider>(context, listen: false)
-                        .addLetterToCategoryByTitle(
-                            categoryTitle: "Recent", letter: letter);
+                        .addLetterToCategory(
+                            categoryId: widget.categoryId, letter: letter);
 
-                    Navigator.pushNamed(context, "/sukses");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const SuccessfulAddSuratInFolder()),
+                    );
+
                     imagePaths.clear();
                   },
                   child: const Text(

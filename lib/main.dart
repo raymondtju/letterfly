@@ -1,6 +1,6 @@
-import 'package:Letterfly/pages/category/category_view.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
 import 'package:Letterfly/pages/category/suratOnFolderView.dart';
+import 'package:Letterfly/pages/category/view_my_letter.dart';
 import 'package:Letterfly/pages/drawer/aboutUs.dart';
 import 'package:Letterfly/pages/add_letter_page/addletter.dart';
 import 'package:Letterfly/components/colors.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/home",
+            initialRoute: "/category",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':
