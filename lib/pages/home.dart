@@ -629,51 +629,32 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  SizedBox homeSearchBar() {
-    return SizedBox(
-      height: 38,
-      child: TextField(
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(0),
-          hintText: 'Search category or letter title',
-          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-          fillColor: const Color.fromRGBO(249, 249, 249, 1),
-          filled: true,
-          prefixIcon: const Padding(
-            padding: EdgeInsets.only(left: 10.0),
-            child: Padding(
-              padding: EdgeInsets.only(right: 16.0),
-              child: Icon(
-                Icons.search,
-                // color: Colors.grey,
-              ),
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-                // color: Colors.grey,
-                ),
-            borderRadius: BorderRadius.circular(0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-                // color: Colors.grey,
-                ),
-            borderRadius: BorderRadius.circular(0),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(
-                // color: Colors.grey,
-                ),
-            borderRadius: BorderRadius.circular(0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(0),
-          ),
-        ),
-      ),
-    );
-  }
+  Padding homeSearchBar() {
+    Padding(
+     padding: const EdgeInsets.symmetric(horizontal: 20.0),
+     child: TextField(
+       onChanged: (value) {
+         setState(() {
+           searchQuery = value.toLowerCase();
+         });
+       },
+       decoration: InputDecoration(
+         hintText: 'Search category or letter title',
+         hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+         filled: true,
+         fillColor: Colors.white,
+         prefixIcon: const Icon(Icons.search),
+         enabledBorder: OutlineInputBorder(
+           borderSide: BorderSide(color: Colors.grey.shade400),
+           borderRadius: BorderRadius.circular(10.0),
+         ),
+         focusedBorder: OutlineInputBorder(
+           borderSide: BorderSide(color: Colors.grey.shade400),
+           borderRadius: BorderRadius.circular(10.0),
+         ),
+       ),
+     ),
+   );
 }
 
 class Chips extends StatefulWidget {
