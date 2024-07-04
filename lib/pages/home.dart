@@ -85,12 +85,13 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding:
-                const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
+                //const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
+                const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 24),
             child: homeNavBar(context),
           ),
           Expanded(
             child: Container(
-              color: Colors.white,
+              color: global.colorScheme.onPrimary,
               width: MediaQuery.of(context).size.width,
               child: Padding(
                 padding: const EdgeInsets.all(20),
@@ -115,32 +116,6 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5,),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                      child: TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            searchQuery = value.toLowerCase();
-                          });
-                        },
-                        decoration: InputDecoration(
-                          hintText: 'Search category or letter title',
-                          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: const Icon(Icons.search),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey.shade400),
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
-                    ),
                     const SizedBox(
                       height: 5,
                     ),
@@ -150,32 +125,54 @@ class _HomePageState extends State<HomePage> {
                           ? ListView.builder(
                               itemCount: prov.Letters.length,
                               itemBuilder: (context, index) {
-                                 final letter = prov.Letters[index];
-                                final matchesSearchQuery = searchQuery == null || searchQuery!.isEmpty || 
-                                  letter.letterNumber.toLowerCase().contains(searchQuery!) ||
-                                  letter.category.toLowerCase().contains(searchQuery!);
+                                final letter = prov.Letters[index];
+                                final matchesSearchQuery =
+                                    searchQuery == null ||
+                                        searchQuery!.isEmpty ||
+                                        letter.letterNumber
+                                            .toLowerCase()
+                                            .contains(searchQuery!) ||
+                                        letter.category
+                                            .toLowerCase()
+                                            .contains(searchQuery!) ||
+                                        letter.title
+                                            .toLowerCase()
+                                            .contains(searchQuery!);
 
-                                if ((prov.selectedChipSuratKuasa && letter.category == 'Surat Kuasa'&& matchesSearchQuery) ||
-                                    (prov.selectedChipSuratAjaib && letter.category == 'Surat Ajaib'&& matchesSearchQuery) ||
-                                    (!prov.selectedChipSuratKuasa && !prov.selectedChipSuratAjaib && matchesSearchQuery)) {
+                                if ((prov.selectedChipSuratKuasa &&
+                                        letter.category == 'Surat Kuasa' &&
+                                        matchesSearchQuery) ||
+                                    (prov.selectedChipSuratAjaib &&
+                                        letter.category == 'Surat Ajaib' &&
+                                        matchesSearchQuery) ||
+                                    (!prov.selectedChipSuratKuasa &&
+                                        !prov.selectedChipSuratAjaib &&
+                                        matchesSearchQuery)) {
                                   return ListTile(
                                     onTap: () {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => LetterDetailPage(id_letter: letter.id),
+                                          builder: (context) =>
+                                              LetterDetailPage(
+                                                  id_letter: letter.id),
                                         ),
                                       );
                                     },
-                                    contentPadding: const EdgeInsets.fromLTRB(0, 5, 5, 5),
+                                    contentPadding:
+                                        const EdgeInsets.fromLTRB(0, 5, 5, 5),
                                     leading: Container(
-                                      height: MediaQuery.of(context).size.width * 0.1,
-                                      width: MediaQuery.of(context).size.width * 0.1,
+                                      height:
+                                          MediaQuery.of(context).size.width *
+                                              0.1,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.1,
                                       color: Colors.grey,
                                     ),
                                     title: Text(letter.letterNumber),
                                     subtitle: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file',
@@ -192,7 +189,9 @@ class _HomePageState extends State<HomePage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => EditLetterPage(id_letter: letter.id),
+                                            builder: (context) =>
+                                                EditLetterPage(
+                                                    id_letter: letter.id),
                                           ),
                                         );
                                       },
@@ -400,9 +399,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Column homeNavBar(BuildContext context) {
+  Widget homeNavBar(BuildContext context) {
     return Column(
       children: [
+        const SizedBox(height: 16),
+        homeSearchBar(),
+        const SizedBox(height: 16),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -476,10 +478,92 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
-        )
+        ),
       ],
     );
   }
+
+  //Column homeNavBar(BuildContext context) {
+  //  return Column(
+  //    children: [
+  //      homeNavBar(context),
+  //      Row(
+  //        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //        children: [
+  //          Expanded(
+  //            child: InkWell(
+  //              onTap: () {
+  //                Navigator.pushNamed(context, "/addletter");
+  //              },
+  //              child: Container(
+  //                height: 44,
+  //                margin: const EdgeInsets.symmetric(horizontal: 8),
+  //                decoration: BoxDecoration(
+  //                  border: Border.all(
+  //                    color: global.colorScheme.onPrimary,
+  //                    width: 2,
+  //                  ),
+  //                  borderRadius: BorderRadius.circular(0),
+  //                  color: global.colorScheme.onPrimary,
+  //                ),
+  //                child: const Row(
+  //                  mainAxisAlignment: MainAxisAlignment.center,
+  //                  children: [
+  //                    Icon(
+  //                      Icons.add,
+  //                      size: 24,
+  //                    ),
+  //                    SizedBox(
+  //                      width: 6,
+  //                    ),
+  //                    Text(
+  //                      "Add Letter",
+  //                      style: TextStyle(fontSize: 16),
+  //                    ),
+  //                  ],
+  //                ),
+  //              ),
+  //            ),
+  //          ),
+  //          Expanded(
+  //            child: InkWell(
+  //              onTap: () {
+  //                Navigator.pushNamed(context, "/category");
+  //              },
+  //              child: Container(
+  //                height: 44,
+  //                margin: const EdgeInsets.symmetric(horizontal: 8),
+  //                decoration: BoxDecoration(
+  //                  border: Border.all(
+  //                      color: global.colorScheme.onPrimary, width: 2),
+  //                  borderRadius: BorderRadius.circular(0),
+  //                ),
+  //                child: Row(
+  //                  mainAxisAlignment: MainAxisAlignment.center,
+  //                  children: [
+  //                    Icon(
+  //                      Icons.grid_view_sharp,
+  //                      size: 20,
+  //                      color: global.colorScheme.onPrimary,
+  //                    ),
+  //                    const SizedBox(
+  //                      width: 6,
+  //                    ),
+  //                    Text(
+  //                      "My Letter",
+  //                      style: TextStyle(
+  //                          fontSize: 16, color: global.colorScheme.onPrimary),
+  //                    ),
+  //                  ],
+  //                ),
+  //              ),
+  //            ),
+  //          )
+  //        ],
+  //      )
+  //    ],
+  //  );
+  //}
 
   Column homeNavbarOriginal(BuildContext context) {
     return Column(
@@ -630,31 +714,75 @@ class _HomePageState extends State<HomePage> {
   }
 
   Padding homeSearchBar() {
-    Padding(
-     padding: const EdgeInsets.symmetric(horizontal: 20.0),
-     child: TextField(
-       onChanged: (value) {
-         setState(() {
-           searchQuery = value.toLowerCase();
-         });
-       },
-       decoration: InputDecoration(
-         hintText: 'Search category or letter title',
-         hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-         filled: true,
-         fillColor: Colors.white,
-         prefixIcon: const Icon(Icons.search),
-         enabledBorder: OutlineInputBorder(
-           borderSide: BorderSide(color: Colors.grey.shade400),
-           borderRadius: BorderRadius.circular(10.0),
-         ),
-         focusedBorder: OutlineInputBorder(
-           borderSide: BorderSide(color: Colors.grey.shade400),
-           borderRadius: BorderRadius.circular(10.0),
-         ),
-       ),
-     ),
-   );
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      child: TextField(
+        onChanged: (value) {
+          setState(() {
+            searchQuery = value.toLowerCase();
+          });
+        },
+        decoration: InputDecoration(
+          hintText: 'Search by category, title, or number',
+          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+          filled: true,
+          fillColor: Colors.white,
+          prefixIcon: const Icon(Icons.search),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+    // return SizedBox(
+    //   height: 38,
+    //   child: TextField(
+    //     decoration: InputDecoration(
+    //       contentPadding: const EdgeInsets.all(0),
+    //       hintText: 'Search by Category, title or number',
+    //       hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+    //       fillColor: const Color.fromRGBO(249, 249, 249, 1),
+    //       filled: true,
+    //       prefixIcon: const Padding(
+    //         padding: EdgeInsets.only(left: 10.0),
+    //         child: Padding(
+    //           padding: EdgeInsets.only(right: 16.0),
+    //           child: Icon(
+    //             Icons.search,
+    //             // color: Colors.grey,
+    //           ),
+    //         ),
+    //       ),
+    //       enabledBorder: OutlineInputBorder(
+    //         borderSide: const BorderSide(
+    //             // color: Colors.grey,
+    //             ),
+    //         borderRadius: BorderRadius.circular(0),
+    //       ),
+    //       focusedBorder: OutlineInputBorder(
+    //         borderSide: const BorderSide(
+    //             // color: Colors.grey,
+    //             ),
+    //         borderRadius: BorderRadius.circular(0),
+    //       ),
+    //       focusedErrorBorder: OutlineInputBorder(
+    //         borderSide: const BorderSide(
+    //             // color: Colors.grey,
+    //             ),
+    //         borderRadius: BorderRadius.circular(0),
+    //       ),
+    //       border: OutlineInputBorder(
+    //         borderRadius: BorderRadius.circular(0),
+    //       ),
+    //     ),
+    //   ),
+    // );
+  }
 }
 
 class Chips extends StatefulWidget {
