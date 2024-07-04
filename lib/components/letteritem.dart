@@ -10,6 +10,7 @@ class Letter {
   final String division;
   Uint8List? signatureImage;
   final String description;
+  final bool isDraft;
 
   Letter({
     required this.id,
@@ -21,5 +22,6 @@ class Letter {
     required this.division,
     required this.signatureImage,
     required this.description,
+    required this.isDraft,
   });
 }

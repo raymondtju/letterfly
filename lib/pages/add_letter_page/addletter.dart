@@ -90,10 +90,16 @@ class AddLetterPageState extends State<AddLetterPage> {
         prov.folders.isEmpty) {
       prov.addItem(title: "Recent");
     }
+  } void addingDraftFolder() {
+    final prov = Provider.of<MyLetterProvider>(context, listen: false);
+    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Draft") ||
+        prov.folders.isEmpty) {
+      prov.addItem(title: "Draft");
+    }
   }
 
   final List<String> imagePaths;
-  bool isDraft = false;
+  bool draftbool = false;
   String selectedCategory = 'Surat Kuasa';
   String selectedDivision = 'IT';
   List<String> itemsCategory = ['Surat Kuasa', 'Surat Ajaib'];
@@ -605,11 +611,42 @@ class AddLetterPageState extends State<AddLetterPage> {
                 children: [
                   Text('Save as draft'),
                   Switch(
-                      value: isDraft,
+                      value: draftbool,
                       onChanged: (value) {
                         setState(() {
-                          isDraft = value;
+                          draftbool = value;
                         });
+                        if (draftbool == true) {
+                          DateTime currentDate = DateTime.now();
+                          String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+                          for (var gmbr in imagePaths) {
+                            TempPhotos.add(gmbr);
+                          }
+                          final letterProvider = Provider.of<LetterFlyProvider>(context, listen: false);
+                          final letter = Letter(
+                            id: letterProvider.LetterCounts + 1,
+                            imagePaths: TempPhotos,
+                            letterTitle: lettertitleController.text,
+                            letterNumber: letternumberController.text,
+                            datePublished: selectedDate != null
+                                ? "${selectedDate.toLocal()}".split(' ')[0]
+                                : defaultDate,
+                            category: selectedCategory,
+                            division: selectedDivision,
+                            signatureImage: signImage,
+                            description: descriptionController.text,
+                            isDraft: draftbool);
+
+                        addingDraftFolder();
+                        Provider.of<LetterFlyProvider>(context, listen: false)
+                            .setLetters(letter);
+                        Provider.of<MyLetterProvider>(context, listen: false)
+                        .addLetterToCategoryByTitle(
+                            categoryTitle: "Draft", letter: letter);
+
+                        Navigator.pushNamed(context, "/sukses");
+                        imagePaths.clear();
+                        }
                       })
                 ],
               ),
@@ -627,8 +664,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                       )),
                   onPressed: () {
                     DateTime currentDate = DateTime.now();
-                    String defaultDate =
-                        "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+                    String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
                     for (var gmbr in imagePaths) {
                       TempPhotos.add(gmbr);
                     }
@@ -645,7 +681,8 @@ class AddLetterPageState extends State<AddLetterPage> {
                         category: selectedCategory,
                         division: selectedDivision,
                         signatureImage: signImage,
-                        description: descriptionController.text);
+                        description: descriptionController.text,
+                        isDraft: false);
                     Provider.of<LetterFlyProvider>(context, listen: false)
                         .setLetters(letter);
 

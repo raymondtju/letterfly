@@ -489,6 +489,32 @@ class EditLetterPageState extends State<EditLetterPage> {
                   ),
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Save as draft'),
+                  Switch(
+                      value: itemOfLetter.isDraft,
+                      onChanged: (value) {
+                        final updatedLetter = Letter(
+                          id: itemOfLetter.id,
+                          imagePaths: itemOfLetter.imagePaths,
+                          letterTitle: lettertitleController.text,
+                          letterNumber: letternumberController.text,
+                          datePublished: "$selectedDate".split(' ')[0],
+                          category: selectedCategory,
+                          division: selectedDivision,
+                          signatureImage: signImage,
+                          description: descriptionController.text,
+                          isDraft: value,
+                        );
+
+                        Provider.of<LetterFlyProvider>(context, listen: false)
+                            .editLetter(updatedLetter);
+                        Navigator.pushNamed(context, "/sukses");
+                      })
+                ],
+              ),
               const SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
@@ -512,6 +538,7 @@ class EditLetterPageState extends State<EditLetterPage> {
                       division: selectedDivision,
                       signatureImage: signImage,
                       description: descriptionController.text,
+                      isDraft: itemOfLetter.isDraft,
                     );
 
                     Provider.of<LetterFlyProvider>(context, listen: false)

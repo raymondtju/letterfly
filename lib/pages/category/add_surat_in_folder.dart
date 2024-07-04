@@ -643,7 +643,8 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                         category: selectedCategory,
                         division: selectedDivision,
                         signatureImage: signImage,
-                        description: descriptionController.text);
+                        description: descriptionController.text,
+                        isDraft: false);
                     Provider.of<LetterFlyProvider>(context, listen: false)
                         .setLetters(letter);
                     Provider.of<MyLetterProvider>(context, listen: false)

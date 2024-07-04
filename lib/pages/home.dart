@@ -174,6 +174,11 @@ class _HomePageState extends State<HomePage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        letter.isDraft == true ?
+                                        Text(
+                                          '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file (DRAFT)',
+                                          style: const TextStyle(fontSize: 10),
+                                        ) : 
                                         Text(
                                           '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file',
                                           style: const TextStyle(fontSize: 10),
