@@ -1,11 +1,14 @@
+import "package:Letterfly/components/letteritem.dart";
 import "package:Letterfly/components/textstylefont.dart";
-import "package:Letterfly/data/dummy_suratkuasa.dart";
-import "package:Letterfly/provider/letterfly_provider.dart";
+import "package:Letterfly/pages/category/provider/My_Letter_Provider.dart";
+import "package:Letterfly/pages/letterDetail.dart";
 import "package:flutter/material.dart";
 import "package:provider/provider.dart";
 
 class SuratKuasaView extends StatefulWidget {
-  const SuratKuasaView({super.key});
+  final String categoryId;
+
+  const SuratKuasaView({super.key, required this.categoryId});
 
   @override
   State<SuratKuasaView> createState() => _SuratKuasaViewState();
@@ -14,7 +17,10 @@ class SuratKuasaView extends StatefulWidget {
 class _SuratKuasaViewState extends State<SuratKuasaView> {
   @override
   Widget build(BuildContext context) {
-    final prov = Provider.of<LetterFlyProvider>(context);
+    final prov = Provider.of<MyLetterProvider>(context);
+    final category =
+        prov.folders.firstWhere((folder) => folder.id == widget.categoryId);
+    final letters = category.listletter;
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
@@ -23,10 +29,10 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
             Navigator.pop(context);
           },
         ),
-        title: const Row(
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('Surat Kuasa', style: subheadlineStyle),
+            Text(category.title, style: subheadlineStyle),
           ],
         ),
       ),
@@ -46,8 +52,7 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text('${dummySuratKuasa.length} Letter',
-                          style: subheadlineStyle),
+                      Text('${letters.length} Letter', style: subheadlineStyle),
                     ],
                   ),
                 ),
@@ -78,8 +83,8 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
             ),
             Expanded(
                 child: prov.CategoryViewIsGrid
-                    ? gridSuratKuasa()
-                    : listSuratKuasa())
+                    ? gridSuratKuasa(letters)
+                    : listSuratKuasa(letters))
           ],
         ),
       ),
@@ -87,7 +92,7 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
   }
 
   Row searchBar(context) {
-    final prov = Provider.of<LetterFlyProvider>(context);
+    final prov = Provider.of<MyLetterProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -151,16 +156,24 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
     );
   }
 
-  Expanded listSuratKuasa() {
+  Expanded listSuratKuasa(List<Letter> letters) {
     return Expanded(
       child: ListView.builder(
-        itemCount: dummySuratKuasa.length,
+        itemCount: letters.length,
         itemBuilder: (context, index) => Column(
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          LetterDetailPage(id_letter: letters[index].id),
+                    ),
+                  );
+                },
                 child: Row(
                   children: [
                     Container(
@@ -180,11 +193,11 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          dummySuratKuasa[index].title,
+                          letters[index].letterTitle,
                           style: const TextStyle(fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          dummySuratKuasa[index].durasi,
+                          letters[index].datePublished,
                           style: const TextStyle(fontSize: 10),
                         )
                       ],
@@ -200,7 +213,7 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
   }
 }
 
-Expanded gridSuratKuasa() {
+Expanded gridSuratKuasa(List<Letter> letters) {
   return Expanded(
     child: GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -210,9 +223,17 @@ Expanded gridSuratKuasa() {
         childAspectRatio: 0.6,
       ),
       // padding: const EdgeInsets.all(10),
-      itemCount: dummySuratKuasa.length,
+      itemCount: letters.length,
       itemBuilder: (context, index) => InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  LetterDetailPage(id_letter: letters[index].id),
+            ),
+          );
+        },
         child: Column(
           children: [
             SizedBox(
@@ -232,11 +253,11 @@ Expanded gridSuratKuasa() {
               height: 7,
             ),
             Text(
-              dummySuratKuasa[index].title,
+              letters[index].letterTitle,
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             Text(
-              dummySuratKuasa[index].durasi,
+              letters[index].datePublished,
               style: const TextStyle(fontSize: 10),
             ),
           ],

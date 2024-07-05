@@ -14,3 +14,64 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+# letterfly
+
+## Table of Contents
+
+1. [Description](#description)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [License](#license)
+6. [Contact](#contact)
+
+## Description
+
+Aplikasi Penomoran Surat memungkinkan pengguna untuk memindai, menambahkan surat, dan mengarsipkannya secara online.
+
+
+## Features
+
+Scan surat
+Tambah surat baru
+Arsipkan surat secara online
+
+## Installation
+
+Step-by-step instructions on how to set up the project locally.
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/your_username/repo_name.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd repo_name
+   ```
+3. Install dependencies:
+   ```sh
+   flutter pub get
+   ```
+
+## Usage
+
+Instructions and examples for running the project.
+
+1. Run the app:
+   ```sh
+   flutter run
+   ```
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+Provide your contact information for any queries or support.
+
+- Email: 
+- GitHub: 
+
+---
