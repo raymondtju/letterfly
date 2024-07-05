@@ -63,7 +63,7 @@ class _MyWidgetState extends State<MyWidget> {
                   _showOTPMenu(context);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Email not registered.'),
                       duration: Duration(seconds: 2),
                     ),
@@ -268,14 +268,14 @@ void _showOTPMenu(BuildContext context) {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('Error'),
-                                content: Text('OTP code didn\'t match.'),
+                                title: const Text('Error'),
+                                content: const Text('OTP code didn\'t match.'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('OK'),
+                                    child: const Text('OK'),
                                   ),
                                 ],
                               );
@@ -316,14 +316,14 @@ void _showRandomCodeDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('OTP Code'),
+        title: const Text('OTP Code'),
         content: Text('Your OTP code is: $randomCode'),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('OK'),
+            child: const Text('OK'),
           ),
         ],
       );

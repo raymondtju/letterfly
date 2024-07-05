@@ -130,14 +130,14 @@ class _MyWidgetState extends State<MyWidget> {
                         if (password == prov.password) {
                           Navigator.pushNamed(context, "/home");
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                             content: Text('Password is wrong.'),
                             duration: Duration(seconds: 2),
                           ));
                         }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
+                          const SnackBar(
                             content: Text('Email not registered.'),
                             duration: Duration(seconds: 2),
                           ),

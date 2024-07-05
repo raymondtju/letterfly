@@ -19,10 +19,10 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
   bool obscurePassword1 = true;
   bool obscurePassword2 = true;
 
-  TextEditingController UsernameController = TextEditingController();
-  TextEditingController EmailController = TextEditingController();
-  TextEditingController Password1Controller = TextEditingController();
-  TextEditingController Password2Controller = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController password1Controller = TextEditingController();
+  TextEditingController password2Controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,18 +43,18 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'New Password',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
-                controller: Password1Controller,
+                controller: password1Controller,
                 obscureText: obscurePassword1,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -97,7 +97,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 height: 10,
               ),
               TextField(
-                controller: Password2Controller,
+                controller: password2Controller,
                 obscureText: obscurePassword2,
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(),
@@ -135,13 +135,13 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
             children: [
               OutlinedButton(
                 onPressed: () {
-                  String password1 = Password1Controller.text;
-                  String password2 = Password2Controller.text;
+                  String password1 = password1Controller.text;
+                  String password2 = password2Controller.text;
 
                   if (password1 == password2) {
                     prov.setPassword = password1;
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Successful !!'),
                         duration: Duration(seconds: 2),
                       ),
@@ -149,7 +149,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                     Navigator.pushNamed(context, "/login");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Passwords do not match.'),
                         duration: Duration(seconds: 2),
                       ),

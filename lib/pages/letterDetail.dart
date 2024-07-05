@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LetterDetailPage extends StatelessWidget {
+  // ignore: non_constant_identifier_names
   final int id_letter;
+  // ignore: non_constant_identifier_names
   const LetterDetailPage({super.key, required this.id_letter});
 
   @override

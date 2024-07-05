@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget {
         title: const Text('Profile', style: subheadlineStyle),
       ),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(20, 16, 20, 20),
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -31,7 +31,7 @@ class ProfilePage extends StatelessWidget {
                       Container(
                         width: 100,
                         height: 100,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.black,
                         ),
                         child: Padding(
@@ -47,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                       Text(
                         'Hi, ${prov.username}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -56,8 +56,8 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
-                Text(
+                const SizedBox(height: 15),
+                const Text(
                   'Your Profile',
                   style: TextStyle(
                     color: Colors.black,
@@ -65,7 +65,7 @@ class ProfilePage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -87,11 +87,11 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     Text('${prov.username}'),
                   ],
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -113,7 +113,7 @@ class ProfilePage extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     Text('${prov.email}'),
                   ],
                 ),

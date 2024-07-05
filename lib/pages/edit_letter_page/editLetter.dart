@@ -495,7 +495,7 @@ class EditLetterPageState extends State<EditLetterPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Save as draft'),
+                  const Text('Save as draft'),
                   Switch(
                       value: itemOfLetter.isDraft,
                       onChanged: (value) {

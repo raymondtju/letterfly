@@ -289,7 +289,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                                 letters[index].imagePaths[0],
                                 fit: BoxFit.cover,
                               )
-                            : Text(""),
+                            : const Text(""),
                       ),
                     ),
                     SizedBox(
@@ -316,9 +316,9 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                           showDeleteConfirmation(context, prov, index);
                         } else if (prov.folders.length <= 1) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: const Duration(seconds: 5),
-                              content: const Text(
+                            const SnackBar(
+                              duration: Duration(seconds: 5),
+                              content: Text(
                                   'No folder to move to. Try creating a folder or add more'),
                             ),
                           );
@@ -440,7 +440,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                         letters[index].imagePaths[0],
                         fit: BoxFit.cover,
                       )
-                    : Text(""),
+                    : const Text(""),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -523,13 +523,13 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics:
-                      NeverScrollableScrollPhysics(), // Disable scrolling for this ListView
+                      const NeverScrollableScrollPhysics(), // Disable scrolling for this ListView
                   itemCount: prov.folders.length,
                   itemBuilder: (context, index) {
                     final category = prov.folders[index];
                     if (category.id != widget.categoryId) {
                       return ListTile(
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.folder_sharp,
                         ),
                         title: Text(category.title),
@@ -580,7 +580,7 @@ class MoveToSubmenuState extends State<MoveToSubmenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
-      child: Row(
+      child: const Row(
         children: [
           Icon(Icons.folder),
           SizedBox(width: 8),

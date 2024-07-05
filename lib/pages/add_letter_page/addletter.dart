@@ -282,7 +282,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                     selectedDate != null
                         ? "${selectedDate.toLocal()}".split(' ')[0]
                         : "Select date",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -586,7 +586,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                 height: 160,
                 // width: 200,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
@@ -595,7 +595,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                       controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Write Detail Description',
                       ),
@@ -603,13 +603,13 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Save as draft'),
+                  const Text('Save as draft'),
                   Switch(
                       value: draftbool,
                       onChanged: (value) {

@@ -56,11 +56,11 @@ class _MyWidgetState extends State<MyWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Full Name',
                 style: DefaultStyles.labelStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               TextField(
@@ -69,14 +69,14 @@ class _MyWidgetState extends State<MyWidget> {
                   hintText: 'Masukkan nama lengkap anda',
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Email',
                 style: DefaultStyles.labelStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               TextField(
@@ -98,14 +98,14 @@ class _MyWidgetState extends State<MyWidget> {
                   });
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              Text(
+              const Text(
                 'Password',
                 style: DefaultStyles.labelStyle,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 8,
               ),
               TextField(
@@ -199,7 +199,7 @@ class _MyWidgetState extends State<MyWidget> {
                     Navigator.pushNamed(context, "/login");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Passwords do not match.'),
                         duration: Duration(seconds: 2),
                       ),

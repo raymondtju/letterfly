@@ -301,6 +301,7 @@ class _HomePageState extends State<HomePage> {
                                   padding: const EdgeInsets.all(28),
                                   child: SvgPicture.asset(
                                     'assets/logo/Logo.svg',
+                                    // ignore: deprecated_member_use
                                     color: Colors.white,
                                   ),
                                 ),
@@ -324,8 +325,8 @@ class _HomePageState extends State<HomePage> {
                   height: MediaQuery.of(context).size.height * 0.03,
                 ),
                 ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text(
+                  leading: const Icon(Icons.person),
+                  title: const Text(
                     'Profile',
                     style: textlineStyle,
                   ),

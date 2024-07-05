@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                   return _buildPageRoute(
                       suratOnFolderView(categoryId: categoryId));
                 case '/takeaphoto':
-                  return _buildPageRoute(const TakeAPhotoPage());
+                  return _buildPageRoute(const takeAPhotoPage());
                 case '/edit_takeaphoto':
                   return _buildPageRoute(EditTakeAPhotoPage(
                       id_letter:

@@ -6,7 +6,7 @@ class MyLetterProvider with ChangeNotifier {
   bool _categoryViewIsGrid = false;
   bool get categoryViewIsGrid => _categoryViewIsGrid;
   int folderlastid = 0;
-  List<CategoryItem> folders = [];
+  List<categoryItem> folders = [];
 
   set setCategoryViewGrid(val) {
     _categoryViewIsGrid = val;
@@ -15,7 +15,7 @@ class MyLetterProvider with ChangeNotifier {
 
   void addItem({required String title, String? id}) {
     folderlastid++;
-    final newFolder = CategoryItem(
+    final newFolder = categoryItem(
       id: id ??
           folderlastid.toString(), // Use provided ID or generate a new one
       title: title,
@@ -44,7 +44,7 @@ class MyLetterProvider with ChangeNotifier {
     }
   }
 
-  void insertItem(int index, CategoryItem item) {
+  void insertItem(int index, categoryItem item) {
     folders.insert(index, item);
     notifyListeners();
   }

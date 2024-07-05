@@ -1,10 +1,11 @@
 import 'package:Letterfly/components/letteritem.dart';
 
-class CategoryItem {
+// ignore: camel_case_types
+class categoryItem {
   final String id;
   final String title;
   final List<Letter> listletter;
 
-  const CategoryItem(
+  const categoryItem(
       {required this.id, required this.title, required this.listletter});
 }
