@@ -15,15 +15,15 @@ class EditProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
 
-    TextEditingController usernameController = TextEditingController(text: prov.username);
-    TextEditingController emailController = TextEditingController(text: prov.email);
+    TextEditingController usernameController = TextEditingController(text: prov.Username);
+    TextEditingController emailController = TextEditingController(text: prov.Email);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Profile', style: subheadlineStyle),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,7 +43,7 @@ class EditProfilePage extends StatelessWidget {
                 child: prov.imageProfile == null ? Container(
                   width: 100,
                   height: 100,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.black,
                   ),
                   child: Padding(
@@ -106,7 +106,7 @@ class EditProfilePage extends StatelessWidget {
                     prov.setUsername = usernameController.text;
                     Navigator.pushNamed(context, '/sukses');
                   } else {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text('Email must be in the format example@gmail.com'),
                       duration: Duration(seconds: 2),
                     ));

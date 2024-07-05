@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
-class takeAPhotoPage extends StatefulWidget {
-  const takeAPhotoPage({super.key});
+class TakeAPhotoPage extends StatefulWidget {
+  const TakeAPhotoPage({super.key});
 
   @override
-  State<takeAPhotoPage> createState() => _takeAPhotoPageState();
+  State<TakeAPhotoPage> createState() => _TakeAPhotoPageState();
 }
 
-class _takeAPhotoPageState extends State<takeAPhotoPage> {
+class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
 
@@ -63,7 +63,7 @@ class _takeAPhotoPageState extends State<takeAPhotoPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      AddLetterPage(imagePaths: prov.tempPhoto),
+                      AddLetterPage(imagePaths: prov.TempPhoto),
                 ),
               );
             } catch (e) {

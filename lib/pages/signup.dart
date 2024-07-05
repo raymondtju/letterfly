@@ -1,5 +1,3 @@
-//sign up page
-
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
@@ -58,11 +56,11 @@ class _MyWidgetState extends State<MyWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Full Name',
                 style: DefaultStyles.labelStyle,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 8,
               ),
               TextField(
@@ -71,14 +69,14 @@ class _MyWidgetState extends State<MyWidget> {
                   hintText: 'Masukkan nama lengkap anda',
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Email',
                 style: DefaultStyles.labelStyle,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 8,
               ),
               TextField(
@@ -100,14 +98,14 @@ class _MyWidgetState extends State<MyWidget> {
                   });
                 },
               ),
-              const SizedBox(
+              SizedBox(
                 height: 20,
               ),
-              const Text(
+              Text(
                 'Password',
                 style: DefaultStyles.labelStyle,
               ),
-              const SizedBox(
+              SizedBox(
                 height: 8,
               ),
               TextField(
@@ -201,7 +199,7 @@ class _MyWidgetState extends State<MyWidget> {
                     Navigator.pushNamed(context, "/login");
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
+                      SnackBar(
                         content: Text('Passwords do not match.'),
                         duration: Duration(seconds: 2),
                       ),

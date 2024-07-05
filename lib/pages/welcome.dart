@@ -1,5 +1,3 @@
-// welcome page
-
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
@@ -24,7 +22,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   void addingRecentFolder() {
     final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((categoryItem) => categoryItem.title == "Recent") &&
+    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent") &&
         prov.folders.isEmpty) {
       prov.addItem(title: "Recent");
     }

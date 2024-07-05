@@ -72,7 +72,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                           ),
                           IconButton(
                             icon: Icon(
-                              prov.categoryViewIsGrid
+                              prov.CategoryViewIsGrid
                                   ? Icons.list
                                   : Icons.grid_view,
                               size: 40,
@@ -81,7 +81,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                             hoverColor: Colors.white.withOpacity(0),
                             onPressed: () {
                               prov.setCategoryViewGrid =
-                                  !prov.categoryViewIsGrid;
+                                  !prov.CategoryViewIsGrid;
                             },
                           ),
                         ],
@@ -92,7 +92,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                     height: 15,
                   ),
                   Expanded(
-                      child: prov.categoryViewIsGrid
+                      child: prov.CategoryViewIsGrid
                           ? gridLetter(letters)
                           : listLetter(letters))
                 ],
@@ -110,7 +110,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => AddSuratInFolder(
-                                  imagePaths: const [],
+                                  imagePaths: [],
                                   categoryId: widget.categoryId,
                                 ),
                               ),
@@ -172,7 +172,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => AddSuratInFolder(
-                        imagePaths: const [],
+                        imagePaths: [],
                         categoryId: widget.categoryId,
                       ),
                     ),
@@ -242,13 +242,13 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
         ),
         IconButton(
           icon: Icon(
-            prov.categoryViewIsGrid ? Icons.list : Icons.grid_view,
+            prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
             size: 40,
             color: const Color(0xFFd9d9d9),
           ),
           hoverColor: Colors.white.withOpacity(0),
           onPressed: () {
-            prov.setCategoryViewGrid = !prov.categoryViewIsGrid;
+            prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
           },
         ),
       ],
@@ -289,7 +289,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                                 letters[index].imagePaths[0],
                                 fit: BoxFit.cover,
                               )
-                            : const Text(""),
+                            : Text(""),
                       ),
                     ),
                     SizedBox(
@@ -316,9 +316,9 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                           showDeleteConfirmation(context, prov, index);
                         } else if (prov.folders.length <= 1) {
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              duration: Duration(seconds: 5),
-                              content: Text(
+                            SnackBar(
+                              duration: const Duration(seconds: 5),
+                              content: const Text(
                                   'No folder to move to. Try creating a folder or add more'),
                             ),
                           );
@@ -440,7 +440,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                         letters[index].imagePaths[0],
                         fit: BoxFit.cover,
                       )
-                    : const Text(""),
+                    : Text(""),
               ),
               Container(
                 decoration: BoxDecoration(
@@ -523,13 +523,13 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics:
-                      const NeverScrollableScrollPhysics(), // Disable scrolling for this ListView
+                      NeverScrollableScrollPhysics(), // Disable scrolling for this ListView
                   itemCount: prov.folders.length,
                   itemBuilder: (context, index) {
                     final category = prov.folders[index];
                     if (category.id != widget.categoryId) {
                       return ListTile(
-                        leading: const Icon(
+                        leading: Icon(
                           Icons.folder_sharp,
                         ),
                         title: Text(category.title),
@@ -580,7 +580,7 @@ class MoveToSubmenuState extends State<MoveToSubmenu> {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
-      child: const Row(
+      child: Row(
         children: [
           Icon(Icons.folder),
           SizedBox(width: 8),

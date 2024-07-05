@@ -64,7 +64,6 @@ Future showSignatureDialog(
                   style: TextStyle(color: Color.fromRGBO(249, 249, 249, 1))),
               onPressed: () async {
                 var data = await signatureKey.currentState?.getData();
-                // ignore: use_build_context_synchronously
                 Navigator.of(context).pop(data);
               },
             ),
@@ -87,7 +86,6 @@ class AddSuratInFolder extends StatefulWidget {
 
   @override
   State<AddSuratInFolder> createState() =>
-      // ignore: no_logic_in_create_state
       AddSuratInFolderState(imagePaths: imagePaths);
 }
 
@@ -100,7 +98,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
   List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
-  List<String> tempPhotos = [];
+  List<String> TempPhotos = [];
 
   TextEditingController lettertitleController = TextEditingController();
   TextEditingController letternumberController = TextEditingController();
@@ -120,11 +118,10 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(DateTime.now().year + 10),
     );
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
       });
-    }
   }
 
   @override
@@ -274,11 +271,10 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                     ),
                   ),
                   child: Text(
-                    // ignore: unnecessary_null_comparison
                     selectedDate != null
                         ? "${selectedDate.toLocal()}".split(' ')[0]
                         : "Select date",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -582,7 +578,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                 height: 160,
                 // width: 200,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
@@ -591,7 +587,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                       controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Write Detail Description',
                       ),
@@ -599,13 +595,13 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Save as draft'),
+                  Text('Save as draft'),
                   Switch(
                       value: isDraft,
                       onChanged: (value) {
@@ -632,16 +628,15 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                     String defaultDate =
                         "${currentDate.day}/${currentDate.month}/${currentDate.year}";
                     for (var gmbr in imagePaths) {
-                      tempPhotos.add(gmbr);
+                      TempPhotos.add(gmbr);
                     }
                     final letterProvider =
                         Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
-                        id: letterProvider.letterCounts + 1,
-                        imagePaths: tempPhotos,
+                        id: letterProvider.LetterCounts + 1,
+                        imagePaths: TempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
-                        // ignore: unnecessary_null_comparison
                         datePublished: selectedDate != null
                             ? "${selectedDate.toLocal()}".split(' ')[0]
                             : defaultDate,

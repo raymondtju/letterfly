@@ -74,13 +74,13 @@ class _CategoryViewState extends State<CategoryView> {
                     ),
                     IconButton(
                       icon: Icon(
-                        prov.categoryViewIsGrid ? Icons.list : Icons.grid_view,
+                        prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
                         size: 40,
                         color: const Color(0xFFd9d9d9),
                       ),
                       hoverColor: Colors.white.withOpacity(0),
                       onPressed: () {
-                        prov.setCategoryViewGrid = !prov.categoryViewIsGrid;
+                        prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
                       },
                     ),
                   ],
@@ -143,7 +143,7 @@ class _CategoryViewState extends State<CategoryView> {
                   ),
             Expanded(
                 child:
-                    prov.categoryViewIsGrid ? gridCategory() : listCategory()),
+                    prov.CategoryViewIsGrid ? gridCategory() : listCategory()),
 
             // searchBar(context), rip searchbar
             // const SizedBox(
@@ -286,13 +286,13 @@ class _CategoryViewState extends State<CategoryView> {
         ),
         IconButton(
           icon: Icon(
-            prov.categoryViewIsGrid ? Icons.grid_view : Icons.list,
+            prov.CategoryViewIsGrid ? Icons.grid_view : Icons.list,
             size: 40,
             color: const Color(0xFFd9d9d9),
           ),
           hoverColor: Colors.white.withOpacity(0),
           onPressed: () {
-            prov.setCategoryViewGrid = !prov.categoryViewIsGrid;
+            prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
           },
         ),
       ],

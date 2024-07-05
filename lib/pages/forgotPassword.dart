@@ -1,6 +1,3 @@
-// ignore_for_file: avoid_print
-// forgot password page
-
 import 'dart:math';
 
 import 'package:Letterfly/components/textstylefont.dart';
@@ -10,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class forgotPasswordPage extends StatelessWidget {
-  const forgotPasswordPage({super.key});
+class ForgotPasswordPage extends StatelessWidget {
+  const ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,11 +59,11 @@ class _MyWidgetState extends State<MyWidget> {
             ),
             OutlinedButton(
               onPressed: () {
-                if (prov.email == emailController.text) {
+                if (prov.Email == emailController.text) {
                   _showOTPMenu(context);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text('Email not registered.'),
                       duration: Duration(seconds: 2),
                     ),
@@ -271,14 +268,14 @@ void _showOTPMenu(BuildContext context) {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: const Text('Error'),
-                                content: const Text('OTP code didn\'t match.'),
+                                title: Text('Error'),
+                                content: Text('OTP code didn\'t match.'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: const Text('OK'),
+                                    child: Text('OK'),
                                   ),
                                 ],
                               );
@@ -319,14 +316,14 @@ void _showRandomCodeDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('OTP Code'),
+        title: Text('OTP Code'),
         content: Text('Your OTP code is: $randomCode'),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('OK'),
+            child: Text('OK'),
           ),
         ],
       );

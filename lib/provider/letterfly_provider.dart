@@ -5,27 +5,27 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class LetterFlyProvider with ChangeNotifier {
-  String _username = '';
-  String get username => _username;
+  String _Username = '';
+  String get Username => _Username;
 
   set setUsername(val) {
-    _username = val;
+    _Username = val;
     notifyListeners();
   }
 
-  String _email = '';
-  String get email => _email;
+  String _Email = '';
+  String get Email => _Email;
 
   set setEmail(val) {
-    _email = val;
+    _Email = val;
     notifyListeners();
   }
 
-  String _password = '';
-  String get password => _password;
+  String _Password = '';
+  String get Password => _Password;
 
   set setPassword(val) {
-    _password = val;
+    _Password = val;
     notifyListeners();
   }
 
@@ -37,25 +37,25 @@ class LetterFlyProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool _categoryViewIsGrid = false;
-  bool get categoryViewIsGrid => _categoryViewIsGrid;
+  bool _CategoryViewIsGrid = false;
+  bool get CategoryViewIsGrid => _CategoryViewIsGrid;
 
   set setCategoryViewGrid(val) {
-    _categoryViewIsGrid = val;
+    _CategoryViewIsGrid = val;
     notifyListeners();
   }
 
-  List<String> tempPhoto = [];
+  List<String> TempPhoto = [];
 
   void addPhoto(String value) {
-    tempPhoto.add(value);
+    TempPhoto.add(value);
     notifyListeners();
   }
 
-  String? tempSignature;
+  String? TempSignature;
 
   void addSignature(String value) {
-    tempSignature = value;
+    TempSignature = value;
     notifyListeners();
   }
 
@@ -75,8 +75,8 @@ class LetterFlyProvider with ChangeNotifier {
   }
 
   List<Letter> _letters = [];
-  List get letters => _letters;
-  int get letterCounts => _letters.length;
+  List get Letters => _letters;
+  int get LetterCounts => _letters.length;
 
   void setLetters(Letter letter) {
     _letters.add(letter);
@@ -84,7 +84,7 @@ class LetterFlyProvider with ChangeNotifier {
   }
 
   void clearTempPhoto() {
-    tempPhoto.clear();
+    TempPhoto.clear();
     notifyListeners();
   }
 

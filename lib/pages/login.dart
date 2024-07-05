@@ -1,5 +1,3 @@
-// login page
-
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
@@ -128,18 +126,18 @@ class _MyWidgetState extends State<MyWidget> {
                     String password = passwordController.text;
 
                     if (!password.isEmpty) {
-                      if (email == prov.email) {
-                        if (password == prov.password) {
+                      if (email == prov.Email) {
+                        if (password == prov.Password) {
                           Navigator.pushNamed(context, "/home");
                         } else {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content: Text('Password is wrong.'),
                             duration: Duration(seconds: 2),
                           ));
                         }
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text('Email not registered.'),
                             duration: Duration(seconds: 2),
                           ),

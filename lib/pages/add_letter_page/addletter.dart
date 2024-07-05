@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
@@ -88,13 +86,15 @@ class AddLetterPage extends StatefulWidget {
 class AddLetterPageState extends State<AddLetterPage> {
   void addingRecentFolder() {
     final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((categoryItem) => categoryItem.title == "Recent") ||
+    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent") ||
         prov.folders.isEmpty) {
       prov.addItem(title: "Recent");
     }
-  } void addingDraftFolder() {
+  }
+
+  void addingDraftFolder() {
     final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((categoryItem) => categoryItem.title == "Draft") ||
+    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Draft") ||
         prov.folders.isEmpty) {
       prov.addItem(title: "Draft");
     }
@@ -108,7 +108,7 @@ class AddLetterPageState extends State<AddLetterPage> {
   List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
-  List<String> tempPhotos = [];
+  List<String> TempPhotos = [];
 
   TextEditingController lettertitleController = TextEditingController();
   TextEditingController letternumberController = TextEditingController();
@@ -128,11 +128,10 @@ class AddLetterPageState extends State<AddLetterPage> {
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(DateTime.now().year + 10),
     );
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
       });
-    }
   }
 
   @override
@@ -282,12 +281,10 @@ class AddLetterPageState extends State<AddLetterPage> {
                     ),
                   ),
                   child: Text(
-                    // ignore: duplicate_ignore
-                    // ignore: unnecessary_null_comparison
                     selectedDate != null
                         ? "${selectedDate.toLocal()}".split(' ')[0]
                         : "Select date",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -591,7 +588,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                 height: 160,
                 // width: 200,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
@@ -600,7 +597,7 @@ class AddLetterPageState extends State<AddLetterPage> {
                       controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Write Detail Description',
                       ),
@@ -608,50 +605,53 @@ class AddLetterPageState extends State<AddLetterPage> {
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Save as draft'),
+                  Text('Save as draft'),
                   Switch(
                       value: draftbool,
                       onChanged: (value) {
                         setState(() {
                           draftbool = value;
                         });
-                        if (draftbool == true) {
-                          DateTime currentDate = DateTime.now();
-                          String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
-                          for (var gmbr in imagePaths) {
-                            tempPhotos.add(gmbr);
-                          }
-                          final letterProvider = Provider.of<LetterFlyProvider>(context, listen: false);
-                          final letter = Letter(
-                            id: letterProvider.letterCounts + 1,
-                            imagePaths: tempPhotos,
-                            letterTitle: lettertitleController.text,
-                            letterNumber: letternumberController.text,
-                            datePublished: selectedDate != null
-                                ? "${selectedDate.toLocal()}".split(' ')[0]
-                                : defaultDate,
-                            category: selectedCategory,
-                            division: selectedDivision,
-                            signatureImage: signImage,
-                            description: descriptionController.text,
-                            isDraft: draftbool);
+                        // if (draftbool == true) {
+                        //   DateTime currentDate = DateTime.now();
+                        //   String defaultDate =
+                        //       "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+                        //   for (var gmbr in imagePaths) {
+                        //     TempPhotos.add(gmbr);
+                        //   }
+                        //   final letterProvider = Provider.of<LetterFlyProvider>(
+                        //       context,
+                        //       listen: false);
+                        //   final letter = Letter(
+                        //       id: letterProvider.LetterCounts + 1,
+                        //       imagePaths: TempPhotos,
+                        //       letterTitle: lettertitleController.text,
+                        //       letterNumber: letternumberController.text,
+                        //       datePublished: selectedDate != null
+                        //           ? "${selectedDate.toLocal()}".split(' ')[0]
+                        //           : defaultDate,
+                        //       category: selectedCategory,
+                        //       division: selectedDivision,
+                        //       signatureImage: signImage,
+                        //       description: descriptionController.text,
+                        //       isDraft: draftbool);
 
-                        addingDraftFolder();
-                        Provider.of<LetterFlyProvider>(context, listen: false)
-                            .setLetters(letter);
-                        Provider.of<MyLetterProvider>(context, listen: false)
-                        .addLetterToCategoryByTitle(
-                            categoryTitle: "Draft", letter: letter);
+                        //   addingDraftFolder();
+                        //   Provider.of<LetterFlyProvider>(context, listen: false)
+                        //       .setLetters(letter);
+                        //   Provider.of<MyLetterProvider>(context, listen: false)
+                        //       .addLetterToCategoryByTitle(
+                        //           categoryTitle: "Draft", letter: letter);
 
-                        Navigator.pushNamed(context, "/sukses");
-                        imagePaths.clear();
-                        }
+                        //   Navigator.pushNamed(context, "/sukses");
+                        //   imagePaths.clear();
+                        // }
                       })
                 ],
               ),
@@ -669,15 +669,16 @@ class AddLetterPageState extends State<AddLetterPage> {
                       )),
                   onPressed: () {
                     DateTime currentDate = DateTime.now();
-                    String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+                    String defaultDate =
+                        "${currentDate.day}/${currentDate.month}/${currentDate.year}";
                     for (var gmbr in imagePaths) {
-                      tempPhotos.add(gmbr);
+                      TempPhotos.add(gmbr);
                     }
                     final letterProvider =
                         Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
-                        id: letterProvider.letterCounts + 1,
-                        imagePaths: tempPhotos,
+                        id: letterProvider.LetterCounts + 1,
+                        imagePaths: TempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
                         datePublished: selectedDate != null
@@ -687,15 +688,23 @@ class AddLetterPageState extends State<AddLetterPage> {
                         division: selectedDivision,
                         signatureImage: signImage,
                         description: descriptionController.text,
-                        isDraft: false);
-                    Provider.of<LetterFlyProvider>(context, listen: false)
-                        .setLetters(letter);
+                        isDraft: draftbool);
 
-                    addingRecentFolder();
-
-                    Provider.of<MyLetterProvider>(context, listen: false)
-                        .addLetterToCategoryByTitle(
-                            categoryTitle: "Recent", letter: letter);
+                    if (draftbool == true) {
+                      addingDraftFolder();
+                      Provider.of<LetterFlyProvider>(context, listen: false)
+                          .setLetters(letter);
+                      Provider.of<MyLetterProvider>(context, listen: false)
+                          .addLetterToCategoryByTitle(
+                              categoryTitle: "Draft", letter: letter);
+                    } else {
+                      addingRecentFolder();
+                      Provider.of<LetterFlyProvider>(context, listen: false)
+                          .setLetters(letter);
+                      Provider.of<MyLetterProvider>(context, listen: false)
+                          .addLetterToCategoryByTitle(
+                              categoryTitle: "Recent", letter: letter);
+                    }
 
                     Navigator.pushNamed(context, "/sukses");
                     imagePaths.clear();
