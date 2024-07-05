@@ -15,13 +15,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-
-# letterfly
-
-Sure, here's a simplified README template tailored for a Flutter project:
-
----
-
 # letterfly
 
 ## Table of Contents
@@ -35,12 +28,14 @@ Sure, here's a simplified README template tailored for a Flutter project:
 
 ## Description
 
-Briefly describe your Flutter project, its purpose, and what it aims to achieve.
+Aplikasi Penomoran Surat memungkinkan pengguna untuk memindai, menambahkan surat, dan mengarsipkannya secara online.
+
 
 ## Features
 
-List the key features of the project:
-
+Scan surat
+Tambah surat baru
+Arsipkan surat secara online
 
 ## Installation
 
