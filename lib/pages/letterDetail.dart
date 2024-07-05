@@ -13,7 +13,7 @@ class LetterDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
     final itemOfLetter =
-        prov.Letters.firstWhere((letter) => letter.id == id_letter);
+        prov.letters.firstWhere((letter) => letter.id == id_letter);
 
     return Scaffold(
       appBar: AppBar(

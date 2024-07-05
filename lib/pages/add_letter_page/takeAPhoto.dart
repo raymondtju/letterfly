@@ -63,7 +63,7 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
                 context,
                 MaterialPageRoute(
                   builder: (context) =>
-                      AddLetterPage(imagePaths: prov.TempPhoto),
+                      AddLetterPage(imagePaths: prov.tempPhoto),
                 ),
               );
             } catch (e) {

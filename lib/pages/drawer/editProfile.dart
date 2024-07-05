@@ -15,8 +15,8 @@ class EditProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
 
-    TextEditingController usernameController = TextEditingController(text: prov.Username);
-    TextEditingController emailController = TextEditingController(text: prov.Email);
+    TextEditingController usernameController = TextEditingController(text: prov.username);
+    TextEditingController emailController = TextEditingController(text: prov.email);
 
     return Scaffold(
       appBar: AppBar(

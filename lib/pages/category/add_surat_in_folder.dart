@@ -98,7 +98,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
   List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
-  List<String> TempPhotos = [];
+  List<String> tempPhotos = [];
 
   TextEditingController lettertitleController = TextEditingController();
   TextEditingController letternumberController = TextEditingController();
@@ -628,13 +628,13 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                     String defaultDate =
                         "${currentDate.day}/${currentDate.month}/${currentDate.year}";
                     for (var gmbr in imagePaths) {
-                      TempPhotos.add(gmbr);
+                      tempPhotos.add(gmbr);
                     }
                     final letterProvider =
                         Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
-                        id: letterProvider.LetterCounts + 1,
-                        imagePaths: TempPhotos,
+                        id: letterProvider.letterCounts + 1,
+                        imagePaths: tempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
                         datePublished: selectedDate != null

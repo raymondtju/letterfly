@@ -126,8 +126,8 @@ class _MyWidgetState extends State<MyWidget> {
                     String password = passwordController.text;
 
                     if (!password.isEmpty) {
-                      if (email == prov.Email) {
-                        if (password == prov.Password) {
+                      if (email == prov.email) {
+                        if (password == prov.password) {
                           Navigator.pushNamed(context, "/home");
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

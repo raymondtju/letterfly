@@ -86,13 +86,13 @@ class AddLetterPage extends StatefulWidget {
 class AddLetterPageState extends State<AddLetterPage> {
   void addingRecentFolder() {
     final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Recent") ||
+    if (!prov.folders.any((categoryItem) => categoryItem.title == "Recent") ||
         prov.folders.isEmpty) {
       prov.addItem(title: "Recent");
     }
   } void addingDraftFolder() {
     final prov = Provider.of<MyLetterProvider>(context, listen: false);
-    if (!prov.folders.any((CategoryItem) => CategoryItem.title == "Draft") ||
+    if (!prov.folders.any((categoryItem) => categoryItem.title == "Draft") ||
         prov.folders.isEmpty) {
       prov.addItem(title: "Draft");
     }
@@ -106,7 +106,7 @@ class AddLetterPageState extends State<AddLetterPage> {
   List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
-  List<String> TempPhotos = [];
+  List<String> tempPhotos = [];
 
   TextEditingController lettertitleController = TextEditingController();
   TextEditingController letternumberController = TextEditingController();
@@ -620,12 +620,12 @@ class AddLetterPageState extends State<AddLetterPage> {
                           DateTime currentDate = DateTime.now();
                           String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
                           for (var gmbr in imagePaths) {
-                            TempPhotos.add(gmbr);
+                            tempPhotos.add(gmbr);
                           }
                           final letterProvider = Provider.of<LetterFlyProvider>(context, listen: false);
                           final letter = Letter(
-                            id: letterProvider.LetterCounts + 1,
-                            imagePaths: TempPhotos,
+                            id: letterProvider.letterCounts + 1,
+                            imagePaths: tempPhotos,
                             letterTitle: lettertitleController.text,
                             letterNumber: letternumberController.text,
                             datePublished: selectedDate != null
@@ -666,13 +666,13 @@ class AddLetterPageState extends State<AddLetterPage> {
                     DateTime currentDate = DateTime.now();
                     String defaultDate = "${currentDate.day}/${currentDate.month}/${currentDate.year}";
                     for (var gmbr in imagePaths) {
-                      TempPhotos.add(gmbr);
+                      tempPhotos.add(gmbr);
                     }
                     final letterProvider =
                         Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
-                        id: letterProvider.LetterCounts + 1,
-                        imagePaths: TempPhotos,
+                        id: letterProvider.letterCounts + 1,
+                        imagePaths: tempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
                         datePublished: selectedDate != null

@@ -72,7 +72,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                           ),
                           IconButton(
                             icon: Icon(
-                              prov.CategoryViewIsGrid
+                              prov.categoryViewIsGrid
                                   ? Icons.list
                                   : Icons.grid_view,
                               size: 40,
@@ -81,7 +81,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                             hoverColor: Colors.white.withOpacity(0),
                             onPressed: () {
                               prov.setCategoryViewGrid =
-                                  !prov.CategoryViewIsGrid;
+                                  !prov.categoryViewIsGrid;
                             },
                           ),
                         ],
@@ -92,7 +92,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                     height: 15,
                   ),
                   Expanded(
-                      child: prov.CategoryViewIsGrid
+                      child: prov.categoryViewIsGrid
                           ? gridLetter(letters)
                           : listLetter(letters))
                 ],
@@ -242,13 +242,13 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
         ),
         IconButton(
           icon: Icon(
-            prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
+            prov.categoryViewIsGrid ? Icons.list : Icons.grid_view,
             size: 40,
             color: const Color(0xFFd9d9d9),
           ),
           hoverColor: Colors.white.withOpacity(0),
           onPressed: () {
-            prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
+            prov.setCategoryViewGrid = !prov.categoryViewIsGrid;
           },
         ),
       ],

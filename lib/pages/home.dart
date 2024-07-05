@@ -119,13 +119,13 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 5,
                     ),
-                    prov.Letters.isNotEmpty ? const Chips() : const SizedBox(),
+                    prov.letters.isNotEmpty ? const Chips() : const SizedBox(),
                     Expanded(
-                      child: prov.Letters.isNotEmpty
+                      child: prov.letters.isNotEmpty
                           ? ListView.builder(
-                              itemCount: prov.Letters.length,
+                              itemCount: prov.letters.length,
                               itemBuilder: (context, index) {
-                                final letter = prov.Letters[index];
+                                final letter = prov.letters[index];
                                 final matchesSearchQuery =
                                     searchQuery == null ||
                                         searchQuery!.isEmpty ||
@@ -313,11 +313,11 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.02,
                         ),
-                        Text('Hi, ${prov.Username}', style: headlineStyle),
+                        Text('Hi, ${prov.username}', style: headlineStyle),
                         SizedBox(
                           height: MediaQuery.of(context).size.height * 0.005,
                         ),
-                        Text(prov.Email, style: subheadlineStyle),
+                        Text(prov.email, style: subheadlineStyle),
                       ],
                     )),
                 SizedBox(

@@ -12,10 +12,12 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class EditLetterPage extends StatefulWidget {
+  // ignore: non_constant_identifier_names
   final int id_letter;
 
   const EditLetterPage({
     super.key,
+    // ignore: non_constant_identifier_names
     required this.id_letter,
   });
 
@@ -26,6 +28,7 @@ class EditLetterPage extends StatefulWidget {
 }
 
 class EditLetterPageState extends State<EditLetterPage> {
+  // ignore: non_constant_identifier_names
   final int id_letter;
 
   bool isDraft = false;
@@ -35,12 +38,12 @@ class EditLetterPageState extends State<EditLetterPage> {
   List<String> itemsDivision = ['IT', 'ADMN', 'LOG', 'FO'];
   Uint8List? signImage;
 
-  List<String> TempPhotos = [];
+  List<String> tempPhotos = [];
 
   final signatureKey = GlobalKey<SignatureState>();
 
   late DateTime selectedDate;
-
+// ignore: non_constant_identifier_names
   EditLetterPageState({required this.id_letter});
 
   @override
@@ -48,7 +51,7 @@ class EditLetterPageState extends State<EditLetterPage> {
     super.initState();
     final prov = Provider.of<LetterFlyProvider>(context, listen: false);
     final itemOfLetter =
-        prov.Letters.firstWhere((letter) => letter.id == id_letter);
+        prov.letters.firstWhere((letter) => letter.id == id_letter);
     String stringDate = itemOfLetter.datePublished;
     selectedDate = DateTime.parse(stringDate);
   }
@@ -72,7 +75,7 @@ class EditLetterPageState extends State<EditLetterPage> {
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
     final itemOfLetter =
-        prov.Letters.firstWhere((letter) => letter.id == id_letter);
+        prov.letters.firstWhere((letter) => letter.id == id_letter);
     TextEditingController lettertitleController =
         TextEditingController(text: itemOfLetter.letterTitle);
     TextEditingController letternumberController =

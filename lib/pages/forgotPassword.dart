@@ -59,7 +59,7 @@ class _MyWidgetState extends State<MyWidget> {
             ),
             OutlinedButton(
               onPressed: () {
-                if (prov.Email == emailController.text) {
+                if (prov.email == emailController.text) {
                   _showOTPMenu(context);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(

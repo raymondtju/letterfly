@@ -3,13 +3,13 @@ import 'package:Letterfly/components/letteritem.dart';
 import 'package:flutter/material.dart';
 
 class MyLetterProvider with ChangeNotifier {
-  bool _CategoryViewIsGrid = false;
-  bool get CategoryViewIsGrid => _CategoryViewIsGrid;
+  bool _categoryViewIsGrid = false;
+  bool get categoryViewIsGrid => _categoryViewIsGrid;
   int folderlastid = 0;
   List<CategoryItem> folders = [];
 
   set setCategoryViewGrid(val) {
-    _CategoryViewIsGrid = val;
+    _categoryViewIsGrid = val;
     notifyListeners();
   }
 

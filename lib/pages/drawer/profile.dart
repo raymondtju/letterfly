@@ -46,7 +46,7 @@ class ProfilePage extends StatelessWidget {
                   backgroundImage: NetworkImage(prov.imageProfile!.path),
                 ),
                       Text(
-                        'Hi, ${prov.Username}',
+                        'Hi, ${prov.username}',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 24,
@@ -88,7 +88,7 @@ class ProfilePage extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(width: 25),
-                    Text('${prov.Username}'),
+                    Text('${prov.username}'),
                   ],
                 ),
                 SizedBox(height: 8),
@@ -114,7 +114,7 @@ class ProfilePage extends StatelessWidget {
                 Row(
                   children: [
                     SizedBox(width: 25),
-                    Text('${prov.Email}'),
+                    Text('${prov.email}'),
                   ],
                 ),
               ],
