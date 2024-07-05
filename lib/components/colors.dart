@@ -14,7 +14,7 @@ class GlobalThemeData {
       fontFamily: "SF",
     );
   }
-  //membuat warna brightness
+
   static const ColorScheme lightColorScheme = ColorScheme(
     brightness: Brightness.light,
     primary: Color.fromRGBO(40, 42, 45, 1),

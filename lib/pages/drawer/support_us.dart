@@ -52,7 +52,7 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                       activeTrackColor: global.colorScheme.primary,
                       inactiveTrackColor:
                           global.colorScheme.primary.withOpacity(0.3),
-                      trackShape: const RectangularSliderTrackShape(),
+                      trackShape: RectangularSliderTrackShape(),
                       trackHeight: 4.0,
                       thumbColor: global.colorScheme.primary,
                       thumbShape: RoundedRectangleSliderThumbShape(
@@ -61,13 +61,13 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                       ),
                       overlayColor: global.colorScheme.primary.withAlpha(32),
                       overlayShape:
-                          const RoundSliderOverlayShape(overlayRadius: 28.0),
+                          RoundSliderOverlayShape(overlayRadius: 28.0),
                       tickMarkShape:
-                          const RoundSliderTickMarkShape(tickMarkRadius: 3.0),
+                          RoundSliderTickMarkShape(tickMarkRadius: 3.0),
                       activeTickMarkColor: global.colorScheme.onPrimary,
                       inactiveTickMarkColor:
                           global.colorScheme.primary.withOpacity(0.5),
-                      valueIndicatorShape: const PaddleSliderValueIndicatorShape(),
+                      valueIndicatorShape: PaddleSliderValueIndicatorShape(),
                       valueIndicatorColor: global.colorScheme.primary,
                       valueIndicatorTextStyle: TextStyle(
                         color: global.colorScheme.onPrimary,
@@ -87,7 +87,7 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Very Poor", style: subtextLineStyle),
@@ -102,7 +102,7 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                         child: InkWell(
                           onTap: () {
                             setState(() {
-                              _selectedRating = 0;
+                              _selectedRating = 1;
                             });
                           },
                           child: Container(
@@ -121,7 +121,7 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                           ),
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         width: 6,
                       ),
                       Expanded(

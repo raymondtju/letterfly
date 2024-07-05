@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             themeMode: ThemeMode.light,
             theme: GlobalThemeData().lightThemeData,
             debugShowCheckedModeBanner: false,
-            initialRoute: "/home",
+            initialRoute: "/welcome",
             onGenerateRoute: (settings) {
               switch (settings.name) {
                 case '/welcome':
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
                 case '/sukses':
                   return _buildPageRoute(const SuccessfulPage());
                 case '/forgetPass':
-                  return _buildPageRoute(const forgotPasswordPage());
+                  return _buildPageRoute(const ForgotPasswordPage());
                 case '/newPass':
                   return _buildPageRoute(const NewPasswordPage());
                 case '/category':
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
                   return _buildPageRoute(
                       suratOnFolderView(categoryId: categoryId));
                 case '/takeaphoto':
-                  return _buildPageRoute(const takeAPhotoPage());
+                  return _buildPageRoute(const TakeAPhotoPage());
                 case '/edit_takeaphoto':
                   return _buildPageRoute(EditTakeAPhotoPage(
                       id_letter:

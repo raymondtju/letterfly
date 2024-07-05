@@ -65,13 +65,13 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
                     ),
                     IconButton(
                       icon: Icon(
-                        prov.categoryViewIsGrid ? Icons.list : Icons.grid_view,
+                        prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
                         size: 40,
                         color: const Color(0xFFd9d9d9),
                       ),
                       hoverColor: Colors.white.withOpacity(0),
                       onPressed: () {
-                        prov.setCategoryViewGrid = !prov.categoryViewIsGrid;
+                        prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
                       },
                     ),
                   ],
@@ -82,7 +82,7 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
               height: 15,
             ),
             Expanded(
-                child: prov.categoryViewIsGrid
+                child: prov.CategoryViewIsGrid
                     ? gridSuratKuasa(letters)
                     : listSuratKuasa(letters))
           ],
@@ -143,13 +143,13 @@ class _SuratKuasaViewState extends State<SuratKuasaView> {
         ),
         IconButton(
           icon: Icon(
-            prov.categoryViewIsGrid ? Icons.list : Icons.grid_view,
+            prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
             size: 40,
             color: const Color(0xFFd9d9d9),
           ),
           hoverColor: Colors.white.withOpacity(0),
           onPressed: () {
-            prov.setCategoryViewGrid = !prov.categoryViewIsGrid;
+            prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
           },
         ),
       ],

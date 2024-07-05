@@ -47,7 +47,6 @@ class _AboutUsState extends State<AboutUs> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         SvgPicture.asset('assets/logo/Logo.svg',
-                            // ignore: deprecated_member_use
                             height: 25, color: global.colorScheme.onPrimary),
                         const SizedBox(
                           width: 10,
@@ -72,41 +71,41 @@ class _AboutUsState extends State<AboutUs> {
               const SizedBox(
                 height: 16,
               ),
-              const Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Meet Letterfly Group',
                     style: headlineStyle,
                   ),
-                  Text(
+                  const Text(
                       "At LetterFly, we believe in the magic of words. Our mission is to make communication more personal, meaningful, and delightful. We are a team of passionate individuals who come together with a shared love for creativity, technology, and human connection. Here's a glimpse into the hearts and minds behind LetterFly."),
-                  SizedBox(
+                  const SizedBox(
                     height: 16,
                   ),
-                  Text(
+                  const Text(
                     "Founders",
                     style: headlineStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Text("Timcook - CEO"),
                   Text(
                       "Timcook is the strategic mind behind our marketing efforts. He develops and implements campaigns that drive engagement and growth. Timcook's insights and creativity help us reach new heights and connect with our audience in meaningful ways."),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Text("Timcook - CEO"),
                   Text(
                       "Timcook is the strategic mind behind our marketing efforts. He develops and implements campaigns that drive engagement and growth. Timcook's insights and creativity help us reach new heights and connect with our audience in meaningful ways."),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Text("Timcook - CEO"),
                   Text(
                       "Timcook is the strategic mind behind our marketing efforts. He develops and implements campaigns that drive engagement and growth. Timcook's insights and creativity help us reach new heights and connect with our audience in meaningful ways."),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Text("Timcook - CEO"),

@@ -6,16 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LetterDetailPage extends StatelessWidget {
-  // ignore: non_constant_identifier_names
   final int id_letter;
-  // ignore: non_constant_identifier_names
   const LetterDetailPage({super.key, required this.id_letter});
 
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
     final itemOfLetter =
-        prov.letters.firstWhere((letter) => letter.id == id_letter);
+        prov.Letters.firstWhere((letter) => letter.id == id_letter);
 
     return Scaffold(
       appBar: AppBar(

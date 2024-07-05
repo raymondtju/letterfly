@@ -5,10 +5,8 @@ import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
 class EditTakeAPhotoPage extends StatefulWidget {
-  // ignore: non_constant_identifier_names
   final int id_letter;
 
-  // ignore: non_constant_identifier_names
   const EditTakeAPhotoPage({super.key, required this.id_letter});
 
   @override
@@ -43,7 +41,7 @@ class _EditTakeAPhotoPageState extends State<EditTakeAPhotoPage> {
     final prov = Provider.of<LetterFlyProvider>(context);
 
     final itemOfLetter =
-        prov.letters.firstWhere((letter) => letter.id == widget.id_letter);
+        prov.Letters.firstWhere((letter) => letter.id == widget.id_letter);
 
     return Scaffold(
       backgroundColor: Colors.black,

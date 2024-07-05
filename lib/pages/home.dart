@@ -15,11 +15,33 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   final global = GlobalThemeData().lightThemeData;
   String? searchQuery;
+  bool _isSearchVisible = false;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _animation = CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +53,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: const EdgeInsets.only(top: 30, left: 12
-              //MediaQuery.of(context).size.width * 0.01
-              ),
+          padding: const EdgeInsets.only(top: 30, left: 12),
           child: Row(
             children: [
               SvgPicture.asset(
@@ -41,9 +61,7 @@ class _HomePageState extends State<HomePage> {
                 height: 29,
                 color: Colors.white,
               ),
-              const SizedBox(
-                width: 10,
-              ),
+              const SizedBox(width: 10),
               const Text(
                 'Letterfly',
                 style: TextStyle(
@@ -57,27 +75,39 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           Padding(
-              padding: const EdgeInsets.only(
-                top: 20,
-                right: 20,
+            padding: const EdgeInsets.only(top: 20, right: 10),
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  _isSearchVisible = !_isSearchVisible;
+                  if (_isSearchVisible) {
+                    _animationController.forward();
+                  } else {
+                    _animationController.reverse();
+                  }
+                });
+              },
+              icon: const Icon(
+                Icons.search,
+                size: 24,
+                color: Colors.white,
               ),
-              child: IconButton(
-                  onPressed: () {
-                    _scaffoldKey.currentState?.openDrawer();
-                  },
-                  icon: const Icon(
-                    Icons.settings_sharp,
-                    size: 24,
-                    color: Colors.white,
-                  )))
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20, right: 20),
+            child: IconButton(
+              onPressed: () {
+                _scaffoldKey.currentState?.openDrawer();
+              },
+              icon: const Icon(
+                Icons.settings_sharp,
+                size: 24,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
-        // actions: [
-        //   Switch(
-        //       value: prov.switchThemeto,
-        //       onChanged: (val) {
-        //         prov.setSwitchThemeto = val;
-        //       }),
-        // ],
       ),
       drawer: HomeDrawer(context, prov),
       backgroundColor: const Color.fromRGBO(40, 42, 45, 1),
@@ -85,7 +115,6 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding:
-                //const EdgeInsets.only(left: 20, right: 20, top: 24, bottom: 24),
                 const EdgeInsets.only(left: 20, right: 20, top: 0, bottom: 24),
             child: homeNavBar(context),
           ),
@@ -93,176 +122,209 @@ class _HomePageState extends State<HomePage> {
             child: Container(
               color: global.colorScheme.onPrimary,
               width: MediaQuery.of(context).size.width,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Recents",
-                          style: subheadlineStyle,
+              child: Column(
+                children: [
+                  AnimatedBuilder(
+                    animation: _animation,
+                    builder: (context, child) {
+                      return SizeTransition(
+                        sizeFactor: _animation,
+                        axisAlignment: -1,
+                        child: FadeTransition(
+                          opacity: _animation,
+                          child: child,
                         ),
-                        TextButton(
-                          onPressed: () {
-                            prov.setSelectedChipSuratAjaib = false;
-                            prov.setSelectedChipSuratKuasa = false;
-                          },
-                          child: const Text(
-                            "View All",
-                            style: TextStyle(color: Colors.black),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          top: 16, bottom: 0), // Adjust these values as needed
+                      child: homeSearchBar(),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(30, 20, 20, 20),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                "Recents",
+                                style: subheadlineStyle,
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  prov.setSelectedChipSuratAjaib = false;
+                                  prov.setSelectedChipSuratKuasa = false;
+                                },
+                                child: const Text(
+                                  "View All",
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    prov.letters.isNotEmpty ? const Chips() : const SizedBox(),
-                    Expanded(
-                      child: prov.letters.isNotEmpty
-                          ? ListView.builder(
-                              itemCount: prov.letters.length,
-                              itemBuilder: (context, index) {
-                                final letter = prov.letters[index];
-                                final matchesSearchQuery =
-                                    searchQuery == null ||
-                                        searchQuery!.isEmpty ||
-                                        letter.letterNumber
-                                            .toLowerCase()
-                                            .contains(searchQuery!) ||
-                                        letter.category
-                                            .toLowerCase()
-                                            .contains(searchQuery!) ||
-                                        letter.title
-                                            .toLowerCase()
-                                            .contains(searchQuery!);
+                          const SizedBox(height: 5),
+                          prov.Letters.isNotEmpty
+                              ? const Chips()
+                              : const SizedBox(),
+                          Expanded(
+                            child: prov.Letters.isNotEmpty
+                                ? ListView.builder(
+                                    itemCount: prov.Letters.length,
+                                    itemBuilder: (context, index) {
+                                      final letter = prov.Letters[index];
+                                      final matchesSearchQuery =
+                                          searchQuery == null ||
+                                              searchQuery!.isEmpty ||
+                                              letter.letterNumber
+                                                  .toLowerCase()
+                                                  .contains(searchQuery!) ||
+                                              letter.category
+                                                  .toLowerCase()
+                                                  .contains(searchQuery!) ||
+                                              letter.letterTitle
+                                                  .toLowerCase()
+                                                  .contains(searchQuery!);
 
-                                if ((prov.selectedChipSuratKuasa &&
-                                        letter.category == 'Surat Kuasa' &&
-                                        matchesSearchQuery) ||
-                                    (prov.selectedChipSuratAjaib &&
-                                        letter.category == 'Surat Ajaib' &&
-                                        matchesSearchQuery) ||
-                                    (!prov.selectedChipSuratKuasa &&
-                                        !prov.selectedChipSuratAjaib &&
-                                        matchesSearchQuery)) {
-                                  return ListTile(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              LetterDetailPage(
-                                                  id_letter: letter.id),
-                                        ),
-                                      );
+                                      if ((prov.selectedChipSuratKuasa && letter.category == 'Surat Kuasa' && matchesSearchQuery) ||
+                                          (prov.selectedChipSuratAjaib &&
+                                              letter.category ==
+                                                  'Surat Ajaib' &&
+                                              matchesSearchQuery) ||
+                                          (!prov.selectedChipSuratKuasa &&
+                                              !prov.selectedChipSuratAjaib &&
+                                              matchesSearchQuery)) {
+                                        return ListTile(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LetterDetailPage(
+                                                        id_letter: letter.id),
+                                              ),
+                                            );
+                                          },
+                                          contentPadding:
+                                              const EdgeInsets.fromLTRB(
+                                                  0, 5, 5, 5),
+                                          leading: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.1,
+                                            color: Colors.grey,
+                                          ),
+                                          title: Text(letter.letterNumber),
+                                          subtitle: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              letter.isDraft == true
+                                                  ? Text(
+                                                      '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file (DRAFT)',
+                                                      style: const TextStyle(
+                                                          fontSize: 10),
+                                                    )
+                                                  : Text(
+                                                      '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file',
+                                                      style: const TextStyle(
+                                                          fontSize: 10),
+                                                    ),
+                                              Text(
+                                                letter.datePublished,
+                                                style: const TextStyle(
+                                                    fontSize: 10),
+                                              ),
+                                            ],
+                                          ),
+                                          trailing: IconButton(
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditLetterPage(
+                                                          id_letter: letter.id),
+                                                ),
+                                              );
+                                            },
+                                            icon: const Icon(Icons.edit),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
                                     },
-                                    contentPadding:
-                                        const EdgeInsets.fromLTRB(0, 5, 5, 5),
-                                    leading: Container(
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.1,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                      color: Colors.grey,
-                                    ),
-                                    title: Text(letter.letterNumber),
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  )
+                                : Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        letter.isDraft == true ?
-                                        Text(
-                                          '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file (DRAFT)',
-                                          style: const TextStyle(fontSize: 10),
-                                        ) : 
-                                        Text(
-                                          '${letter.category} / ${letter.division} / ${letter.imagePaths.length} file',
-                                          style: const TextStyle(fontSize: 10),
+                                        Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                    context, "/addletter");
+                                              },
+                                              child: SizedBox(
+                                                height: 60,
+                                                width: 60,
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              40, 42, 45, 1),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            0),
+                                                  ),
+                                                  child: const Icon(
+                                                    Icons.add,
+                                                    size: 28,
+                                                    color: Color.fromRGBO(
+                                                        40, 42, 45, 1),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        Text(
-                                          letter.datePublished,
-                                          style: const TextStyle(fontSize: 10),
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        const Text(
+                                          "No Recent File",
+                                          style: subheadlineStyle,
+                                        ),
+                                        const Text(
+                                          "Scan First Letter",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    trailing: IconButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditLetterPage(
-                                                    id_letter: letter.id),
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(Icons.edit),
-                                    ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              },
-                            )
-                          : Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.center,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.pushNamed(
-                                              context, "/addletter");
-                                        },
-                                        child: SizedBox(
-                                          height: 60,
-                                          width: 60,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: const Color.fromRGBO(
-                                                    40, 42, 45, 1),
-                                                width: 2,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(0),
-                                            ),
-                                            child: const Icon(
-                                              Icons.add,
-                                              size: 28,
-                                              color:
-                                                  Color.fromRGBO(40, 42, 45, 1),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
                                   ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  const Text(
-                                    "No Recent File",
-                                    style: subheadlineStyle,
-                                  ),
-                                  const Text(
-                                    "Scan First Letter",
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -277,130 +339,134 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.zero,
       ),
       width: MediaQuery.of(context).size.width * 0.75,
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 44, 0, 0),
-              children: [
-                Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        prov.imageProfile == null
-                            ? Container(
-                                width: MediaQuery.of(context).size.width * 0.25,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                decoration: BoxDecoration(
-                                  color: global.colorScheme.primary,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(28),
-                                  child: SvgPicture.asset(
-                                    'assets/logo/Logo.svg',
-                                    // ignore: deprecated_member_use
-                                    color: Colors.white,
+      child: SizedBox(
+        height: 20,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 44, 0, 0),
+                children: [
+                  Container(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          prov.imageProfile == null
+                              ? Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  decoration: BoxDecoration(
+                                    color: global.colorScheme.primary,
                                   ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(28),
+                                    child: SvgPicture.asset(
+                                      'assets/logo/Logo.svg',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage:
+                                      NetworkImage(prov.imageProfile!.path),
                                 ),
-                              )
-                            : CircleAvatar(
-                                radius: 50,
-                                backgroundImage:
-                                    NetworkImage(prov.imageProfile!.path),
-                              ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Text('Hi, ${prov.username}', style: headlineStyle),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.005,
-                        ),
-                        Text(prov.email, style: subheadlineStyle),
-                      ],
-                    )),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                ListTile(
-                  leading: const Icon(Icons.person),
-                  title: const Text(
-                    'Profile',
-                    style: textlineStyle,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          Text('Hi, ${prov.Username}', style: headlineStyle),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.005,
+                          ),
+                          Text(prov.Email, style: subheadlineStyle),
+                        ],
+                      )),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/profile");
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.report),
-                  title: const Text(
-                    'Report',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/report");
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.info_rounded),
-                  title: const Text(
-                    'About us',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/about_us");
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.support),
-                  title: const Text(
-                    'Support us',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    showSupportUsSheet(context);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text(
-                    'Logout',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/login");
-                  },
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(
-                0, 0, 0, MediaQuery.of(context).size.height * 0.1),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/logo/Logo.svg',
-                      width: 24, // Adjust size as needed
-                      height: 24,
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      'Profile',
+                      style: textlineStyle,
                     ),
-                    const SizedBox(width: 10),
-                    const Text('Letterfly', style: headlineStyle),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                const Text('All rights Reserved 2024', style: subtextLineStyle),
-              ],
+                    onTap: () {
+                      Navigator.pushNamed(context, "/profile");
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.report),
+                    title: const Text(
+                      'Report',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/report");
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.info_rounded),
+                    title: const Text(
+                      'About us',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/about_us");
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.support),
+                    title: const Text(
+                      'Support us',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showSupportUsSheet(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text(
+                      'Logout',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.1),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/logo/Logo.svg',
+                        width: 24, // Adjust size as needed
+                        height: 24,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text('Letterfly', style: headlineStyle),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  const Text('All rights Reserved 2024',
+                      style: subtextLineStyle),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -408,9 +474,9 @@ class _HomePageState extends State<HomePage> {
   Widget homeNavBar(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 16),
-        homeSearchBar(),
-        const SizedBox(height: 16),
+        //const SizedBox(height: 16),
+        //homeSearchBar(),
+        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -442,7 +508,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Text(
                         "Add Letter",
-                        style: TextStyle(fontSize: 16),
+                        style: subtextLineStyle,
                       ),
                     ],
                   ),
@@ -473,11 +539,9 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(
-                        "My Letter",
-                        style: TextStyle(
-                            fontSize: 16, color: global.colorScheme.onPrimary),
-                      ),
+                      Text("My Letter",
+                          style: subtextLineStyle.apply(
+                              color: global.colorScheme.onPrimary)),
                     ],
                   ),
                 ),
@@ -719,9 +783,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Padding homeSearchBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+  Widget homeSearchBar() {
+    return Container(
+      color: global.colorScheme.onPrimary,
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       child: TextField(
         onChanged: (value) {
           setState(() {
@@ -729,65 +794,24 @@ class _HomePageState extends State<HomePage> {
           });
         },
         decoration: InputDecoration(
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           hintText: 'Search by category, title, or number',
-          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
+          hintStyle: TextStyle(color: Colors.grey[600], fontSize: 14),
           filled: true,
-          fillColor: Colors.white,
-          prefixIcon: const Icon(Icons.search),
+          fillColor: Colors.grey[200],
+          prefixIcon: const Icon(Icons.search, color: Colors.grey),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.grey[300]!),
+            borderRadius: BorderRadius.circular(0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.grey[400]!),
+            borderRadius: BorderRadius.circular(0),
           ),
         ),
       ),
     );
-    // return SizedBox(
-    //   height: 38,
-    //   child: TextField(
-    //     decoration: InputDecoration(
-    //       contentPadding: const EdgeInsets.all(0),
-    //       hintText: 'Search by Category, title or number',
-    //       hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-    //       fillColor: const Color.fromRGBO(249, 249, 249, 1),
-    //       filled: true,
-    //       prefixIcon: const Padding(
-    //         padding: EdgeInsets.only(left: 10.0),
-    //         child: Padding(
-    //           padding: EdgeInsets.only(right: 16.0),
-    //           child: Icon(
-    //             Icons.search,
-    //             // color: Colors.grey,
-    //           ),
-    //         ),
-    //       ),
-    //       enabledBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             // color: Colors.grey,
-    //             ),
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //       focusedBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             // color: Colors.grey,
-    //             ),
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //       focusedErrorBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             // color: Colors.grey,
-    //             ),
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //       border: OutlineInputBorder(
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
 
