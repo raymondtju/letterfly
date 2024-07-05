@@ -16,3 +16,5 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 Terima kasih untuk kepada developer dan mobile designer yang sudah mengerjakan projek ini sampai akhir!!
+Terimakasih kepada semua anggota tim:)
+Farewell.
