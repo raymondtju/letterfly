@@ -274,7 +274,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                     selectedDate != null
                         ? "${selectedDate.toLocal()}".split(' ')[0]
                         : "Select date",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -578,7 +578,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                 height: 160,
                 // width: 200,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
@@ -587,7 +587,7 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                       controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Write Detail Description',
                       ),
@@ -595,13 +595,13 @@ class AddSuratInFolderState extends State<AddSuratInFolder> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Save as draft'),
+                  const Text('Save as draft'),
                   Switch(
                       value: isDraft,
                       onChanged: (value) {
