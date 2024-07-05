@@ -65,11 +65,11 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.filter_alt_outlined,
-                            size: 40,
-                            color: Color(0xFFd9d9d9),
-                          ),
+                          //const Icon(
+                          //  Icons.filter_alt_outlined,
+                          //  size: 40,
+                          //  color: Color(0xFFd9d9d9),
+                          //),
                           IconButton(
                             icon: Icon(
                               prov.CategoryViewIsGrid
@@ -434,23 +434,16 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
           child: Column(
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.width * 0.05,
+                height: MediaQuery.of(context).size.width * 0.25,
+                width: MediaQuery.of(context).size.width * 0.25,
                 child: letters[index].imagePaths.isNotEmpty
                     ? Image.network(
                         letters[index].imagePaths[0],
                         fit: BoxFit.cover,
                       )
-                    : Text(""),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(0),
-                ),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.25,
-                  width: MediaQuery.of(context).size.width * 0.25,
-                ),
+                    : Container(
+                        color: Colors.grey[200],
+                      ),
               ),
               const SizedBox(
                 height: 7,
@@ -472,21 +465,56 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
 
   void showDeleteConfirmation(
       BuildContext context, MyLetterProvider prov, int index) {
+    final global = GlobalThemeData().lightThemeData;
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Letter'),
-          content: const Text('Are you sure you want to delete this letter?'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Cancel'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(0),
+          ),
+          backgroundColor: Colors.white,
+          title: const Text(
+            "Delete This Letter",
+            style: subheadlineStyle,
+          ),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: const Text(
+                "This Letter will be deleted Permanently, Are you sure?"),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          actions: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                backgroundColor: global.colorScheme.onPrimary,
+                side: const BorderSide(width: 1, color: Colors.grey),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
               },
+              child: Text("Cancel",
+                  style: TextStyle(
+                    color: global.colorScheme.primary,
+                  )),
             ),
-            TextButton(
-              child: const Text('Delete'),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                side: const BorderSide(width: 1, color: Colors.grey),
+                backgroundColor: const Color.fromARGB(255, 40, 42, 45),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
+                ),
+              ),
               onPressed: () {
                 prov.folders
                     .firstWhere((folder) => folder.id == widget.categoryId)
@@ -495,8 +523,11 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                 prov.notifyListeners();
                 Navigator.of(context).pop();
               },
+              child:
+                  const Text("Delete", style: TextStyle(color: Colors.white)),
             ),
           ],
+          actionsPadding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
         );
       },
     );

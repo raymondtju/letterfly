@@ -102,7 +102,7 @@ Future<int?> showSupportUsSheet(BuildContext context, {int initialRating = 5}) {
                         child: InkWell(
                           onTap: () {
                             setState(() {
-                              _selectedRating = 0;
+                              _selectedRating = 1;
                             });
                           },
                           child: Container(

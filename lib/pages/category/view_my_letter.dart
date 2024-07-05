@@ -179,7 +179,7 @@ class _CategoryViewState extends State<CategoryView> {
                 ),
                 backgroundColor: Colors.white,
                 title: const Text(
-                  "Category Name",
+                  "Folder Name",
                   style: headlineStyle,
                 ),
                 content: Column(
@@ -193,7 +193,7 @@ class _CategoryViewState extends State<CategoryView> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(0),
                               borderSide: const BorderSide(color: Colors.grey)),
-                          hintText: "Enter Category Name",
+                          hintText: "Enter Folder Name",
                         ),
                         onChanged: (value) => title = value,
                         style: const TextStyle(fontSize: 12),

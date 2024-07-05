@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage>
                                               letter.category
                                                   .toLowerCase()
                                                   .contains(searchQuery!) ||
-                                              letter.title
+                                              letter.letterTitle
                                                   .toLowerCase()
                                                   .contains(searchQuery!);
 
@@ -339,129 +339,134 @@ class _HomePageState extends State<HomePage>
         borderRadius: BorderRadius.zero,
       ),
       width: MediaQuery.of(context).size.width * 0.75,
-      child: Column(
-        children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 44, 0, 0),
-              children: [
-                Container(
-                    padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        prov.imageProfile == null
-                            ? Container(
-                                width: MediaQuery.of(context).size.width * 0.25,
-                                height:
-                                    MediaQuery.of(context).size.width * 0.25,
-                                decoration: BoxDecoration(
-                                  color: global.colorScheme.primary,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(28),
-                                  child: SvgPicture.asset(
-                                    'assets/logo/Logo.svg',
-                                    color: Colors.white,
+      child: SizedBox(
+        height: 20,
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 44, 0, 0),
+                children: [
+                  Container(
+                      padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          prov.imageProfile == null
+                              ? Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  decoration: BoxDecoration(
+                                    color: global.colorScheme.primary,
                                   ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(28),
+                                    child: SvgPicture.asset(
+                                      'assets/logo/Logo.svg',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: 50,
+                                  backgroundImage:
+                                      NetworkImage(prov.imageProfile!.path),
                                 ),
-                              )
-                            : CircleAvatar(
-                                radius: 50,
-                                backgroundImage:
-                                    NetworkImage(prov.imageProfile!.path),
-                              ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
-                        Text('Hi, ${prov.Username}', style: headlineStyle),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.005,
-                        ),
-                        Text(prov.Email, style: subheadlineStyle),
-                      ],
-                    )),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.03,
-                ),
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text(
-                    'Profile',
-                    style: textlineStyle,
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.02,
+                          ),
+                          Text('Hi, ${prov.Username}', style: headlineStyle),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.005,
+                          ),
+                          Text(prov.Email, style: subheadlineStyle),
+                        ],
+                      )),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.03,
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/profile");
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.report),
-                  title: const Text(
-                    'Report',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/report");
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.info_rounded),
-                  title: const Text(
-                    'About us',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/about_us");
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.support),
-                  title: const Text(
-                    'Support us',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    showSupportUsSheet(context);
-                  },
-                ),
-                ListTile(
-                  leading: const Icon(Icons.logout),
-                  title: const Text(
-                    'Logout',
-                    style: textlineStyle,
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, "/login");
-                  },
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.fromLTRB(
-                0, 0, 0, MediaQuery.of(context).size.height * 0.1),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/logo/Logo.svg',
-                      width: 24, // Adjust size as needed
-                      height: 24,
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      'Profile',
+                      style: textlineStyle,
                     ),
-                    const SizedBox(width: 10),
-                    const Text('Letterfly', style: headlineStyle),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                const Text('All rights Reserved 2024', style: subtextLineStyle),
-              ],
+                    onTap: () {
+                      Navigator.pushNamed(context, "/profile");
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.report),
+                    title: const Text(
+                      'Report',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/report");
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.info_rounded),
+                    title: const Text(
+                      'About us',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/about_us");
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.support),
+                    title: const Text(
+                      'Support us',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      showSupportUsSheet(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.logout),
+                    title: const Text(
+                      'Logout',
+                      style: textlineStyle,
+                    ),
+                    onTap: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.fromLTRB(
+                  0, 0, 0, MediaQuery.of(context).size.height * 0.1),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/logo/Logo.svg',
+                        width: 24, // Adjust size as needed
+                        height: 24,
+                      ),
+                      const SizedBox(width: 10),
+                      const Text('Letterfly', style: headlineStyle),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  const Text('All rights Reserved 2024',
+                      style: subtextLineStyle),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -807,49 +812,6 @@ class _HomePageState extends State<HomePage>
         ),
       ),
     );
-    // return SizedBox(
-    //   height: 38,
-    //   child: TextField(
-    //     decoration: InputDecoration(
-    //       contentPadding: const EdgeInsets.all(0),
-    //       hintText: 'Search by Category, title or number',
-    //       hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14),
-    //       fillColor: const Color.fromRGBO(249, 249, 249, 1),
-    //       filled: true,
-    //       prefixIcon: const Padding(
-    //         padding: EdgeInsets.only(left: 10.0),
-    //         child: Padding(
-    //           padding: EdgeInsets.only(right: 16.0),
-    //           child: Icon(
-    //             Icons.search,
-    //             // color: Colors.grey,
-    //           ),
-    //         ),
-    //       ),
-    //       enabledBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             // color: Colors.grey,
-    //             ),
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //       focusedBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             // color: Colors.grey,
-    //             ),
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //       focusedErrorBorder: OutlineInputBorder(
-    //         borderSide: const BorderSide(
-    //             // color: Colors.grey,
-    //             ),
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //       border: OutlineInputBorder(
-    //         borderRadius: BorderRadius.circular(0),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
 
