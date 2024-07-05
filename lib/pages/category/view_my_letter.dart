@@ -181,56 +181,76 @@ class _CategoryViewState extends State<CategoryView> {
   }
 
   Future<dynamic> addFolderDialog(BuildContext context, MyLetterProvider prov) {
+    String errorMessage = '';
     return showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
-              backgroundColor: Colors.white,
-              title: const Text(
-                "Category Name",
-                style: headlineStyle,
-              ),
-              content: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: TextField(
-                  maxLines: 1,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(0),
-                        borderSide: const BorderSide(color: Colors.grey)),
-                    hintText: "Enter Category Name",
-                  ),
-                  onChanged: (value) => title = value,
-                  style: const TextStyle(fontSize: 12),
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0),
                 ),
-              ),
-              contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              actions: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    backgroundColor: const Color.fromARGB(255, 40, 42, 45),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0),
+                backgroundColor: Colors.white,
+                title: const Text(
+                  "Category Name",
+                  style: headlineStyle,
+                ),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(0),
+                              borderSide: const BorderSide(color: Colors.grey)),
+                          hintText: "Enter Category Name",
+                        ),
+                        onChanged: (value) => title = value,
+                        style: const TextStyle(fontSize: 12),
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    if (title.isNotEmpty) {
-                      prov.addItem(
-                        title: title,
-                      );
-                    }
-                    Navigator.of(context).pop();
-                  },
-                  child:
-                      const Text("Add", style: TextStyle(color: Colors.white)),
+                    if (errorMessage.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          errorMessage,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                  ],
                 ),
-              ],
-              actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20));
+                contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                actions: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
+                      backgroundColor: const Color.fromARGB(255, 40, 42, 45),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(0),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (title.isNotEmpty) {
+                        prov.addItem(
+                          title: title,
+                        );
+                        Navigator.of(context).pop();
+                      } else {
+                        setState(() {
+                          errorMessage = 'Folder name has not yet been defined';
+                        });
+                      }
+                    },
+                    child: const Text("Add",
+                        style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+                actionsPadding: const EdgeInsets.fromLTRB(20, 0, 20, 20));
+          });
         });
   }
 
@@ -302,9 +322,9 @@ class _CategoryViewState extends State<CategoryView> {
   Widget listCategory() {
     final prov = Provider.of<MyLetterProvider>(context);
     final sortedFolders = List.from(prov.folders)
-    ..sort((a, b) => isAscending
-        ? a.title.compareTo(b.title)
-        : b.title.compareTo(a.title));
+      ..sort((a, b) => isAscending
+          ? a.title.compareTo(b.title)
+          : b.title.compareTo(a.title));
 
     return Expanded(
       child: ListView.builder(
@@ -318,8 +338,8 @@ class _CategoryViewState extends State<CategoryView> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          suratOnFolderView(categoryId: sortedFolders[index].id),
+                      builder: (context) => suratOnFolderView(
+                          categoryId: sortedFolders[index].id),
                     ),
                   );
                 },
@@ -357,13 +377,6 @@ class _CategoryViewState extends State<CategoryView> {
                       },
                       itemBuilder: (BuildContext context) {
                         return [
-                          const PopupMenuItem<String>(
-                            value: 'Favorite',
-                            child: ListTile(
-                              leading: Icon(Icons.star_border),
-                              title: Text("Favorite"),
-                            ),
-                          ),
                           const PopupMenuItem<String>(
                               value: 'Delete',
                               child: ListTile(

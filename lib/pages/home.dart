@@ -144,7 +144,7 @@ class _HomePageState extends State<HomePage>
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.fromLTRB(30, 20, 20, 20),
                       child: Column(
                         children: [
                           Row(
@@ -503,7 +503,7 @@ class _HomePageState extends State<HomePage>
                       ),
                       Text(
                         "Add Letter",
-                        style: TextStyle(fontSize: 16),
+                        style: subtextLineStyle,
                       ),
                     ],
                   ),
@@ -534,11 +534,9 @@ class _HomePageState extends State<HomePage>
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(
-                        "My Letter",
-                        style: TextStyle(
-                            fontSize: 16, color: global.colorScheme.onPrimary),
-                      ),
+                      Text("My Letter",
+                          style: subtextLineStyle.apply(
+                              color: global.colorScheme.onPrimary)),
                     ],
                   ),
                 ),
