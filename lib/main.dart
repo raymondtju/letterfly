@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
                 case '/sukses':
                   return _buildPageRoute(const SuccessfulPage());
                 case '/forgetPass':
-                  return _buildPageRoute(const ForgotPasswordPage());
+                  return _buildPageRoute(const forgotPasswordPage());
                 case '/newPass':
                   return _buildPageRoute(const NewPasswordPage());
                 case '/category':

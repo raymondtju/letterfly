@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:math';
 
 import 'package:Letterfly/components/textstylefont.dart';
@@ -7,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class ForgotPasswordPage extends StatelessWidget {
-  const ForgotPasswordPage({super.key});
+class forgotPasswordPage extends StatelessWidget {
+  const forgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {

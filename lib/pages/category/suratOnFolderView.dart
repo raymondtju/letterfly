@@ -110,7 +110,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => AddSuratInFolder(
-                                  imagePaths: [],
+                                  imagePaths: const [],
                                   categoryId: widget.categoryId,
                                 ),
                               ),
@@ -172,7 +172,7 @@ class _suratOnFolderViewState extends State<suratOnFolderView> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => AddSuratInFolder(
-                        imagePaths: [],
+                        imagePaths: const [],
                         categoryId: widget.categoryId,
                       ),
                     ),

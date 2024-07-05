@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_null_comparison
+
 import 'dart:convert';
 import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
@@ -126,10 +128,11 @@ class AddLetterPageState extends State<AddLetterPage> {
       firstDate: DateTime(2015, 8),
       lastDate: DateTime(DateTime.now().year + 10),
     );
-    if (picked != null && picked != selectedDate)
+    if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
       });
+    }
   }
 
   @override
@@ -279,6 +282,8 @@ class AddLetterPageState extends State<AddLetterPage> {
                     ),
                   ),
                   child: Text(
+                    // ignore: duplicate_ignore
+                    // ignore: unnecessary_null_comparison
                     selectedDate != null
                         ? "${selectedDate.toLocal()}".split(' ')[0]
                         : "Select date",
