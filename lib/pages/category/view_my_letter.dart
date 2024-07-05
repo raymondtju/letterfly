@@ -1,3 +1,4 @@
+import 'package:Letterfly/components/categoryItem.dart';
 import 'package:Letterfly/components/colors.dart';
 import 'package:Letterfly/components/textstylefont.dart';
 import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/rendering.dart';
 
+enum SortOption { normal, nameAZ, nameZA }
+
 class CategoryView extends StatefulWidget {
   const CategoryView({super.key});
 
@@ -18,6 +21,7 @@ class CategoryView extends StatefulWidget {
 
 class _CategoryViewState extends State<CategoryView> {
   String title = '';
+  SortOption currentSortOption = SortOption.normal;
   bool isAscending = true;
   @override
   Widget build(BuildContext context) {
@@ -27,156 +31,139 @@ class _CategoryViewState extends State<CategoryView> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
-        leading: BackButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text('My Letter', style: subheadlineStyle),
-          ],
-        ),
+        leading: BackButton(onPressed: () => Navigator.pop(context)),
+        title: const Text('My Letter', style: subheadlineStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      prov.folders.isNotEmpty
-                          ? Text('${prov.folders.length} Folder ',
-                              style: subheadlineStyle)
-                          : const Text(""),
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(
-                        Icons.filter_alt_outlined,
-                        size: 40,
-                        color: Color(0xFFd9d9d9),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isAscending = !isAscending;
-                        });
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
-                        size: 40,
-                        color: const Color(0xFFd9d9d9),
-                      ),
-                      hoverColor: Colors.white.withOpacity(0),
-                      onPressed: () {
-                        prov.setCategoryViewGrid = !prov.CategoryViewIsGrid;
-                      },
-                    ),
-                  ],
-                )
-              ],
-            ),
+            _buildHeader(prov),
             prov.folders.isEmpty
-                ? Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.30,
-                      ),
-                      Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    addFolderDialog(context, prov);
-                                  },
-                                  child: SizedBox(
-                                    height: 60,
-                                    width: 60,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: const Color.fromRGBO(
-                                              40, 42, 45, 1),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(0),
-                                      ),
-                                      child: const Icon(
-                                        Icons.add,
-                                        size: 28,
-                                        color: Color.fromRGBO(40, 42, 45, 1),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Text(
-                              "No Recent Folder",
-                              style: subheadlineStyle,
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
-                  )
-                : const SizedBox(
-                    height: 15,
-                  ),
+                ? _buildEmptyState(context, prov)
+                : const SizedBox(height: 15),
             Expanded(
-                child:
-                    prov.CategoryViewIsGrid ? gridCategory() : listCategory()),
-
-            // searchBar(context), rip searchbar
-            // const SizedBox(
-            //   height: 15,
-            // ),
+              child: prov.CategoryViewIsGrid ? gridCategory() : listCategory(),
+            ),
           ],
         ),
       ),
-      floatingActionButton: Consumer<MyLetterProvider>(
-        builder: (context, prov, child) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
-            child: Visibility(
-              visible: prov.folders.isNotEmpty,
-              child: FloatingActionButton(
-                elevation: 12,
-                backgroundColor: global.colorScheme.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(0),
-                  side: BorderSide(color: global.colorScheme.primary, width: 2),
-                ),
-                onPressed: () {
-                  addFolderDialog(context, prov);
-                },
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
+      floatingActionButton: _buildFloatingActionButton(prov, global),
+    );
+  }
+
+  Widget _buildHeader(MyLetterProvider prov) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Text(
+            prov.folders.isNotEmpty ? '${prov.folders.length} Folder' : '',
+            style: subheadlineStyle,
+          ),
+        ),
+        Row(
+          children: [
+            _buildSortButton(),
+            _buildViewToggleButton(prov),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSortButton() {
+    return PopupMenuButton<SortOption>(
+      icon: const Icon(Icons.sort_outlined, size: 40, color: Color(0xFFd9d9d9)),
+      onSelected: (SortOption result) {
+        setState(() => currentSortOption = result);
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<SortOption>>[
+        const PopupMenuItem<SortOption>(
+          value: SortOption.normal,
+          child: Text('Default'),
+        ),
+        const PopupMenuItem<SortOption>(
+          value: SortOption.nameAZ,
+          child: Text('Ascending'),
+        ),
+        const PopupMenuItem<SortOption>(
+          value: SortOption.nameZA,
+          child: Text('Descending'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildViewToggleButton(MyLetterProvider prov) {
+    return IconButton(
+      icon: Icon(
+        prov.CategoryViewIsGrid ? Icons.list : Icons.grid_view,
+        size: 40,
+        color: const Color(0xFFd9d9d9),
+      ),
+      hoverColor: Colors.white.withOpacity(0),
+      onPressed: () => prov.setCategoryViewGrid = !prov.CategoryViewIsGrid,
+    );
+  }
+
+  Widget _buildEmptyState(BuildContext context, MyLetterProvider prov) {
+    return Column(
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * 0.30),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () => addFolderDialog(context, prov),
+                child: Container(
+                  height: 60,
+                  width: 60,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color.fromRGBO(40, 42, 45, 1),
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(0),
+                  ),
+                  child: const Icon(
+                    Icons.add,
+                    size: 28,
+                    color: Color.fromRGBO(40, 42, 45, 1),
+                  ),
                 ),
               ),
+              const SizedBox(height: 20),
+              const Text("No Recent Folder", style: subheadlineStyle),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFloatingActionButton(MyLetterProvider prov, ThemeData global) {
+    return Consumer<MyLetterProvider>(
+      builder: (context, prov, child) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+          child: Visibility(
+            visible: prov.folders.isNotEmpty,
+            child: FloatingActionButton(
+              elevation: 12,
+              backgroundColor: global.colorScheme.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0),
+                side: BorderSide(color: global.colorScheme.primary, width: 2),
+              ),
+              onPressed: () => addFolderDialog(context, prov),
+              child: const Icon(Icons.add, color: Colors.white),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -319,12 +306,43 @@ class _CategoryViewState extends State<CategoryView> {
     );
   }
 
+//  int customCompare(String a, String b) {
+//    int caseInsensitiveCompare = a.toLowerCase().compareTo(b.toLowerCase());
+//    if (caseInsensitiveCompare != 0) {
+//      return caseInsensitiveCompare;
+//    }
+//    return b.compareTo(a);
+//  }
+
+  int customCompare(String a, String b) {
+    // Compare case-insensitive
+    int caseInsensitiveCompare = a.toLowerCase().compareTo(b.toLowerCase());
+
+    // If case-insensitive comparison is different, return it
+    if (caseInsensitiveCompare != 0) {
+      return caseInsensitiveCompare;
+    }
+
+    // Otherwise, prioritize uppercase letters before lowercase letters
+    return a.compareTo(b);
+  }
+
+  List<CategoryItem> getSortedFolders(List<CategoryItem> folders) {
+    switch (currentSortOption) {
+      case SortOption.normal:
+        return folders; // Return the original order
+      case SortOption.nameAZ:
+        return List.from(folders)
+          ..sort((a, b) => customCompare(a.title, b.title));
+      case SortOption.nameZA:
+        return List.from(folders)
+          ..sort((a, b) => customCompare(b.title, a.title));
+    }
+  }
+
   Widget listCategory() {
     final prov = Provider.of<MyLetterProvider>(context);
-    final sortedFolders = List.from(prov.folders)
-      ..sort((a, b) => isAscending
-          ? a.title.compareTo(b.title)
-          : b.title.compareTo(a.title));
+    final sortedFolders = getSortedFolders(prov.folders);
 
     return Expanded(
       child: ListView.builder(
@@ -405,10 +423,7 @@ class _CategoryViewState extends State<CategoryView> {
 
   Expanded gridCategory() {
     final prov = Provider.of<MyLetterProvider>(context);
-    final sortedFolders = List.from(prov.folders)
-      ..sort((a, b) => isAscending
-          ? a.title.compareTo(b.title)
-          : b.title.compareTo(a.title));
+    final sortedFolders = getSortedFolders(prov.folders);
     Offset? tapPosition;
 
     return Expanded(
