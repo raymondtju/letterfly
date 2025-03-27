@@ -1,20 +1,22 @@
-import 'package:Letterfly/addletter.dart';
+import 'package:Letterfly/pages/edit_letter_page/editLetter.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:provider/provider.dart';
 
-class TakeAPhotoPage extends StatefulWidget {
-  const TakeAPhotoPage({Key? key}) : super(key: key);
+class EditTakeAPhotoPage extends StatefulWidget {
+  final int id_letter;
+
+  const EditTakeAPhotoPage({super.key, required this.id_letter});
 
   @override
-  State<TakeAPhotoPage> createState() => _TakeAPhotoPageState();
+  State<EditTakeAPhotoPage> createState() => _EditTakeAPhotoPageState();
 }
 
-class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
+class _EditTakeAPhotoPageState extends State<EditTakeAPhotoPage> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
-  
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +40,9 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
 
+    final itemOfLetter =
+        prov.Letters.firstWhere((letter) => letter.id == widget.id_letter);
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
@@ -47,7 +52,7 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
             if (snapshot.connectionState == ConnectionState.done) {
               return CameraPreview(_controller);
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
@@ -58,11 +63,15 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
           if (_controller.value.isInitialized) {
             try {
               final image = await _controller.takePicture();
-              prov.addPhoto(image.path);
+              itemOfLetter.imagePaths.add(
+                image.path,
+              );
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AddLetterPage(imagePaths: prov.TempPhoto),
+                  builder: (context) => EditLetterPage(
+                    id_letter: widget.id_letter,
+                  ),
                 ),
               );
             } catch (e) {
@@ -72,7 +81,7 @@ class _TakeAPhotoPageState extends State<TakeAPhotoPage> {
             print("Camera is not initialized");
           }
         },
-        child: Icon(Icons.camera),
+        child: const Icon(Icons.camera),
       ),
     );
   }

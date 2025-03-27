@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -5,23 +7,33 @@ import 'package:flutter/material.dart';
 class LetterFlyProvider with ChangeNotifier {
   String _Username = '';
   String get Username => _Username;
-  
+
   set setUsername(val) {
     _Username = val;
     notifyListeners();
   }
+
   String _Email = '';
   String get Email => _Email;
-  
+
   set setEmail(val) {
     _Email = val;
     notifyListeners();
   }
+
   String _Password = '';
   String get Password => _Password;
-  
+
   set setPassword(val) {
     _Password = val;
+    notifyListeners();
+  }
+
+  File? _imageProfile;
+  File? get imageProfile => _imageProfile;
+
+  set setImageProfile(File? value) {
+    _imageProfile = value;
     notifyListeners();
   }
 
@@ -64,6 +76,8 @@ class LetterFlyProvider with ChangeNotifier {
 
   List<Letter> _letters = [];
   List get Letters => _letters;
+  int get LetterCounts => _letters.length;
+
   void setLetters(Letter letter) {
     _letters.add(letter);
     notifyListeners();
@@ -73,17 +87,32 @@ class LetterFlyProvider with ChangeNotifier {
     TempPhoto.clear();
     notifyListeners();
   }
-  
+
   bool _selectedChipSuratKuasa = false;
   bool get selectedChipSuratKuasa => _selectedChipSuratKuasa;
   set setSelectedChipSuratKuasa(bool val) {
     _selectedChipSuratKuasa = val;
     notifyListeners();
   }
+
   bool _selectedChipSuratAjaib = false;
   bool get selectedChipSuratAjaib => _selectedChipSuratAjaib;
   set setSelectedChipSuratAjaib(bool val) {
     _selectedChipSuratAjaib = val;
+    notifyListeners();
+  }
+
+  void editLetter(Letter updatedLetter) {
+    final index =
+        _letters.indexWhere((letter) => letter.id == updatedLetter.id);
+    if (index != -1) {
+      _letters[index] = updatedLetter;
+      notifyListeners();
+    }
+  }
+
+  void removeLetter(Letter letter) {
+    _letters.remove(letter);
     notifyListeners();
   }
 }

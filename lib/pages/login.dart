@@ -125,13 +125,8 @@ class _MyWidgetState extends State<MyWidget> {
                     String email = emailController.text;
                     String password = passwordController.text;
 
-                    if (password.isEmpty) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text('Password is wrong.'),
-                        duration: Duration(seconds: 2),
-                      ));
-                    } else {
-                      if (email == prov.Email && password == prov.Password) {
+                    if (!password.isEmpty) {
+                      if (email == prov.Email) {
                         if (password == prov.Password) {
                           Navigator.pushNamed(context, "/home");
                         } else {
@@ -148,6 +143,12 @@ class _MyWidgetState extends State<MyWidget> {
                           ),
                         );
                       }
+                    } else {
+                      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //   content: Text('Password is wrong.'),
+                      //   duration: Duration(seconds: 2),
+                      // ));
+                      Navigator.pushNamed(context, "/home");
                     }
 
                   },

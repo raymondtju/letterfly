@@ -1,10 +1,10 @@
-class SuratKuasaItem {
+class suratKuasaItem {
   final String id;
   final String image;
   final String title;
   final String durasi;
 
-  const SuratKuasaItem({
+  const suratKuasaItem({
     required this.id,
     required this.image,
     required this.title,

@@ -1,16 +1,23 @@
-import 'package:Letterfly/addletter.dart';
-import 'package:Letterfly/category/category_view.dart';
-import 'package:Letterfly/category/suratkuasa_view.dart';
+//Import - Import
+import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
+import 'package:Letterfly/pages/category/suratOnFolderView.dart';
+import 'package:Letterfly/pages/category/view_my_letter.dart';
+import 'package:Letterfly/pages/drawer/aboutUs.dart';
+import 'package:Letterfly/pages/add_letter_page/addletter.dart';
 import 'package:Letterfly/components/colors.dart';
-import 'package:Letterfly/forgotPassword.dart';
-import 'package:Letterfly/home.dart';
-import 'package:Letterfly/login.dart';
-import 'package:Letterfly/newPassword.dart';
+import 'package:Letterfly/pages/drawer/editProfile.dart';
+import 'package:Letterfly/pages/forgotPassword.dart';
+import 'package:Letterfly/pages/home.dart';
+import 'package:Letterfly/pages/login.dart';
+import 'package:Letterfly/pages/newPassword.dart';
+import 'package:Letterfly/pages/drawer/profile.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
-import 'package:Letterfly/signup.dart';
-import 'package:Letterfly/successful.dart';
-import 'package:Letterfly/takeAPhoto.dart';
-import 'package:Letterfly/welcome.dart';
+import 'package:Letterfly/pages/drawer/report.dart';
+import 'package:Letterfly/pages/signup.dart';
+import 'package:Letterfly/pages/add_letter_page/successful.dart';
+import 'package:Letterfly/pages/add_letter_page/takeAPhoto.dart';
+import 'package:Letterfly/pages/edit_letter_page/editTakeAPhoto.dart';
+import 'package:Letterfly/pages/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +31,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => LetterFlyProvider()),
+        ChangeNotifierProvider(create: (_) => MyLetterProvider()),
       ],
       child: Consumer<LetterFlyProvider>(
         builder: (context, prov, child) {
@@ -41,7 +49,7 @@ class MyApp extends StatelessWidget {
                 case '/signup':
                   return _buildPageRoute(const SignUpPage());
                 case '/home':
-                  return _buildPageRoute(const HomePage());
+                  return _buildPageRoute(HomePage());
                 case '/sukses':
                   return _buildPageRoute(const SuccessfulPage());
                 case '/forgetPass':
@@ -51,11 +59,25 @@ class MyApp extends StatelessWidget {
                 case '/category':
                   return _buildPageRoute(const CategoryView());
                 case '/surat_kuasa':
-                  return _buildPageRoute(const SuratKuasaView());
+                  final String categoryId = settings.arguments as String;
+                  return _buildPageRoute(
+                      suratOnFolderView(categoryId: categoryId));
                 case '/takeaphoto':
                   return _buildPageRoute(const TakeAPhotoPage());
+                case '/edit_takeaphoto':
+                  return _buildPageRoute(EditTakeAPhotoPage(
+                      id_letter:
+                          ModalRoute.of(context)?.settings.arguments as int));
                 case '/addletter':
                   return _buildPageRoute(const AddLetterPage(imagePaths: []));
+                case '/profile':
+                  return _buildPageRoute(const ProfilePage());
+                case '/about_us':
+                  return _buildPageRoute(const AboutUs());
+                case '/report':
+                  return _buildPageRoute(const ReportBug());
+                case '/edit_profile':
+                  return _buildPageRoute(const EditProfilePage());
                 default:
                   return _buildPageRoute(const WelcomePage());
               }

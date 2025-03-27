@@ -1,16 +1,13 @@
 import 'dart:convert';
-import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:Letterfly/components/letteritem.dart';
 import 'package:Letterfly/components/textstylefont.dart';
+import 'package:Letterfly/pages/category/provider/My_Letter_Provider.dart';
+import 'package:Letterfly/pages/category/successful_add_surat_in_folder.dart';
 import 'package:Letterfly/provider/letterfly_provider.dart';
 import 'package:Letterfly/utils/styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_signature_pad/flutter_signature_pad.dart';
 import 'package:provider/provider.dart';
 
@@ -77,17 +74,22 @@ Future showSignatureDialog(
   );
 }
 
-class AddLetterPage extends StatefulWidget {
+class AddSuratInFolder extends StatefulWidget {
   final List<String> imagePaths;
+  final String categoryId;
 
-  const AddLetterPage({super.key, required this.imagePaths});
+  const AddSuratInFolder({
+    super.key,
+    required this.imagePaths,
+    required this.categoryId,
+  });
 
   @override
-  State<AddLetterPage> createState() =>
-      AddLetterPageState(imagePaths: imagePaths);
+  State<AddSuratInFolder> createState() =>
+      AddSuratInFolderState(imagePaths: imagePaths);
 }
 
-class AddLetterPageState extends State<AddLetterPage> {
+class AddSuratInFolderState extends State<AddSuratInFolder> {
   final List<String> imagePaths;
   bool isDraft = false;
   String selectedCategory = 'Surat Kuasa';
@@ -106,7 +108,7 @@ class AddLetterPageState extends State<AddLetterPage> {
 
   final signatureKey = GlobalKey<SignatureState>();
 
-  AddLetterPageState({required this.imagePaths});
+  AddSuratInFolderState({required this.imagePaths});
 
   DateTime selectedDate = DateTime.now();
   Future<void> _selectDate(BuildContext context) async {
@@ -114,7 +116,7 @@ class AddLetterPageState extends State<AddLetterPage> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
+      lastDate: DateTime(DateTime.now().year + 10),
     );
     if (picked != null && picked != selectedDate)
       setState(() {
@@ -575,13 +577,14 @@ class AddLetterPageState extends State<AddLetterPage> {
                 ),
                 height: 160,
                 // width: 200,
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 12.0,
                     vertical: 0,
                   ),
                   child: SingleChildScrollView(
                     child: TextField(
+                      controller: descriptionController,
                       maxLines: null,
                       keyboardType: TextInputType.multiline,
                       decoration: InputDecoration(
@@ -600,18 +603,17 @@ class AddLetterPageState extends State<AddLetterPage> {
                 children: [
                   Text('Save as draft'),
                   Switch(
-                    value: isDraft, 
-                    onChanged: (value) {
-                      setState(() {
-                        isDraft = value;
-                      });
-                    })
+                      value: isDraft,
+                      onChanged: (value) {
+                        setState(() {
+                          isDraft = value;
+                        });
+                      })
                 ],
               ),
               const SizedBox(
                 height: 30,
               ),
-
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
@@ -628,20 +630,34 @@ class AddLetterPageState extends State<AddLetterPage> {
                     for (var gmbr in imagePaths) {
                       TempPhotos.add(gmbr);
                     }
+                    final letterProvider =
+                        Provider.of<LetterFlyProvider>(context, listen: false);
                     final letter = Letter(
+                        id: letterProvider.LetterCounts + 1,
                         imagePaths: TempPhotos,
                         letterTitle: lettertitleController.text,
                         letterNumber: letternumberController.text,
-                        datePublished: datepublishedController.text.isNotEmpty
-                            ? datepublishedController.text
+                        datePublished: selectedDate != null
+                            ? "${selectedDate.toLocal()}".split(' ')[0]
                             : defaultDate,
                         category: selectedCategory,
                         division: selectedDivision,
                         signatureImage: signImage,
-                        description: descriptionController.text);
+                        description: descriptionController.text,
+                        isDraft: false);
                     Provider.of<LetterFlyProvider>(context, listen: false)
                         .setLetters(letter);
-                    Navigator.pushNamed(context, "/sukses");
+                    Provider.of<MyLetterProvider>(context, listen: false)
+                        .addLetterToCategory(
+                            categoryId: widget.categoryId, letter: letter);
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const SuccessfulAddSuratInFolder()),
+                    );
+
                     imagePaths.clear();
                   },
                   child: const Text(

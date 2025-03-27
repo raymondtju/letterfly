@@ -34,6 +34,9 @@ class _MyWidgetState extends State<MyWidget> {
   TextEditingController Password1Controller = TextEditingController();
   TextEditingController Password2Controller = TextEditingController();
 
+  String emailErrorText = '';
+  bool emailErrorBool = false;
+
   @override
   Widget build(BuildContext context) {
     final prov = Provider.of<LetterFlyProvider>(context);
@@ -80,7 +83,20 @@ class _MyWidgetState extends State<MyWidget> {
                 controller: EmailController,
                 decoration: DefaultStyles.inputDecoration.copyWith(
                   hintText: 'Enter your work email',
+                  errorText: emailErrorBool ? emailErrorText : null,
                 ),
+                onChanged: (value) {
+                  setState(() {
+                    if (value.endsWith('@gmail.com')) {
+                      emailErrorText = '';
+                      emailErrorBool = false;
+                    } else {
+                      emailErrorText =
+                          'Email must be in the format example@gmail.com';
+                      emailErrorBool = true;
+                    }
+                  });
+                },
               ),
               SizedBox(
                 height: 20,

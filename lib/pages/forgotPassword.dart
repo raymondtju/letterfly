@@ -260,10 +260,7 @@ void _showOTPMenu(BuildContext context) {
                             "OTP from provider: ${Provider.of<LetterFlyProvider>(context, listen: false).otp}");
                         print("OTP entered by user: $otpTemp");
 
-                        if (otpTemp ==
-                            Provider.of<LetterFlyProvider>(context,
-                                    listen: false)
-                                .otp) {
+                        if (otpTemp == Provider.of<LetterFlyProvider>(context,listen: false).otp) {
                           print("OTP matched, navigating to '/newPass'");
                           Navigator.pushNamed(context, "/newPass");
                         } else {
